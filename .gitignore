@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# prevent people from having access to our environment
+/src/environments/**
+
 # Compiled output
 /dist
 /tmp
