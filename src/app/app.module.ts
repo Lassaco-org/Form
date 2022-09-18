@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PageNotFoundComponent } from './layouts/page-not-found/page-not-found.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
@@ -13,6 +14,7 @@ import { PageNotFoundComponent } from './layouts/page-not-found/page-not-found.c
     BrowserModule,
     AppRoutingModule,
     AuthenticationModule,
+    AdminModule,
     HttpClientModule,
   ],
   providers: [],

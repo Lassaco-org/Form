@@ -4,15 +4,25 @@
       <h3 class="title">Hello 👋🏾</h3>
       <p>Pick up where you left off.</p>
     </div>
-    <div class="auth_form">
+    <form class="auth_form" [formGroup]="userForm">
       <div class="auth_form_field">
         <div class="input-field">
-          <input type="text" placeholder="Email Address" />
+          <input
+            type="text"
+            name="username"
+            placeholder="Email Address"
+            formControlName="username"
+          />
         </div>
       </div>
       <div class="auth_form_field">
         <div class="input-field dis-flex">
-          <input type="password" placeholder="Password" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            formControlName="password"
+          />
           <small class="hide-icon">i</small>
         </div>
       </div>
@@ -21,14 +31,25 @@
           <input type="checkbox" placeholder="Password" />
           Remember Me
         </label>
-        <p>Forgot Password</p>
+        <p class="clickable hover-1" routerLink="/auth/forgot-password">
+          Forgot Password
+        </p>
       </div>
       <div class="auth_form_btns">
-        <button class="btn prim_btn" (click)="login()">Sign in</button>
+        <button class="btn prim_btn" (click)="login()" *ngIf="!loading">
+          Sign In
+        </button>
+        <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
+          <span class="loading-spinner">
+            <div class="spinner-3"></div>
+          </span>
+        </button>
       </div>
-    </div>
+    </form>
     <div class="auth_others">
-      <p>Don’t have an account? <span>Create One</span></p>
+      <p>
+        Don’t have an account? <span class="clickable hover-1">Create One</span>
+      </p>
     </div>
   </div>
 </section>
