@@ -1,11 +1,11 @@
 //-- Colors starts --//
 
 // Primary starts
-$primary100: #2D2B6D;
+$primary100: #000F2D;
 // Primary ends
 
 // Secondary starts
-$secondary100: #DF7829;
+$secondary100: #00B4CB;
 // Secondary ends
 
 // Error starts
@@ -20,19 +20,20 @@ $success100: #039855;
 $warning100: #FACC15;
 // Warning ends
 
+$text-color1: #141414;
+$text-color2: #52525B;
+$text-color3: #949494;
+$orange100: #F38704;
 
-$grey20: #FBFCFD;
+$grey1: #979797;
+$grey2: #F1F1F1;
 $grey40: #F9FAFB;
 $grey60: #EAECF0;
-$grey100: #A5A4AA;
+
 $inner-border: #CFCFD4;
 $divider-color: #ECEDF1;
 $divider-color2: #AFB3B8;
 $white-color: #ffffff;
-$text-color1: #232323;
-$text-color2: #52525B;
-$text-color3: #949494;
-$fushiapink: #CD1A6B;
 $brightyellow: #F3C019;
 //-- Colors ends --//
 
@@ -43,7 +44,7 @@ $box-shadow2: 4px 4px 40px rgba(112, 144, 176, 0.1);
 
 //-- Border starts --//
 $border-radius1: 5px;
-$border-radius2: 10px;
+$border-radius2: 8px;
 $border-radius3: 10px;
 $border-radius4: 20px;
 $border-radius5: 25px;

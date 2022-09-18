@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -8,7 +9,12 @@ import { PageNotFoundComponent } from './layouts/page-not-found/page-not-found.c
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
-  imports: [BrowserModule, AppRoutingModule, AuthenticationModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AuthenticationModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

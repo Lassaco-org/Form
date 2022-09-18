@@ -1,0 +1,52 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+.auth {
+    width: 100%;
+    display: flex;
+    &_container {
+        margin: $s-2 auto;
+        min-width: 300px;
+        text-align: center;
+        .auth_form {
+            margin: $s-1 0;
+            display: grid;
+            grid-gap: $s-2;
+            &_field {
+                .input-field {
+                    width: 100%;
+                    border: 1px solid $grey2;
+                    border-radius: 8px;
+                    input {
+                        width: 100%;
+                        padding: $s-2;
+                        border-radius: 8px;
+                        border: none;
+                        background-color: none;
+                        outline: none;
+                    }
+                    .hide-icon {
+                        padding: $s-2;
+                    }
+                }
+                &.forgot-password {
+                    justify-content: space-between;
+                    gap: $s-2;
+                    p {
+                        color: $orange100;
+                    }
+                }
+            }
+            &_btns {
+                .btn {
+                    width: 100%;
+                }
+            }
+        }
+        .auth_others {
+            span {
+                color: $secondary100;
+            }
+        }
+    }
+}

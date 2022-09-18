@@ -1,1 +1,34 @@
-<p>login works!</p>
+<section class="auth">
+  <div class="auth_container">
+    <div class="auth_header">
+      <h3 class="title">Hello 👋🏾</h3>
+      <p>Pick up where you left off.</p>
+    </div>
+    <div class="auth_form">
+      <div class="auth_form_field">
+        <div class="input-field">
+          <input type="text" placeholder="Email Address" />
+        </div>
+      </div>
+      <div class="auth_form_field">
+        <div class="input-field dis-flex">
+          <input type="password" placeholder="Password" />
+          <small class="hide-icon">i</small>
+        </div>
+      </div>
+      <div class="auth_form_field forgot-password dis-flex">
+        <label class="">
+          <input type="checkbox" placeholder="Password" />
+          Remember Me
+        </label>
+        <p>Forgot Password</p>
+      </div>
+      <div class="auth_form_btns">
+        <button class="btn prim_btn" (click)="login()">Sign in</button>
+      </div>
+    </div>
+    <div class="auth_others">
+      <p>Don’t have an account? <span>Create One</span></p>
+    </div>
+  </div>
+</section>
