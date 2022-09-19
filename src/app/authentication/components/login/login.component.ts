@@ -57,7 +57,10 @@ export class LoginComponent implements OnInit {
             this.authService.addUserDataToLocalStorage(res.data);
 
             // Route user
-            this.router.navigate(['/admin']);
+            setTimeout(() => {
+              // Route user
+              this.router.navigate(['/admin']);
+            }, 2000);
           }
         },
         error: (e) => {
