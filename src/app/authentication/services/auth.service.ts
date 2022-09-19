@@ -62,8 +62,38 @@ export class AuthService {
         return of(res);
       }),
       catchError((err: any) => {
-        return throwError(() => new Error('Failed to login User'));
+        return throwError(() => new Error(err.error.message));
       })
     );
+  }
+
+  // Request Password Reset
+  requestPasswordReset(email: string): Observable<IAuth> {
+    return this.http
+      .get<IAuth>(`${this.baseUrl}auth/request-reset-password?email=${email}`)
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Code sent successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
+  // Request Password Reset
+  resetPassword(data: any): Observable<IAuth> {
+    return this.http
+      .post<IAuth>(`${this.baseUrl}auth/reset-password`, data)
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Password reset successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
   }
 }

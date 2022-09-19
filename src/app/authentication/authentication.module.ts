@@ -7,12 +7,15 @@ import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     AuthenticationComponent,
     LoginComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -20,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
 })
 export class AuthenticationModule {}

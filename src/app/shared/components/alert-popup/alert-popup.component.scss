@@ -1,0 +1,12 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+.alert {
+    position: fixed;
+    right: 0;
+    top: 2rem;
+    // background-color: $grey2;
+    color: $white-color;
+    padding: $s-2;
+    z-index: 150;
+}

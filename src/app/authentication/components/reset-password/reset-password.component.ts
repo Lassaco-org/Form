@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit {
   loading: boolean = false;
   alertMessage: string = '';
   isAlert: boolean = false;
@@ -27,41 +26,29 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // User form
     this.userForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      token: ['', Validators.required],
+      newPassword: ['', Validators.required],
     });
   }
 
-  login() {
+  // Reset Password
+  resetPassword() {
     // Start loading
     this.loading = true;
 
-    let payload = {
-      username: 'admin@formapp.com',
-      password: 'Admin@1234',
-    };
-    console.log(this.userForm.value);
-
     this.authService
-      .loginUser(this.userForm.value)
+      .resetPassword(this.userForm.value)
       .pipe(first())
       .subscribe({
         next: (res: any) => {
-          // If status is true
-          if (res.message === 'User logged in successfully') {
-            this.showAlert(res.message, 'success');
-            // Set token
-            this.authService.setToken(res.data?.token);
+          this.loading = false;
 
-            // Set User data
-            this.authService.addUserDataToLocalStorage(res.data);
+          this.showAlert(res.message, 'success');
 
-            // Route user
-            this.router.navigate(['/admin']);
-          }
+          this.router.navigate(['/auth/login']);
         },
         error: (e) => {
-          console.error(e.message);
+          console.error(e);
 
           // Show error message
           this.showAlert(e.message, 'error');
@@ -84,11 +71,5 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.isAlert = false;
     }, 3000);
-  }
-
-  // Go Back to the previous page
-  goBack() {
-    window.history.go(-1);
-    return false;
   }
 }
