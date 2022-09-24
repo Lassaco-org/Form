@@ -1,0 +1,27 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+header {
+    padding: $s-1;
+    border-bottom: 1px solid $divider-color;
+    .header_container {
+        height: 3rem;
+        gap: $s-2;
+        justify-content: space-between;
+        .header_right {
+            gap: $s-2;
+            justify-content: space-between;
+            .profile-image {
+                width: 45px;
+                height: 45px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .notifi {
+                @include icon-area($size: 45px, $color: $blue);
+            }
+        }
+    }
+}
