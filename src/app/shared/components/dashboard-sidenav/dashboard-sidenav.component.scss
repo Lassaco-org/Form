@@ -1,6 +1,12 @@
 @import '../../../../assets/css/variables.scss';
 @import '../../../../assets/css/mixins.scss';
 
+
+.title {
+  color: $blue50;
+  padding-left: $s-1;
+  margin-bottom: $s-2;
+}
 .sidenav_container {
     padding: $s-2;
     nav {

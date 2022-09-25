@@ -1,9 +1,9 @@
 <div class="sidenav_container">
-  <h5>Account</h5>
+  <h5 class="title uc">Account</h5>
   <nav>
     <ul>
       <li
-        class="dis-flex active"
+        class="dis-flex"
         routerLinkActive="active"
         routerLink="/admin"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -18,6 +18,16 @@
           <img src="../../../../assets/img/svg/folder.svg" alt="" />
         </span>
         Forms
+      </li>
+      <li
+        class="dis-flex"
+        routerLinkActive="active"
+        routerLink="/admin/settings"
+      >
+        <span class="icon">
+          <img src="../../../../assets/img/svg/settings.svg" alt="" />
+        </span>
+        Settings
       </li>
     </ul>
   </nav>
