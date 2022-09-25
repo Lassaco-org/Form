@@ -11,9 +11,14 @@
       <h3 class="title">Hello 👋🏾</h3>
       <p>Pick up where you left off.</p>
     </div>
-    <form class="auth_form" [formGroup]="userForm">
+    <form class="auth_form" [formGroup]="userForm" (ngSubmit)="login()">
       <div class="auth_form_field">
-        <div class="input-field">
+        <div
+          class="input-field"
+          [ngClass]="{
+            'is-invalid': isFormSubmitted && userForm.controls.username.errors
+          }"
+        >
           <input
             type="email"
             name="username"
@@ -21,9 +26,26 @@
             formControlName="username"
           />
         </div>
+        <!-- Error -->
+        <div
+          class="input_error"
+          *ngIf="isFormSubmitted && userForm.controls.username.errors"
+        >
+          <small *ngIf="userForm.controls.username.errors.required"
+            >Username is required</small
+          >
+          <!-- <small *ngIf="userForm.controls.email.errors.email"
+            >Email is invalid</small
+          > -->
+        </div>
       </div>
       <div class="auth_form_field">
-        <div class="input-field dis-flex">
+        <div
+          class="input-field dis-flex"
+          [ngClass]="{
+            'is-invalid': isFormSubmitted && userForm.controls.password.errors
+          }"
+        >
           <input
             [type]="hide ? 'password' : 'text'"
             name="password"
@@ -36,6 +58,18 @@
             class="hide-icon"
             (click)="hide = !hide"
           />
+        </div>
+        <!-- Error -->
+        <div
+          class="input_error"
+          *ngIf="isFormSubmitted && userForm.controls.password.errors"
+        >
+          <small *ngIf="userForm.controls.password.errors.required"
+            >Password is required</small
+          >
+          <small *ngIf="userForm.controls.password.errors.Length"
+            >Your password must be at least 6 characters</small
+          >
         </div>
       </div>
       <div class="auth_form_field forgot-password dis-flex">

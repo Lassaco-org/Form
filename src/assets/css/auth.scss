@@ -19,13 +19,13 @@
             @include form-controls;
             &_field {
                 .input-field {
-                    &_error {
-                        text-align: left;
-                        color: red;
-                    }
                     &.is-invalid {
                         border: 1px solid red;
                     }
+                }
+                .input_error {
+                    text-align: left;
+                    color: red;
                 }
                 &.forgot-password {
                     justify-content: space-between;

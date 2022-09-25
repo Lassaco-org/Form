@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   userForm: any = FormGroup;
   hide: boolean = true;
   alertColor: string = '';
+  isFormSubmitted: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -27,14 +28,24 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // User form
     this.userForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   login() {
     // Start loading
     this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
 
     this.authService
       .loginUser(this.userForm.value)
