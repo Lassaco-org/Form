@@ -1,33 +1,27 @@
 //-- Colors starts --//
 
-// Primary starts
-$primary100: #000F2D;
-// Primary ends
-
-// Secondary starts
+$blue: #000F2D;
+$blue80: rgba(0, 15, 45, 0.8);
+$blue50: rgba(0, 15, 45, 0.5);
+$blue40: rgba(0, 15, 45, 0.4);
+$orange: #F38704;
+$orange80: rgba(243, 135, 4, 0.4);
+$orange40: rgba(243, 135, 4, 0.2);
 $secondary100: #00B4CB;
-// Secondary ends
-
-// Error starts
+$black: #000716;
+$black5: rgba(0, 7, 22, 0.05);
 $error100: #e92c2c;
-// Error ends
-
-// Success starts
 $success100: #039855;
-// Success ends
-
-// Warning starts
 $warning100: #FACC15;
-// Warning ends
+
 
 $text-color1: #141414;
 $text-color2: #52525B;
 $text-color3: #949494;
-$orange100: #F38704;
 
 $grey1: #979797;
 $grey2: #F1F1F1;
-$grey40: #F9FAFB;
+$grey3: #000F2D0D;
 $grey60: #EAECF0;
 
 $inner-border: #CFCFD4;
@@ -38,7 +32,7 @@ $brightyellow: #F3C019;
 //-- Colors ends --//
 
 //-- Box shadow starts --//
-$box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+$box-shadow1: 0px 8px 20px rgba(0, 0, 0, 0.08);
 $box-shadow2: 4px 4px 40px rgba(112, 144, 176, 0.1);
 //-- Box shadow ends --//
 

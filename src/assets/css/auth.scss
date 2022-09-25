@@ -1,0 +1,48 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+
+.auth {
+    width: 100%;
+    display: flex;
+    padding: 0 5%;
+    &_container {
+        margin: $s-6 auto;
+        width: 100%;
+        max-width: 350px;
+        text-align: center;
+        .auth_header {
+            p {
+                margin-top: $s-1;
+            }
+        }
+        .auth_form {
+            @include form-controls;
+            &_field {
+                .input-field {
+                    &_error {
+                        text-align: left;
+                        color: red;
+                    }
+                    &.is-invalid {
+                        border: 1px solid red;
+                    }
+                }
+                &.forgot-password {
+                    justify-content: space-between;
+                    gap: $s-2;
+                    flex-wrap: wrap;
+                    p {
+                        color: $orange;
+                    }
+                }
+            }
+        }
+        .auth_others {
+            margin-top: $s-4;
+            span {
+                color: $secondary100;
+            }
+        }
+        
+    }
+}

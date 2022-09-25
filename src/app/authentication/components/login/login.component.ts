@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 // import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -35,12 +35,6 @@ export class LoginComponent implements OnInit {
   login() {
     // Start loading
     this.loading = true;
-
-    let payload = {
-      username: 'admin@formapp.com',
-      password: 'Admin@1234',
-    };
-    console.log(this.userForm.value);
 
     this.authService
       .loginUser(this.userForm.value)

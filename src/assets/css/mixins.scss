@@ -1,0 +1,56 @@
+@import './variables.scss';
+
+@mixin card($value, $auto: auto-fill) {
+  display: grid;
+  grid-gap: $s-4;
+  @media only screen and (min-width: 450px) {
+    grid-template-columns: repeat($auto, minmax($value, 1fr));
+  }
+}
+
+@mixin icon-area($size, $color: transparent) {
+    display: inline-grid;
+    place-items: center;
+    min-width: $size;
+    height: $size;
+    border: 1px solid $color;
+    background: $color;
+    border-radius: 50%;
+  }
+
+@mixin form-controls {
+  margin: $s-2 0;
+  display: grid;
+  grid-gap: $s-2;
+  label {
+    display: block;
+    margin-bottom: $s-1;
+  }
+  &_field {
+    .input-field {
+      width: 100%;
+      border: 1px solid $grey2;
+      border-radius: 8px;
+      input {
+        width: 100%;
+        padding: $s-2;
+        border-radius: 8px;
+        border: none;
+        background-color: none;
+        outline: none;
+        &::placeholder {
+          color: $grey1;
+        }
+      }
+      .hide-icon {
+        width: 47px;
+        padding: $s-2;
+      }
+    }
+  }
+  &_btns {
+    .btn {
+      width: 100%;
+    }
+  }
+}

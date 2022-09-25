@@ -1,0 +1,8 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.main_header {
+    gap: $s-2;
+    justify-content: space-between;
+    
+}

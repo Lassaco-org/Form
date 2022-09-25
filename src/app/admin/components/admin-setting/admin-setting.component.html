@@ -1,0 +1,60 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
+<section class="main_header dis-flex">
+  <div class="breadcrumb">
+    <h2>Account Settings</h2>
+  </div>
+</section>
+
+<form class="auth_form" [formGroup]="userForm">
+  <div class="auth_form_field">
+    <label for="oldPassword">Old Password</label>
+    <div class="input-field dis-flex">
+      <input
+        [type]="hide ? 'password' : 'text'"
+        name="oldPassword"
+        placeholder="Enter Old Password"
+        formControlName="oldPassword"
+      />
+      <img
+        src="../../../../assets/img/svg/akar-icons_eye-open.svg"
+        alt="image"
+        class="hide-icon"
+        (click)="hide = !hide"
+      />
+    </div>
+  </div>
+  <div class="auth_form_field">
+    <label for="newPassword">New Password</label>
+    <div class="input-field dis-flex">
+      <input
+        [type]="hide ? 'password' : 'text'"
+        name="newPassword"
+        placeholder="Enter New Password"
+        formControlName="newPassword"
+      />
+      <img
+        src="../../../../assets/img/svg/akar-icons_eye-open.svg"
+        alt="image"
+        class="hide-icon"
+        (click)="hide = !hide"
+      />
+    </div>
+  </div>
+
+  <div class="auth_form_btns">
+    <button class="btn prim_btn" *ngIf="!loading" (click)="updatePassword()">
+      Save
+    </button>
+    <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
+      <span class="loading-spinner">
+        <div class="spinner-3"></div>
+      </span>
+    </button>
+  </div>
+</form>

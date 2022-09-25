@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../authentication/services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,13 +6,21 @@ import { AuthService } from '../authentication/services/auth.service';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  user: any;
+  hamClick: any;
 
-  constructor(private authService: AuthService) {}
+  navLinks: any;
 
-  ngOnInit(): void {
-    // Get user details
-    let userData = this.authService.getUserFromLocalStorage();
-    this.user = userData.user;
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  // Open Menu
+  openMenu() {
+    this.hamClick = !this.hamClick;
+  }
+
+  // Close Menu
+  closeMenu() {
+    this.hamClick = false;
   }
 }

@@ -5,16 +5,15 @@ import { first } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
+  selector: 'app-admin-setting',
+  templateUrl: './admin-setting.component.html',
+  styleUrls: ['./admin-setting.component.scss'],
 })
-export class ForgotPasswordComponent implements OnInit {
+export class AdminSettingComponent implements OnInit {
   loading: boolean = false;
   alertMessage: string = '';
   isAlert: boolean = false;
   userForm: any = FormGroup;
-  isFormSubmitted: boolean = false;
   hide: boolean = true;
   alertColor: string = '';
 
@@ -27,39 +26,43 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit(): void {
     // User form
     this.userForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
     });
   }
 
-  // Forgot Password
-  forgotPassword() {
+  // // Verify Email
+  // verifyEmail() {
+  //   let payload = {
+  //     token: '8476485',
+  //   };
+  //   this.authService.verifyEmail(payload).subscribe((res: any) => {
+  //     console.log(res);
+  //   });
+  // }
+
+  updatePassword() {
     // Start loading
     this.loading = true;
 
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-
     this.authService
-      .requestPasswordReset(this.userForm.value.email)
+      .changePassword(this.userForm.value)
       .pipe(first())
       .subscribe({
         next: (res: any) => {
-          this.showAlert(res.message, 'success');
+          // If status is true
+          if (res.message === 'Password changed successfully') {
+            this.showAlert(res.message, 'success');
 
-          setTimeout(() => {
-            // Route user
-            this.router.navigate(['/auth/reset-password']);
-          }, 2000);
+            // Stop loading
+            this.loading = false;
+
+            // Reset form
+            this.userForm.reset();
+          }
         },
         error: (e) => {
-          console.error(e);
+          console.error(e.message);
 
           // Show error message
           this.showAlert(e.message, 'error');

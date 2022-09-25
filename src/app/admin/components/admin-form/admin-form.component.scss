@@ -1,0 +1,43 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+@import '../../../../assets/css/dash.scss';
+
+.forms {
+    &_list {
+        @include card($value: 300px);
+        &_item {
+            padding: $s-2;
+            box-shadow: $box-shadow1;
+            border-radius: $border-radius4;
+            .image {
+                width: 100%;
+                height: 200px;
+                border-radius: $border-radius3;
+            }
+            .details {
+                margin-top: $s-2;
+                display: grid;
+                grid-gap: $s-2;
+                &_header,
+                &_action {
+                    gap: $s-2;
+                    justify-content: space-between;
+                }
+                &_header {
+                    .date {
+                        color: #413DEE;
+                        background: rgba(65, 61, 238, 0.1);
+                        border-radius: $border-radius1;
+                        padding: $s-1;
+                    }
+                }
+                &_title {
+
+                }
+                &_action {
+
+                }
+            }
+        }
+    }
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -45,7 +45,9 @@ export class ResetPasswordComponent implements OnInit {
 
           this.showAlert(res.message, 'success');
 
-          this.router.navigate(['/auth/login']);
+          setTimeout(() => {
+            this.router.navigate(['/auth/login']);
+          }, 2000);
         },
         error: (e) => {
           console.error(e);
