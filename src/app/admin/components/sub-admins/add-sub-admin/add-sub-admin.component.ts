@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AdminService } from 'src/app/admin/services/admin.service';
 
 @Component({
-  selector: 'app-add-admin-user',
-  templateUrl: './add-admin-user.component.html',
-  styleUrls: ['./add-admin-user.component.scss'],
+  selector: 'app-add-sub-admin',
+  templateUrl: './add-sub-admin.component.html',
+  styleUrls: ['./add-sub-admin.component.scss'],
 })
-export class AddAdminUserComponent implements OnInit {
+export class AddSubAdminComponent implements OnInit {
   loading: boolean = false;
   alertMessage: string = '';
   isAlert: boolean = false;
@@ -19,7 +19,7 @@ export class AddAdminUserComponent implements OnInit {
   isFormSubmitted: boolean = false;
 
   constructor(
-    private authService: AuthService,
+    private adminService: AdminService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
@@ -30,43 +30,29 @@ export class AddAdminUserComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      // password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  validateForm() {
-    // Start loading
-    this.loading = true;
-
-    // Set submitted to true
-    this.isFormSubmitted = true;
-
-    // If Form is invalid
-    if (this.userForm.invalid) {
-      this.loading = false;
-
-      return;
-    }
-  }
-
-  addAndCloseUser() {
+  addAndCloseAdmin() {
     this.validateForm();
 
-    this.authService
-      .createUser(this.userForm.value)
+    this.adminService
+      .createAdmin(this.userForm.value)
       .pipe(first())
       .subscribe({
         next: (res: any) => {
           // If status is true
-          if (res.message === 'Account created successfully.') {
+          if (res.message === 'Admin added successfully') {
             this.showAlert(res.message, 'success');
 
             // Stop loading
             this.loading = false;
 
             // Route to display
-            this.router.navigate(['admin/users']);
+            setTimeout(() => {
+              this.router.navigate(['admin/display-admins']);
+            }, 3000);
           }
         },
         error: (e) => {
@@ -81,11 +67,11 @@ export class AddAdminUserComponent implements OnInit {
       });
   }
 
-  addAndNewUser() {
+  addAndNewAdmin() {
     this.validateForm();
 
-    this.authService
-      .createUser(this.userForm.value)
+    this.adminService
+      .createAdmin(this.userForm.value)
       .pipe(first())
       .subscribe({
         next: (res: any) => {
@@ -112,6 +98,21 @@ export class AddAdminUserComponent implements OnInit {
       });
   }
 
+  // Validate form
+  validateForm() {
+    // Start loading
+    this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
+  }
   // Show alert
   showAlert(message: string, color: string) {
     // Set message

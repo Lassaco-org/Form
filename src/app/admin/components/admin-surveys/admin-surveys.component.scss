@@ -2,7 +2,7 @@
 @import '../../../../assets/css/mixins.scss';
 @import '../../../../assets/css/dash.scss';
 
-.forms {
+.surveys {
     &_list {
         @include card($value: 300px);
         &_item {

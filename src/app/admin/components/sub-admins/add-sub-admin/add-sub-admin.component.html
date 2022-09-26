@@ -7,11 +7,13 @@
 
 <section class="main_header dis-flex">
   <div class="breadcrumb dis-flex">
-    <h2 class="clickable" routerLink="/admin/users">Users</h2>
+    <h2 class="clickable" routerLink="/admin/display-admins">Admins</h2>
     >
-    <p>Add user</p>
+    <p>Add Admin</p>
   </div>
-  <button class="btn prim_btn" routerLink="/admin/users">Go Back</button>
+  <button class="btn prim_btn" routerLink="/admin/display-admins">
+    Go Back
+  </button>
 </section>
 
 <section>
@@ -95,32 +97,7 @@
         >
       </div>
     </div>
-    <div class="auth_form_field">
-      <label for="phone">Phone Number</label>
-      <div
-        class="input-field dis-flex"
-        [ngClass]="{
-          'is-invalid': isFormSubmitted && userForm.controls.phone.errors
-        }"
-      >
-        <input
-          type="text"
-          name="phone"
-          placeholder="Enter Phone Number"
-          formControlName="phone"
-        />
-      </div>
-      <!-- Error -->
-      <div
-        class="input_error"
-        *ngIf="isFormSubmitted && userForm.controls.phone.errors"
-      >
-        <small *ngIf="userForm.controls.phone.errors.required"
-          >Phone Number is required</small
-        >
-      </div>
-    </div>
-    <div class="auth_form_field">
+    <!-- <div class="auth_form_field">
       <label for="password">Password</label>
       <div
         class="input-field dis-flex"
@@ -141,7 +118,6 @@
           (click)="hide = !hide"
         />
       </div>
-      <!-- Error -->
       <div
         class="input_error"
         *ngIf="isFormSubmitted && userForm.controls.password.errors"
@@ -153,13 +129,17 @@
           >Your password must be at least 6 characters</small
         >
       </div>
-    </div>
+    </div> -->
 
     <div class="auth_form_btns dis-flex">
-      <button class="btn prim_btn" *ngIf="!loading" (click)="addAndCloseUser()">
+      <button
+        class="btn prim_btn"
+        *ngIf="!loading"
+        (click)="addAndCloseAdmin()"
+      >
         Create and Close
       </button>
-      <button class="btn prim_btn" *ngIf="!loading" (click)="addAndNewUser()">
+      <button class="btn prim_btn" *ngIf="!loading" (click)="addAndNewAdmin()">
         Create and New
       </button>
       <button class="btn load_btn" *ngIf="loading" [disabled]="loading">

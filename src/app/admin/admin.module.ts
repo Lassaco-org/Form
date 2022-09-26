@@ -7,19 +7,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
 import { SharedModule } from '../shared/shared.module';
-import { AdminFormComponent } from './components/admin-form/admin-form.component';
 import { AdminSettingComponent } from './components/admin-setting/admin-setting.component';
-import { DisplayAdminUsersComponent } from './components/admin-users/display-admin-users/display-admin-users.component';
-import { AddAdminUserComponent } from './components/admin-users/add-admin-user/add-admin-user.component';
+import { AdminSurveysComponent } from './components/admin-surveys/admin-surveys.component';
+import { DisplaySubAdminsComponent } from './components/sub-admins/display-sub-admins/display-sub-admins.component';
+import { AddSubAdminComponent } from './components/sub-admins/add-sub-admin/add-sub-admin.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     AdminOverviewComponent,
-    AdminFormComponent,
     AdminSettingComponent,
-    DisplayAdminUsersComponent,
-    AddAdminUserComponent,
+    AdminSurveysComponent,
+    DisplaySubAdminsComponent,
+    AddSubAdminComponent,
   ],
   imports: [
     CommonModule,

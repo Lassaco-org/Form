@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { AdminFormComponent } from './components/admin-form/admin-form.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
 import { AdminSettingComponent } from './components/admin-setting/admin-setting.component';
-import { AddAdminUserComponent } from './components/admin-users/add-admin-user/add-admin-user.component';
-import { DisplayAdminUsersComponent } from './components/admin-users/display-admin-users/display-admin-users.component';
+import { AdminSurveysComponent } from './components/admin-surveys/admin-surveys.component';
+import { AddSubAdminComponent } from './components/sub-admins/add-sub-admin/add-sub-admin.component';
+import { DisplaySubAdminsComponent } from './components/sub-admins/display-sub-admins/display-sub-admins.component';
 
 const routes: Routes = [
   {
@@ -21,26 +21,26 @@ const routes: Routes = [
         },
       },
       {
-        path: 'forms',
-        component: AdminFormComponent,
+        path: 'surveys',
+        component: AdminSurveysComponent,
         data: {
-          title: 'Forms',
+          title: 'Surveys',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'users',
-        component: DisplayAdminUsersComponent,
+        path: 'display-admins',
+        component: DisplaySubAdminsComponent,
         data: {
-          title: 'Users',
+          title: 'All Admins',
           description: 'Description Meta Tag Content',
         },
       },
       {
-        path: 'add-user',
-        component: AddAdminUserComponent,
+        path: 'add-admin',
+        component: AddSubAdminComponent,
         data: {
-          title: 'Users',
+          title: 'All Admins',
           description: 'Description Meta Tag Content',
         },
       },

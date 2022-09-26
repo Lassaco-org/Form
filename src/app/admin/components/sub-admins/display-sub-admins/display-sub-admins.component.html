@@ -1,0 +1,53 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
+<section class="main_header dis-flex">
+  <div class="breadcrumb">
+    <h2>Admins</h2>
+  </div>
+  <div class="btns">
+    <button class="btn prim_btn" routerLink="/admin/add-admin">
+      Add admin
+    </button>
+  </div>
+</section>
+
+<section class="all-admins">
+  <div class="table-container">
+    <table>
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Total Surveys</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      <tr class="table-body" *ngFor="let i of allAdmins">
+        <ng-container *ngIf="i.type === 'admin'">
+          <td>{{ i.firstName + " " + i.lastName }}</td>
+          <td>{{ i.email }}</td>
+          <td>0</td>
+          <td>{{ i.status }}</td>
+          <td class="action dis-flex">
+            <button
+              type="button"
+              class="btn suspend-btn"
+              (click)="updateAccountStatus(i)"
+            >
+              <span *ngIf="i.status === 'active'">Suspend</span>
+              <span *ngIf="i.status === 'inactive'">Unsuspend</span>
+            </button>
+          </td>
+        </ng-container>
+      </tr>
+    </table>
+  </div>
+  <!-- Data Loading -->
+  <span class="loading-spinner" *ngIf="dataLoading">
+    <div class="spinner-3"></div>
+  </span>
+</section>
