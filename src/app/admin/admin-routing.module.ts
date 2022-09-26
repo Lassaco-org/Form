@@ -4,6 +4,8 @@ import { AdminComponent } from './admin.component';
 import { AdminFormComponent } from './components/admin-form/admin-form.component';
 import { AdminOverviewComponent } from './components/admin-overview/admin-overview.component';
 import { AdminSettingComponent } from './components/admin-setting/admin-setting.component';
+import { AddAdminUserComponent } from './components/admin-users/add-admin-user/add-admin-user.component';
+import { DisplayAdminUsersComponent } from './components/admin-users/display-admin-users/display-admin-users.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,22 @@ const routes: Routes = [
         component: AdminFormComponent,
         data: {
           title: 'Forms',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'users',
+        component: DisplayAdminUsersComponent,
+        data: {
+          title: 'Users',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'add-user',
+        component: AddAdminUserComponent,
+        data: {
+          title: 'Users',
           description: 'Description Meta Tag Content',
         },
       },

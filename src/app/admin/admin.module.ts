@@ -9,9 +9,18 @@ import { AdminOverviewComponent } from './components/admin-overview/admin-overvi
 import { SharedModule } from '../shared/shared.module';
 import { AdminFormComponent } from './components/admin-form/admin-form.component';
 import { AdminSettingComponent } from './components/admin-setting/admin-setting.component';
+import { DisplayAdminUsersComponent } from './components/admin-users/display-admin-users/display-admin-users.component';
+import { AddAdminUserComponent } from './components/admin-users/add-admin-user/add-admin-user.component';
 
 @NgModule({
-  declarations: [AdminComponent, AdminOverviewComponent, AdminFormComponent, AdminSettingComponent],
+  declarations: [
+    AdminComponent,
+    AdminOverviewComponent,
+    AdminFormComponent,
+    AdminSettingComponent,
+    DisplayAdminUsersComponent,
+    AddAdminUserComponent,
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

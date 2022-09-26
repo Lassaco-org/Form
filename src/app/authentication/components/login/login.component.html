@@ -73,18 +73,16 @@
         </div>
       </div>
       <div class="auth_form_field forgot-password dis-flex">
-        <label class="">
+        <!-- <label class="">
           <input type="checkbox" placeholder="Password" />
           Remember Me
-        </label>
+        </label> -->
         <p class="clickable hover-1" routerLink="/auth/forgot-password">
           Forgot Password
         </p>
       </div>
       <div class="auth_form_btns">
-        <button class="btn prim_btn" (click)="login()" *ngIf="!loading">
-          Sign In
-        </button>
+        <button class="btn prim_btn" *ngIf="!loading">Sign In</button>
         <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
           <span class="loading-spinner">
             <div class="spinner-3"></div>
@@ -92,10 +90,10 @@
         </button>
       </div>
     </form>
-    <div class="auth_others">
+    <!-- <div class="auth_others">
       <p>
         Don’t have an account? <span class="clickable hover-1">Create One</span>
       </p>
-    </div>
+    </div> -->
   </div>
 </section>

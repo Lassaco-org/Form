@@ -1,0 +1,11 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dash.scss';
+
+.auth_form {
+    max-width: 500px;
+    @include form-controls;
+    &_btns {
+       gap: $s-2;
+    }
+}

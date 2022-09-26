@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IAuth } from '../interfaces/auth';
@@ -11,7 +12,7 @@ export class AuthService {
   baseUrl: string = environment.baseUrl;
   userData: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   // Is logged In
   isLoggedIn() {
@@ -54,7 +55,20 @@ export class AuthService {
     );
   }
 
-  // Get Users
+  // Create user
+  createUser(data: any): Observable<IAuth> {
+    return this.http.post<IAuth>(`${this.baseUrl}auth/register`, data).pipe(
+      switchMap((res: any) => {
+        console.log(`User created successfully`, res);
+        return of(res);
+      }),
+      catchError((err: any) => {
+        return throwError(() => new Error(err.error.message));
+      })
+    );
+  }
+
+  // Login user
   loginUser(data: any): Observable<IAuth> {
     return this.http.post<IAuth>(`${this.baseUrl}auth/login`, data).pipe(
       switchMap((res: any) => {
@@ -146,6 +160,18 @@ export class AuthService {
           return throwError(() => new Error(err.error.message));
         })
       );
+  }
+
+  // Log Out
+  logOut() {
+    // Remove token
+    localStorage.removeItem('token');
+
+    // Remove User data
+    localStorage.removeItem('data');
+
+    // Route user back to login
+    this.router.navigate(['auth/login']);
   }
 
   // Get HttpOptions

@@ -18,17 +18,8 @@
         .auth_form {
             @include form-controls;
             &_field {
-                .input-field {
-                    &.is-invalid {
-                        border: 1px solid red;
-                    }
-                }
-                .input_error {
-                    text-align: left;
-                    color: red;
-                }
                 &.forgot-password {
-                    justify-content: space-between;
+                    justify-content: flex-end;
                     gap: $s-2;
                     flex-wrap: wrap;
                     p {

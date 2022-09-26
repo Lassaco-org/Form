@@ -4,5 +4,9 @@
 .main_header {
     gap: $s-2;
     justify-content: space-between;
-    
+    margin-bottom: $s-3;
+    .breadcrumb {
+        gap: $s-1;
+        align-items: center;
+    }
 }

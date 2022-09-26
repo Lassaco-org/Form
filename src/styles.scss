@@ -89,8 +89,6 @@ textarea::placeholder {
   color: $blue;
   border: 2px solid $blue;
 }
-.load_btn:hover {
-}
 
 /* Buttons ends */
 
@@ -146,9 +144,21 @@ textarea::placeholder {
 p {
   font-weight: 400;
   font-size: 16px;
-  line-height: 32px;
+  // line-height: 32px;
 }
 /* Headings ends */
+
+// Error starts //
+.input-field {
+  &.is-invalid {
+      border: 1px solid red !important;
+  }
+}
+.input_error {
+  text-align: left;
+  color: red;
+}
+// Error ends //
 
 
 /* Loader starts */

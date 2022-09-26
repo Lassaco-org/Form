@@ -19,6 +19,12 @@
         </span>
         Forms
       </li>
+      <li class="dis-flex" routerLinkActive="active" routerLink="/admin/users">
+        <span class="icon">
+          <img src="../../../../assets/img/svg/people.svg" alt="" />
+        </span>
+        Users
+      </li>
       <li
         class="dis-flex"
         routerLinkActive="active"
@@ -31,4 +37,5 @@
       </li>
     </ul>
   </nav>
+  <p class="clickable" style="margin-top: 3rem" (click)="logOut()">Log Out</p>
 </div>

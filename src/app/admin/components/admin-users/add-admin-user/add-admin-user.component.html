@@ -1,0 +1,172 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
+<section class="main_header dis-flex">
+  <div class="breadcrumb dis-flex">
+    <h2 class="clickable" routerLink="/admin/users">Users</h2>
+    >
+    <p>Add user</p>
+  </div>
+  <button class="btn prim_btn" routerLink="/admin/users">Go Back</button>
+</section>
+
+<section>
+  <h3 style="margin-bottom: 1rem">Create admin to manage forms</h3>
+  <form class="auth_form" [formGroup]="userForm">
+    <div class="auth_form_field">
+      <label for="email">Email Address</label>
+      <div
+        class="input-field dis-flex"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.email.errors
+        }"
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter email address"
+          formControlName="email"
+        />
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.email.errors"
+      >
+        <small *ngIf="userForm.controls.email.errors.required"
+          >Email is required</small
+        >
+        <small *ngIf="userForm.controls.email.errors.email"
+          >Email is badly formatted</small
+        >
+      </div>
+    </div>
+    <div class="auth_form_field">
+      <label for="firstName">First Name</label>
+      <div
+        class="input-field dis-flex"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.firstName.errors
+        }"
+      >
+        <input
+          type="text"
+          name="firstName"
+          placeholder="Enter First Name"
+          formControlName="firstName"
+        />
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.firstName.errors"
+      >
+        <small *ngIf="userForm.controls.firstName.errors.required"
+          >First Name is required</small
+        >
+      </div>
+    </div>
+    <div class="auth_form_field">
+      <label for="lastName">Last Name</label>
+      <div
+        class="input-field dis-flex"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.lastName.errors
+        }"
+      >
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Enter Last Name"
+          formControlName="lastName"
+        />
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.lastName.errors"
+      >
+        <small *ngIf="userForm.controls.lastName.errors.required"
+          >Last Name is required</small
+        >
+      </div>
+    </div>
+    <div class="auth_form_field">
+      <label for="phone">Phone Number</label>
+      <div
+        class="input-field dis-flex"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.phone.errors
+        }"
+      >
+        <input
+          type="text"
+          name="phone"
+          placeholder="Enter Phone Number"
+          formControlName="phone"
+        />
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.phone.errors"
+      >
+        <small *ngIf="userForm.controls.phone.errors.required"
+          >Phone Number is required</small
+        >
+      </div>
+    </div>
+    <div class="auth_form_field">
+      <label for="password">Password</label>
+      <div
+        class="input-field dis-flex"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.password.errors
+        }"
+      >
+        <input
+          [type]="hide ? 'password' : 'text'"
+          name="password"
+          placeholder="Enter Password"
+          formControlName="password"
+        />
+        <img
+          src="../../../../assets/img/svg/akar-icons_eye-open.svg"
+          alt="image"
+          class="hide-icon"
+          (click)="hide = !hide"
+        />
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.password.errors"
+      >
+        <small *ngIf="userForm.controls.password.errors.required"
+          >Password is required</small
+        >
+        <small *ngIf="userForm.controls.password.errors.minLength"
+          >Your password must be at least 6 characters</small
+        >
+      </div>
+    </div>
+
+    <div class="auth_form_btns dis-flex">
+      <button class="btn prim_btn" *ngIf="!loading" (click)="addAndCloseUser()">
+        Create and Close
+      </button>
+      <button class="btn prim_btn" *ngIf="!loading" (click)="addAndNewUser()">
+        Create and New
+      </button>
+      <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
+        <span class="loading-spinner">
+          <div class="spinner-3"></div>
+        </span>
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,39 @@
+<section class="main_header dis-flex">
+  <div class="breadcrumb">
+    <h2>Users</h2>
+  </div>
+  <div class="btns">
+    <button class="btn prim_btn" routerLink="/admin/add-user">Add User</button>
+  </div>
+</section>
+
+<section class="all-users">
+  <table>
+    <tr class="table-header">
+      <th>Name</th>
+      <th>Type</th>
+      <th>Total forms created</th>
+      <th>Action</th>
+    </tr>
+    <ng-container>
+      <tr class="table-body">
+        <td>Aremu David</td>
+        <td>Sub admin</td>
+        <td>5</td>
+        <td class="action dis-flex">
+          <button type="button" class="btn suspend-btn">Suspend</button>
+          <button type="button" class="btn del-btn">Delete</button>
+        </td>
+      </tr>
+      <tr class="table-body">
+        <td>Aremu David</td>
+        <td>Sub admin</td>
+        <td>5</td>
+        <td class="action dis-flex">
+          <button type="button" class="btn suspend-btn">Suspend</button>
+          <button type="button" class="btn del-btn">Delete</button>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+</section>
