@@ -2,7 +2,7 @@
 @import '../../../../assets/css/mixins.scss';
 
 header {
-    padding: $s-1;
+    padding: $s-1 $s-2;
     border-bottom: 1px solid $divider-color;
     .header_container {
         height: 3rem;
