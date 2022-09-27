@@ -9,10 +9,15 @@ import { AuthService } from '../../services/auth.service';
 export class DashboardSidenavComponent implements OnInit {
   @Input() navLinks: any;
   @Output() hamClick: EventEmitter<any> = new EventEmitter();
+  user: any;
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get user details
+    let userData = this.authService.getUserFromLocalStorage();
+    this.user = userData.user;
+  }
 
   closeMenu() {
     this.hamClick.emit();

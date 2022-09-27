@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { AdminService } from 'src/app/admin/services/admin.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-display-sub-admins',
@@ -14,8 +16,13 @@ export class DisplaySubAdminsComponent implements OnInit {
   alertMessage: string = '';
   isAlert: boolean = false;
   alertColor: string = '';
+  user: any;
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Get All Admins
@@ -28,6 +35,14 @@ export class DisplaySubAdminsComponent implements OnInit {
         this.dataLoading = false;
       },
     });
+
+    // Get user details
+    let userData = this.authService.getUserFromLocalStorage();
+    this.user = userData.user;
+    // Prevent Non-Super admin from routing here
+    if (this.user.type !== 'super') {
+      this.router.navigate(['admin']);
+    }
   }
 
   // Suspend Account

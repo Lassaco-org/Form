@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SharedModule } from '../shared/shared.module';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     LoginComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    VerifyEmailComponent,
   ],
   imports: [
     CommonModule,

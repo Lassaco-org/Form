@@ -90,10 +90,13 @@
         </button>
       </div>
     </form>
-    <!-- <div class="auth_others">
+    <div class="auth_others" *ngIf="isNotVerified">
       <p>
-        Don’t have an account? <span class="clickable hover-1">Create One</span>
+        Email not verified?
+        <span class="clickable hover-1" (click)="sendEmailVerificationCode()"
+          >Get code</span
+        >
       </p>
-    </div> -->
+    </div>
   </div>
 </section>

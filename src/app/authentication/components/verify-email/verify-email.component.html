@@ -9,7 +9,7 @@
   <div class="auth_container">
     <div class="auth_header">
       <h3 class="title">Hello 👋🏾</h3>
-      <p>Reset your account password here</p>
+      <p>Enter the code sent to</p>
     </div>
     <form class="auth_form" [formGroup]="userForm">
       <div class="auth_form_field">
@@ -22,7 +22,7 @@
           <input
             type="text"
             name="token"
-            placeholder="Token"
+            placeholder="Enter your Token"
             formControlName="token"
           />
         </div>
@@ -36,40 +36,9 @@
           >
         </div>
       </div>
-      <div class="auth_form_field">
-        <div
-          class="input-field dis-flex"
-          [ngClass]="{
-            'is-invalid':
-              isFormSubmitted && userForm.controls.newPassword.errors
-          }"
-        >
-          <input
-            [type]="hide ? 'password' : 'text'"
-            name="newPassword"
-            placeholder="Password"
-            formControlName="newPassword"
-          />
-          <img
-            src="../../../../assets/img/svg/akar-icons_eye-open.svg"
-            alt="image"
-            class="hide-icon"
-            (click)="hide = !hide"
-          />
-        </div>
-        <!-- Error -->
-        <div
-          class="input_error"
-          *ngIf="isFormSubmitted && userForm.controls.newPassword.errors"
-        >
-          <small *ngIf="userForm.controls.newPassword.errors.required"
-            >Password is required</small
-          >
-        </div>
-      </div>
       <div class="auth_form_btns">
-        <button class="btn prim_btn" (click)="resetPassword()" *ngIf="!loading">
-          Reset Password
+        <button class="btn prim_btn" (click)="verifyEmail()" *ngIf="!loading">
+          Verify Email
         </button>
         <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
           <span class="loading-spinner">
@@ -81,7 +50,7 @@
     <div class="auth_others" *ngIf="isTokenExpired">
       <p>
         If token is expired,
-        <span class="clickable hover-1" routerLink="/auth/forgot-password"
+        <span class="clickable hover-1" (click)="sendEmailVerificationCode()"
           >Get new</span
         >
       </p>

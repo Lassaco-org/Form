@@ -1,40 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-// import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-verify-email',
+  templateUrl: './verify-email.component.html',
+  styleUrls: ['./verify-email.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class VerifyEmailComponent implements OnInit {
   loading: boolean = false;
   alertMessage: string = '';
   isAlert: boolean = false;
   userForm: any = FormGroup;
+  isFormSubmitted: boolean = false;
   hide: boolean = true;
   alertColor: string = '';
-  isFormSubmitted: boolean = false;
-  isNotVerified: boolean = false;
+  isTokenExpired: boolean = false;
+  currentUserEmail: any;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // Get Current Rating Agency ID
+    this.currentUserEmail = this.activatedRoute.snapshot.params;
+    console.log(this.currentUserEmail);
+
     // User form
     this.userForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      token: ['', [Validators.required]],
     });
   }
 
-  login() {
+  // Verify email
+  verifyEmail() {
     // Start loading
     this.loading = true;
 
@@ -49,28 +54,19 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService
-      .loginUser(this.userForm.value)
+      .verifyEmail(this.userForm.value)
       .pipe(first())
       .subscribe({
         next: (res: any) => {
-          // If status is true
-          if (res.message === 'User logged in successfully') {
-            this.showAlert(res.message, 'success');
-            // Set token
-            this.authService.setToken(res.data?.token);
+          this.showAlert(res.message, 'success');
 
-            // Set User data
-            this.authService.addUserDataToLocalStorage(res.data);
-
+          setTimeout(() => {
             // Route user
-            setTimeout(() => {
-              // Route user
-              this.router.navigate(['/admin']);
-            }, 2000);
-          }
+            this.router.navigate(['/auth/login']);
+          }, 2000);
         },
         error: (e) => {
-          console.error(e.message);
+          console.error(e);
 
           // Show error message
           this.showAlert(e.message, 'error');
@@ -79,8 +75,8 @@ export class LoginComponent implements OnInit {
           this.loading = false;
 
           // If not verified
-          if (e.message === 'Email has not been verified') {
-            this.isNotVerified = true;
+          if (e.message === 'This token is invalid or has expired') {
+            this.isTokenExpired = true;
           }
         },
       });
@@ -89,23 +85,17 @@ export class LoginComponent implements OnInit {
   // Get Verification code
   sendEmailVerificationCode() {
     this.authService
-      .requestEmailVerification(this.userForm.value.username)
+      .requestEmailVerification(this.currentUserEmail.email)
       .pipe(first())
       .subscribe({
         next: (res: any) => {
           // If status is true
           this.showAlert(
-            `Verification code sent to ${this.userForm.value.username}`,
+            `Verification code sent to ${this.currentUserEmail.email}`,
             'success'
           );
 
-          // Route user
-          setTimeout(() => {
-            // Route user
-            this.router.navigate([
-              `/auth/verify-email/${this.userForm.value.username}`,
-            ]);
-          }, 3000);
+          this.isTokenExpired = false;
         },
         error: (e) => {
           console.error(e.message);
@@ -128,11 +118,5 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.isAlert = false;
     }, 3000);
-  }
-
-  // Go Back to the previous page
-  goBack() {
-    window.history.go(-1);
-    return false;
   }
 }

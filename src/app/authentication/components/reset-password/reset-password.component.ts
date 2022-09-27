@@ -14,8 +14,10 @@ export class ResetPasswordComponent implements OnInit {
   alertMessage: string = '';
   isAlert: boolean = false;
   userForm: any = FormGroup;
+  isFormSubmitted: boolean = false;
   hide: boolean = true;
   alertColor: string = '';
+  isTokenExpired: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -35,6 +37,16 @@ export class ResetPasswordComponent implements OnInit {
   resetPassword() {
     // Start loading
     this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
 
     this.authService
       .resetPassword(this.userForm.value)
@@ -57,6 +69,11 @@ export class ResetPasswordComponent implements OnInit {
 
           // Set loading to false
           this.loading = false;
+
+          // If not verified
+          if (e.message === 'This token is invalid or has expired') {
+            this.isTokenExpired = true;
+          }
         },
       });
   }

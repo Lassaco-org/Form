@@ -27,6 +27,7 @@
         class="dis-flex"
         routerLinkActive="active"
         routerLink="/admin/display-admins"
+        *ngIf="user.type === 'super'"
       >
         <span class="icon">
           <img src="../../../../assets/img/svg/people.svg" alt="" />

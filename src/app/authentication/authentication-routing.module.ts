@@ -4,25 +4,26 @@ import { AuthenticationComponent } from './authentication.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AuthenticationComponent,
     children: [
-      // {
-      //   path: '',
-      //   component: AuthenticationComponent,
-      //   data: {
-      //     title: 'Auth',
-      //     description: 'Description Meta Tag Content',
-      //   },
-      // },
       {
         path: 'login',
         component: LoginComponent,
         data: {
           title: 'Login',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'verify-email/:email',
+        component: VerifyEmailComponent,
+        data: {
+          title: 'Verify Email',
           description: 'Description Meta Tag Content',
         },
       },

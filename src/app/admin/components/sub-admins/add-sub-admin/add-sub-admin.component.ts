@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { AdminService } from 'src/app/admin/services/admin.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-add-sub-admin',
@@ -17,10 +18,12 @@ export class AddSubAdminComponent implements OnInit {
   hide: boolean = true;
   alertColor: string = '';
   isFormSubmitted: boolean = false;
+  user: any;
 
   constructor(
     private adminService: AdminService,
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -30,8 +33,16 @@ export class AddSubAdminComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      // password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    // Get user details
+    let userData = this.authService.getUserFromLocalStorage();
+    this.user = userData.user;
+    // Prevent Non-Super admin from routing here
+    if (this.user.type !== 'super') {
+      this.router.navigate(['admin']);
+    }
   }
 
   addAndCloseAdmin() {
@@ -76,7 +87,7 @@ export class AddSubAdminComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           // If status is true
-          if (res.message === 'Account created successfully.') {
+          if (res.message === 'Admin added successfully') {
             this.showAlert(res.message, 'success');
 
             // Stop loading
