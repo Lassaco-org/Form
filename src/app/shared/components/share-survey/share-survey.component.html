@@ -1,0 +1,53 @@
+<div class="modal">
+  <div class="modal_area">
+    <span class="modal_area_close" (click)="closeShareModal()">
+      <i class="bx bx-x icon clickable"></i>
+    </span>
+    <div class="modal_area_header">
+      <h3>Share this survey</h3>
+      <p>You can invite anyone to view this survey</p>
+    </div>
+    <form class="auth_form">
+      <div class="auth_form_field">
+        <div
+          class="input-field"
+          [ngClass]="{
+            'is-invalid': isFormSubmitted && userForm.controls.username.errors
+          }"
+        >
+          <input type="email" name="email" placeholder="Email Address" />
+        </div>
+        <!-- Error -->
+        <div
+          class="input_error"
+          *ngIf="isFormSubmitted && userForm.controls.username.errors"
+        >
+          <small *ngIf="userForm.controls.username.errors.required"
+            >Email is required</small
+          >
+          <!-- <small *ngIf="userForm.controls.email.errors.email"
+                >Email is invalid</small
+              > -->
+        </div>
+      </div>
+
+      <div class="auth_form_btns">
+        <button class="btn prim_btn" *ngIf="!loading">Share</button>
+        <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
+          <span class="loading-spinner">
+            <div class="spinner-3"></div>
+          </span>
+        </button>
+      </div>
+    </form>
+    <div class="modal_area_other">
+      <div class="share-link dis-flex clickable">
+        <p>forms.lasaco.co/{{ formId }}</p>
+        <img
+          src="../../../../assets/img/svg/fluent_document-copy-16-regular.svg"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>

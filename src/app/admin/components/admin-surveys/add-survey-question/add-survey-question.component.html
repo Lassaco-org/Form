@@ -1,1 +1,46 @@
-<p>add-survey-question works!</p>
+<section class="main_header dis-flex">
+  <div class="breadcrumb">
+    <h2>Surveys</h2>
+  </div>
+  <div class="btns dis-flex">
+    <button class="btn prim_btn" routerLink="/admin/add-sfa">Preview</button>
+    <button class="btn prim_btn" routerLink="/admin/add-sfa">Save</button>
+  </div>
+</section>
+
+<section>
+  <ul>
+    <li>
+      <p>Create survey</p>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <!-- Surevey frame add (sfa) -->
+  <div class="sfa">
+    <div class="sfa_container">
+      <div class="sfa_header dis-flex">
+        <div class="sfa_header_type">
+          <div class="input-field dis-flex">
+            <input type="text" placeholder="Select Question Type" readonly />
+            <i class="bx bx-chevron-down icon"></i>
+          </div>
+        </div>
+        <div class="sfa_header_actions dis-flex">
+          <label for="required">
+            Required
+            <input type="checkbox" name="" id="required" />
+          </label>
+          <i class="bx bx-trash"></i>
+        </div>
+      </div>
+      <div class="sfa_body"></div>
+    </div>
+    <div class="sfa_other">
+      <div class="add-new">
+        <i class="bx"></i>
+      </div>
+    </div>
+  </div>
+</section>

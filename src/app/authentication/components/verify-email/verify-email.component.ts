@@ -28,9 +28,8 @@ export class VerifyEmailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get Current Rating Agency ID
+    // Get Current user email
     this.currentUserEmail = this.activatedRoute.snapshot.params;
-    console.log(this.currentUserEmail);
 
     // User form
     this.userForm = this.formBuilder.group({

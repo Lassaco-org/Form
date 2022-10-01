@@ -1,0 +1,41 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dash.scss';
+
+.sfa {
+    .sfa_container {
+        padding: $s-2;
+        background: $white-color;
+        border: 1px solid $blue;
+        border-radius: $border-radius2;
+        .sfa_header {
+            border-bottom: 1px solid $grey2;
+            padding-bottom: $s-2;
+            gap: $s-2;
+            justify-content: space-between;
+            &_type {
+                background: $grey2;
+                border-radius: $border-radius2;
+                input {
+                    background: none;
+                    outline: none;
+                    border: none;
+                    width: 100%;
+                    padding: $s-2;
+                    color: $blue;
+                    &::placeholder {
+                        color: $blue;
+                    }
+                }
+                .icon {
+                    font-size: 20px;
+                    padding: 0 $s-2;
+                }
+            }
+    
+        }
+        .sfa_body {
+    
+        }
+    }
+}
