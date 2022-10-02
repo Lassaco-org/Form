@@ -1,0 +1,17 @@
+@import '../../../../../assets/css/variables.scss';
+@import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dash.scss';
+
+.set-info {
+    @media only screen and (min-width: 870px) {
+        margin: 0 $s-6;
+    }
+    &_header {
+        p {
+            margin-top: $s-1;
+        }
+    }
+    .auth_form {
+        @include form-controls();
+    }
+}

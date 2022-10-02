@@ -4,7 +4,7 @@
 
 .auth_form {
     max-width: 500px;
-    @include form-controls;
+    @include form-controls();
     &_btns {
        gap: $s-2;
     }

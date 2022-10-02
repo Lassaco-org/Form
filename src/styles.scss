@@ -45,10 +45,16 @@ select {
   &:-webkit-autofill:active{
       -webkit-box-shadow: 0 0 0 30px white inset !important;
   }
+  &[readonly] {
+    background: $grey2 !important;
+  }
 }
 input::placeholder,
 textarea::placeholder {
   font-family: 'DM Sans', sans-serif;
+}
+textarea {
+  resize: none;
 }
 
 /* Buttons Starts */

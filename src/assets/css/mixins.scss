@@ -9,14 +9,38 @@
 }
 
 @mixin icon-area($size, $color: transparent) {
-    display: inline-grid;
-    place-items: center;
-    min-width: $size;
-    height: $size;
-    border: 1px solid $color;
-    background: $color;
-    border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  min-width: $size;
+  height: $size;
+  border: 1px solid $color;
+  background: $color;
+  border-radius: 50%;
+}
+
+@mixin input-field($bor-col: $grey2, $bac-col: $white-color, $plac-col: $grey1, $inp-col: $text-color1) {
+  width: 100%;
+  border: 1px solid $bor-col;
+  border-radius: $border-radius2;
+  background: $bac-col;
+  input,
+  textarea {
+    width: 100%;
+    padding: $s-2;
+    border-radius: $border-radius2;
+    border: none;
+    background: none;
+    outline: none;
+    color: $inp-col;
+    &::placeholder {
+      color: $plac-col;
+    }
   }
+  .hide-icon {
+    width: 47px;
+    padding: $s-2;
+  }
+}
 
 @mixin form-controls {
   margin: $s-2 0;
@@ -28,24 +52,8 @@
   }
   &_field {
     .input-field {
-      width: 100%;
-      border: 1px solid $grey2;
-      border-radius: 8px;
-      input {
-        width: 100%;
-        padding: $s-2;
-        border-radius: 8px;
-        border: none;
-        background-color: none;
-        outline: none;
-        &::placeholder {
-          color: $grey1;
-        }
-      }
-      .hide-icon {
-        width: 47px;
-        padding: $s-2;
-      }
+      @include input-field();
+      
     }
   }
   &_btns {
