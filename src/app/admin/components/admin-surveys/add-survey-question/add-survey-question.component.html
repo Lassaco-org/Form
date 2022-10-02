@@ -3,8 +3,8 @@
     <h2>Surveys</h2>
   </div>
   <div class="btns dis-flex">
-    <button class="btn prim_btn" routerLink="/admin/add-sfa">Preview</button>
-    <button class="btn prim_btn" routerLink="/admin/add-sfa">Save</button>
+    <button class="btn prim_btn">Preview</button>
+    <button class="btn prim_btn">Save</button>
   </div>
 </section>
 
@@ -51,7 +51,7 @@
           <i class="bx bx-trash icon delete" title="Remove"></i>
         </div>
       </div>
-      <div class="sfa_body" *ngIf="selectedDropdownValue !== ''">
+      <div class="sfa_body" *ngIf="selectedDropdownType !== ''">
         <div class="sfa_body_container">
           <div class="question-field">
             <label for="question">State your question</label>
@@ -65,7 +65,7 @@
               ></textarea>
             </div>
           </div>
-          <ng-container *ngIf="selectedDropdownValue === 'Single Selection'">
+          <ng-container *ngIf="selectedDropdownType === 'Radio'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -101,7 +101,7 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedDropdownValue === 'Multiple Selection'">
+          <ng-container *ngIf="selectedDropdownType === 'Checkbox'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -137,7 +137,7 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedDropdownValue === 'Short Answer'">
+          <ng-container *ngIf="selectedDropdownType === 'Input'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -148,7 +148,7 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedDropdownValue === 'True or False'">
+          <!-- <ng-container *ngIf="selectedDropdownValue === 'boolean'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -159,7 +159,7 @@
                 <span>False</span>
               </div>
             </div>
-          </ng-container>
+          </ng-container> -->
         </div>
       </div>
     </div>
