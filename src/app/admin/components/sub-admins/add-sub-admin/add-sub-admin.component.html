@@ -111,12 +111,12 @@
           placeholder="Enter Password"
           formControlName="password"
         />
-        <img
-          src="../../../../assets/img/svg/akar-icons_eye-open.svg"
-          alt="image"
-          class="hide-icon"
+        <i
+          [class]="
+            hide ? 'bx bx-show clickable icon' : 'bx bx-hide clickable icon'
+          "
           (click)="hide = !hide"
-        />
+        ></i>
       </div>
       <div
         class="input_error"
