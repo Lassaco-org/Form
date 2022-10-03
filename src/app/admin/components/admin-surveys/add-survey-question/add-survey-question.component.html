@@ -11,60 +11,71 @@
 <section>
   <!-- Surevey frame add (sfa) -->
   <div class="sfa">
-    <div class="sfa_container">
+    <div
+      class="sfa_container"
+      *ngFor="let i of questionFields; let questionIndex = index"
+    >
       <div class="sfa_header dis-flex">
-        <div class="sfa_header_type">
-          <div
-            class="input-field dis-flex clickable"
-            (click)="toggleDropdown()"
-          >
+        <div class="sfa_header_question">
+          <div class="input-field">
             <input
               type="text"
-              placeholder="Select Question Type"
-              class="clickable"
-              [(ngModel)]="selectedDropdownValue"
-              readonly
+              id="question"
+              placeholder="State your question"
+              spellcheck="true"
             />
-            <i class="bx bx-chevron-down icon"></i>
-          </div>
-          <div class="dropdown-area" style="overflow: auto" *ngIf="isDropDown">
-            <ul class="dropdown-area_list">
-              <li
-                class="dropdown-area_list_item"
-                *ngFor="let i of questionTypes"
-                (click)="selectItem(i)"
-              >
-                <h5>{{ i.title }}</h5>
-                <p>{{ i.description }}</p>
-              </li>
-            </ul>
           </div>
         </div>
-        <div class="sfa_header_actions dis-flex">
-          <div class="required dis-flex">
-            Required
-            <div class="switch">
-              <input id="switch-1" type="checkbox" class="switch-input" />
-              <label for="switch-1" class="switch-label"></label>
+        <div class="sfa_header_right dis-flex">
+          <div class="sfa_header_right_type">
+            <div
+              class="input-field dis-flex clickable"
+              (click)="toggleDropdown(questionIndex)"
+            >
+              <input
+                type="text"
+                placeholder="Select Question Type"
+                class="clickable"
+                [(ngModel)]="selectedDropdownValue"
+                readonly
+              />
+              <i class="bx bx-chevron-down icon"></i>
+            </div>
+            <div
+              class="dropdown-area"
+              style="overflow: auto"
+              *ngIf="isDropDown"
+            >
+              <ul class="dropdown-area_list">
+                <li
+                  class="dropdown-area_list_item"
+                  *ngFor="let i of questionTypes"
+                  (click)="selectItem(i)"
+                >
+                  <h5>{{ i.title }}</h5>
+                  <p>{{ i.description }}</p>
+                </li>
+              </ul>
             </div>
           </div>
-          <i class="bx bx-trash icon delete" title="Remove"></i>
+          <div class="sfa_header_right_actions dis-flex">
+            <div class="required dis-flex">
+              Required
+              <div class="switch">
+                <input id="switch-1" type="checkbox" class="switch-input" />
+                <label for="switch-1" class="switch-label"></label>
+              </div>
+            </div>
+            <i
+              class="bx bx-trash icon delete"
+              title="Remove"
+              (click)="removeQuestionField(questionIndex)"
+            ></i>
+          </div>
         </div>
       </div>
       <div class="sfa_body" *ngIf="selectedDropdownType !== ''">
         <div class="sfa_body_container">
-          <div class="question-field">
-            <label for="question">State your question</label>
-            <div class="input-field">
-              <textarea
-                name=""
-                id="question"
-                cols="30"
-                rows="3"
-                placeholder="Type here"
-              ></textarea>
-            </div>
-          </div>
           <ng-container *ngIf="selectedDropdownType === 'Radio'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
@@ -72,14 +83,29 @@
                 <p>Users can choose a single option</p>
               </div>
               <ul class="response-field_list">
-                <li class="response-field_list_item dis-flex">
-                  <label for="">1.</label>
+                <li
+                  class="response-field_list_item dis-flex"
+                  *ngFor="
+                    let childItem of i.questionOptionFields;
+                    let optionIndex = index
+                  "
+                >
+                  <label for="">{{ optionIndex + 1 }}.</label>
                   <div class="input-field dis-flex">
-                    <input type="text" />
-                    <i class="bx bx-x icon close"></i>
+                    <input
+                      type="text"
+                      [placeholder]="'Option ' + (optionIndex + 1)"
+                      name="{{ optionIndex }}"
+                    />
+                    <!-- [(ngModel)]="childItem.value"
+                      #questionOption="ngModel" -->
+                    <i
+                      class="bx bx-x icon close"
+                      (click)="removeQuestionOption(questionIndex, optionIndex)"
+                    ></i>
                   </div>
                 </li>
-                <li class="response-field_list_item dis-flex">
+                <!-- <li class="response-field_list_item dis-flex">
                   <label for="">2.</label>
                   <div class="input-field dis-flex">
                     <input type="text" />
@@ -92,10 +118,14 @@
                     <input type="text" />
                     <i class="bx bx-x icon close"></i>
                   </div>
-                </li>
+                </li> -->
               </ul>
               <div class="response-field_other">
-                <span class="add-new clickable" title="Add new option">
+                <span
+                  class="add-new clickable"
+                  title="Add new option"
+                  (click)="addQuestionOption(questionIndex)"
+                >
                   <i class="bx bx-plus icon"></i>
                 </span>
               </div>
@@ -137,7 +167,7 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedDropdownType === 'Input'">
+          <ng-container *ngIf="selectedDropdownType === 'Text'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -164,7 +194,12 @@
       </div>
     </div>
     <div class="sfa_other">
-      <div class="add-new clickable" title="Add new question">
+      <!-- <button class="btn prim_btn">Save</button> -->
+      <div
+        class="add-new clickable"
+        title="Add new question"
+        (click)="addQuestionField()"
+      >
         <i class="bx bx-plus icon"></i>
       </div>
     </div>

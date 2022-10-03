@@ -29,6 +29,51 @@ export class FormService {
       );
   }
 
+  // Get Question Field to localstorage
+  getQuestionFieldFromLocalStorage() {
+    this.userData = localStorage.getItem('survey-question');
+    let data = JSON.parse(this.userData);
+    return data;
+  }
+
+  // Add Question Field to localstorage
+  addQuestionFieldToLocalStorage(data: any): void {
+    let allData = JSON.parse(localStorage.getItem('survey-question') || '[]');
+    allData.push(data);
+    return localStorage.setItem('survey-question', JSON.stringify(allData));
+  }
+
+  // Add Question Field to localstorage
+  removeQuestionFieldToLocalStorage(index: any): void {
+    let allData = JSON.parse(localStorage.getItem('survey-question') || '[]');
+    allData.splice(index, 1);
+    return localStorage.setItem('survey-question', JSON.stringify(allData));
+  }
+
+  // Add Question Field to localstorage
+  addQuestionOptionsFieldToLocalStorage(data: any, questionindex: any): void {
+    let allData = JSON.parse(localStorage.getItem('survey-question') || '[]');
+    allData.push(data);
+    return localStorage.setItem('survey-question', JSON.stringify(data));
+  }
+
+  // Add Question Field to localstorage
+  removeQuestionOptionsFieldToLocalStorage(
+    questionIndex: any,
+    optionIndex: any
+  ): void {
+    let allData = JSON.parse(localStorage.getItem('survey-question') || '[]');
+
+    let questionFields = allData.forEach((e: any, index: any) => {
+      if (index === questionIndex) {
+        e.questionOptionFields.splice(optionIndex, 1);
+      }
+    });
+    // console.log(allData);
+
+    return localStorage.setItem('survey-question', JSON.stringify(allData));
+  }
+
   // Get HttpOptions
   getHttpOptions() {
     const httpOptions = {
