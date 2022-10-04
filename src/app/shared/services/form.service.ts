@@ -51,7 +51,7 @@ export class FormService {
   }
 
   // Add Question Field to localstorage
-  addQuestionOptionsFieldToLocalStorage(data: any, questionindex: any): void {
+  addQuestionOptionsFieldToLocalStorage(data: any): void {
     let allData = JSON.parse(localStorage.getItem('survey-question') || '[]');
     allData.push(data);
     return localStorage.setItem('survey-question', JSON.stringify(data));
@@ -69,7 +69,6 @@ export class FormService {
         e.questionOptionFields.splice(optionIndex, 1);
       }
     });
-    // console.log(allData);
 
     return localStorage.setItem('survey-question', JSON.stringify(allData));
   }

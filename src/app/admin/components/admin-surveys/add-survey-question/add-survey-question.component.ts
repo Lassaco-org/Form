@@ -7,33 +7,27 @@ import { FormService } from 'src/app/shared/services/form.service';
   styleUrls: ['./add-survey-question.component.scss'],
 })
 export class AddSurveyQuestionComponent implements OnInit {
-  isDropDown: boolean = false;
   selectedDropdownValue: string = '';
-  selectedDropdownType: string = 'Radio';
+  selectedDropdownType: string = 'radio';
   questionTypes = [
     {
       id: 1,
       title: 'Single Selection',
-      description: 'Choose the single option',
-      type: 'Radio',
+      description: 'Choose a single option',
+      type: 'radio',
     },
     {
       id: 2,
       title: 'Multiple Selection',
       description: 'Choose multiple options',
-      type: 'Checkbox',
+      type: 'checkbox',
     },
     {
       id: 3,
       title: 'Short Answer',
       description: 'Type your response',
-      type: 'Text',
+      type: 'text',
     },
-    // {
-    //   id: 4,
-    //   title: 'True or False',
-    //   description: 'Decide if a statment is true or false',
-    // },
   ];
   allForms: any;
   questionOptionFields: any[] = [
@@ -50,7 +44,7 @@ export class AddSurveyQuestionComponent implements OnInit {
     this.formService.getForms().subscribe({
       next: (res: any) => {
         this.allForms = res.data.docs;
-        console.log(res);
+        console.log(res.data.docs);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -62,7 +56,9 @@ export class AddSurveyQuestionComponent implements OnInit {
     this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
     if (this.questionFields === null || this.questionFields.length === 0) {
       this.formService.addQuestionFieldToLocalStorage({
+        id: 1,
         value: 'Question 1',
+        type: 'radio',
         questionOptionFields: [
           {
             value: 'Option 1',
@@ -74,34 +70,30 @@ export class AddSurveyQuestionComponent implements OnInit {
     }
   }
 
-  // Toggle Dropdown
-  toggleDropdown(i: any) {
-    this.isDropDown = !this.isDropDown;
-  }
-
   // On Select
-  selectItem(val: any) {
-    // Set selected value
-    this.selectedDropdownValue = val.title;
-    // Set selected type
-    this.selectedDropdownType = val.type;
+  selectItem(val: any, questionField: any) {
+    let payload = {
+      id: questionField.id,
+      value: questionField.value,
+      type: val.type,
+      questionOptionFields: questionField.questionOptionFields,
+    };
 
-    // Close Dropdown on Select
-    this.isDropDown = false;
-  }
-
-  // remove Question option
-  removeQuestionField(i: any) {
-    // this.questionFields.splice(i, 1);
-    this.formService.removeQuestionFieldToLocalStorage(i);
-
+    let allData = this.questionFields.map((s: any) =>
+      s.id !== payload.id ? s : payload
+    );
+    localStorage.removeItem('survey-question');
+    // console.log('users -> ', users);
+    this.formService.addQuestionOptionsFieldToLocalStorage(allData);
     this.ngOnInit();
   }
 
-  // remove Question option
+  // Add Question Field
   addQuestionField() {
     let payload = {
+      id: this.questionFields.length + 1,
       value: `Question ${this.questionFields.length + 1}`,
+      type: 'radio',
       questionOptionFields: [
         {
           value: 'Option 1',
@@ -113,19 +105,24 @@ export class AddSurveyQuestionComponent implements OnInit {
     this.ngOnInit();
   }
 
+  // remove Question Field
+  removeQuestionField(i: any) {
+    // this.questionFields.splice(i, 1);
+    this.formService.removeQuestionFieldToLocalStorage(i);
+
+    this.ngOnInit();
+  }
+
   // Add Question option
-  addQuestionOption(questionindex: any) {
-    this.questionFields.forEach((e: any, index: any) => {
-      if (index === questionindex) {
+  addQuestionOption(questionId: any) {
+    this.questionFields.forEach((e: any) => {
+      if (e.id === questionId) {
         e.questionOptionFields.push({
           value: `Option ${e.questionOptionFields.length + 1}`,
         });
       }
     });
-    this.formService.addQuestionOptionsFieldToLocalStorage(
-      this.questionFields,
-      questionindex
-    );
+    this.formService.addQuestionOptionsFieldToLocalStorage(this.questionFields);
     this.ngOnInit();
   }
 

@@ -96,23 +96,29 @@
                         font-size: 20px;
                         padding: 0 $s-2;
                     }
+                    input {
+                        &:checked + .dropdown-area {
+                            display: block;
+                        }
+                    }
                     // Dropdown 
                     .dropdown-area {
                         position: absolute;
                         width: max-content;
-                        height: 236px;
+                        max-height: 236px;
                         background: $white-color;
                         border: 1px solid $grey2;
                         border-radius: $border-radius2;
                         z-index: 10;
                         overflow-y: auto;
+                        display: none;
                         &_list {
                             &_item {
-                                padding: $s-2 $s-3;
+                                padding: $s-1 $s-3;
                                 cursor: pointer;
                                 p {
                                     color: $blue40;
-                                    margin-top: $s-1;
+                                    margin-top: 0.2rem;
                                 }
                                 &:hover {
                                     background: $grey4;
@@ -206,10 +212,24 @@
         }
     }
     .sfa_other {
-        display: flex;
         justify-content: flex-end;
         margin-top: $s-2;
-        .add-new {
+        gap: $s-1;
+        .add-new-sect {
+            .icon {
+                font-size: 22px;
+                padding: $s-1;
+                transition: all 0.2s ease-in;
+                display: inline-block;
+                cursor: pointer;
+                &:hover {
+                    background-color: $grey2;
+                    border-radius: 50%;
+                }
+            }
+
+        }
+        .add-new-question {
             @include icon-area($size: 35px, $color: $blue);
             .icon {
                 color: $white-color;

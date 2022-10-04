@@ -27,33 +27,34 @@
           </div>
         </div>
         <div class="sfa_header_right dis-flex">
-          <div class="sfa_header_right_type">
-            <div
-              class="input-field dis-flex clickable"
-              (click)="toggleDropdown(questionIndex)"
-            >
+          <div class="sfa_header_right_type" (click)="dropdown.click()">
+            <div class="input-field dis-flex clickable dropdown-btn">
               <input
                 type="text"
                 placeholder="Select Question Type"
                 class="clickable"
-                [(ngModel)]="selectedDropdownValue"
+                [(ngModel)]="i.type"
                 readonly
               />
+              <!-- <p>Select Question Type</p> -->
               <i class="bx bx-chevron-down icon"></i>
             </div>
-            <div
-              class="dropdown-area"
-              style="overflow: auto"
-              *ngIf="isDropDown"
-            >
+            <input
+              type="checkbox"
+              [id]="questionIndex"
+              style="display: none"
+              #dropdown
+            />
+            <div class="dropdown-area" style="overflow: auto">
+              <!-- *ngIf="isDropdown" -->
               <ul class="dropdown-area_list">
                 <li
                   class="dropdown-area_list_item"
-                  *ngFor="let i of questionTypes"
-                  (click)="selectItem(i)"
+                  *ngFor="let questionType of questionTypes"
+                  (click)="selectItem(questionType, i)"
                 >
-                  <h5>{{ i.title }}</h5>
-                  <p>{{ i.description }}</p>
+                  <h5>{{ questionType.title }}</h5>
+                  <p>{{ questionType.description }}</p>
                 </li>
               </ul>
             </div>
@@ -62,8 +63,15 @@
             <div class="required dis-flex">
               Required
               <div class="switch">
-                <input id="switch-1" type="checkbox" class="switch-input" />
-                <label for="switch-1" class="switch-label"></label>
+                <input
+                  [id]="'switch-' + questionIndex"
+                  type="checkbox"
+                  class="switch-input"
+                />
+                <label
+                  [for]="'switch-' + questionIndex"
+                  class="switch-label"
+                ></label>
               </div>
             </div>
             <i
@@ -74,9 +82,9 @@
           </div>
         </div>
       </div>
-      <div class="sfa_body" *ngIf="selectedDropdownType !== ''">
+      <div class="sfa_body" *ngIf="i.type !== ''">
         <div class="sfa_body_container">
-          <ng-container *ngIf="selectedDropdownType === 'Radio'">
+          <ng-container *ngIf="i.type === 'radio'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -124,28 +132,43 @@
                 <span
                   class="add-new clickable"
                   title="Add new option"
-                  (click)="addQuestionOption(questionIndex)"
+                  (click)="addQuestionOption(i.id)"
                 >
                   <i class="bx bx-plus icon"></i>
                 </span>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedDropdownType === 'Checkbox'">
+          <ng-container *ngIf="i.type === 'checkbox'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
                 <p>Users can choose multiple options</p>
               </div>
               <ul class="response-field_list">
-                <li class="response-field_list_item dis-flex">
-                  <label for="">1.</label>
+                <li
+                  class="response-field_list_item dis-flex"
+                  *ngFor="
+                    let childItem of i.questionOptionFields;
+                    let optionIndex = index
+                  "
+                >
+                  <label for="">{{ optionIndex + 1 }}.</label>
                   <div class="input-field dis-flex">
-                    <input type="text" />
-                    <i class="bx bx-x icon close"></i>
+                    <input
+                      type="text"
+                      [placeholder]="'Option ' + (optionIndex + 1)"
+                      name="{{ optionIndex }}"
+                    />
+                    <!-- [(ngModel)]="childItem.value"
+                      #questionOption="ngModel" -->
+                    <i
+                      class="bx bx-x icon close"
+                      (click)="removeQuestionOption(questionIndex, optionIndex)"
+                    ></i>
                   </div>
                 </li>
-                <li class="response-field_list_item dis-flex">
+                <!-- <li class="response-field_list_item dis-flex">
                   <label for="">2.</label>
                   <div class="input-field dis-flex">
                     <input type="text" />
@@ -158,16 +181,20 @@
                     <input type="text" />
                     <i class="bx bx-x icon close"></i>
                   </div>
-                </li>
+                </li> -->
               </ul>
               <div class="response-field_other">
-                <span class="add-new clickable" title="Add new option">
+                <span
+                  class="add-new clickable"
+                  title="Add new option"
+                  (click)="addQuestionOption(i.id)"
+                >
                   <i class="bx bx-plus icon"></i>
                 </span>
               </div>
             </div>
           </ng-container>
-          <ng-container *ngIf="selectedDropdownType === 'Text'">
+          <ng-container *ngIf="i.type === 'text'">
             <div class="response-field">
               <div class="response-field_info dis-flex">
                 <i class="bx bx-info-circle icon"></i>
@@ -193,10 +220,12 @@
         </div>
       </div>
     </div>
-    <div class="sfa_other">
-      <!-- <button class="btn prim_btn">Save</button> -->
+    <div class="sfa_other dis-flex">
+      <div class="add-new-sect" title="Add new section">
+        <i class="bx bx-grid-horizontal icon"></i>
+      </div>
       <div
-        class="add-new clickable"
+        class="add-new-question clickable"
         title="Add new question"
         (click)="addQuestionField()"
       >
