@@ -55,13 +55,21 @@ export class AddSurveyQuestionComponent implements OnInit {
     // Fetch question fields then add new if null
     this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
     if (this.questionFields === null || this.questionFields.length === 0) {
-      this.formService.addQuestionFieldToLocalStorage({
-        id: 1,
-        value: 'Question 1',
-        type: 'radio',
-        questionOptionFields: [
+      this.formService.addSectionToLocalStorage({
+        sectionName: 'Section 1',
+        questions: [
           {
-            value: 'Option 1',
+            id: 1,
+            name: 'Question 1',
+            type: 'radio',
+            options: [
+              {
+                name: 'Option 1',
+              },
+            ],
+            number: '1',
+            required: false,
+            sectionName: '',
           },
         ],
       });
@@ -70,68 +78,120 @@ export class AddSurveyQuestionComponent implements OnInit {
     }
   }
 
-  // On Select
-  selectItem(val: any, questionField: any) {
-    let payload = {
-      id: questionField.id,
-      value: questionField.value,
-      type: val.type,
-      questionOptionFields: questionField.questionOptionFields,
-    };
+  // String.fromCharCode('a'.charCodeAt(0) + 1)
 
-    let allData = this.questionFields.map((s: any) =>
-      s.id !== payload.id ? s : payload
-    );
-    localStorage.removeItem('survey-question');
-    // console.log('users -> ', users);
-    this.formService.addQuestionOptionsFieldToLocalStorage(allData);
+  // On Select
+  selectItem(questionType: any, questionFieldIndex: any, questionIndex: any) {
+    this.questionFields.forEach((e: any, index: any) => {
+      if (index === questionFieldIndex) {
+        e.questions.forEach((o: any, index: any) => {
+          if (index === questionIndex) {
+            o.type = questionType.type;
+
+            this.formService.setItem(this.questionFields);
+            this.ngOnInit();
+          }
+        });
+      }
+    });
+  }
+
+  // Add Section
+  addSection() {
+    let payload = {
+      sectionName: `Section ${this.questionFields.length + 1}`,
+      questions: [
+        {
+          id: 1,
+          name: 'Question 1',
+          type: 'radio',
+          options: [
+            {
+              name: 'Option 1',
+            },
+          ],
+          number: '1',
+          required: false,
+          sectionName: '',
+        },
+      ],
+    };
+    this.formService.addSectionToLocalStorage(payload);
     this.ngOnInit();
   }
 
   // Add Question Field
-  addQuestionField() {
-    let payload = {
-      id: this.questionFields.length + 1,
-      value: `Question ${this.questionFields.length + 1}`,
-      type: 'radio',
-      questionOptionFields: [
-        {
-          value: 'Option 1',
-        },
-      ],
-    };
-    this.formService.addQuestionFieldToLocalStorage(payload);
+  addQuestion(questionFieldIndex: any) {
+    this.questionFields.forEach((e: any, index: any) => {
+      if (index === questionFieldIndex) {
+        e.questions.push({
+          id: e.questions.length + 1,
+          name: `Question ${e.questions.length + 1}`,
+          type: 'radio',
+          options: [
+            {
+              name: 'Option 1',
+            },
+          ],
+          number: `${e.questions.length + 1}`,
+          required: false,
+          sectionName: '',
+        });
 
-    this.ngOnInit();
+        this.formService.setItem(this.questionFields);
+        this.ngOnInit();
+      }
+    });
   }
 
   // remove Question Field
-  removeQuestionField(i: any) {
-    // this.questionFields.splice(i, 1);
-    this.formService.removeQuestionFieldToLocalStorage(i);
-
-    this.ngOnInit();
+  removeQuestionField(questionFieldIndex: any, questionIndex: any) {
+    this.questionFields.forEach((e: any, index: any) => {
+      if (index === questionFieldIndex) {
+        e.questions.splice(questionIndex, 1);
+        this.formService.setItem(this.questionFields);
+        this.ngOnInit();
+      }
+    });
   }
 
   // Add Question option
-  addQuestionOption(questionId: any) {
-    this.questionFields.forEach((e: any) => {
-      if (e.id === questionId) {
-        e.questionOptionFields.push({
-          value: `Option ${e.questionOptionFields.length + 1}`,
+  addQuestionOption(questionFieldIndex: any, questionIndex: any) {
+    this.questionFields.forEach((e: any, index: any) => {
+      if (index === questionFieldIndex) {
+        e.questions.forEach((o: any, index: any) => {
+          if (index === questionIndex) {
+            o.options.push({
+              name: `Option ${o.options.length + 1}`,
+            });
+          }
         });
+        this.formService.setItem(this.questionFields);
+        this.ngOnInit();
       }
     });
-    this.formService.addQuestionOptionsFieldToLocalStorage(this.questionFields);
-    this.ngOnInit();
   }
 
   // remove Question option
-  removeQuestionOption(questionIndex: any, optionIndex: any) {
-    this.formService.removeQuestionOptionsFieldToLocalStorage(
-      questionIndex,
-      optionIndex
-    );
-    this.ngOnInit();
+  removeQuestionOption(
+    questionFieldIndex: any,
+    questionIndex: any,
+    optionIndex: any
+  ) {
+    this.questionFields.forEach((e: any, index: any) => {
+      if (index === questionFieldIndex) {
+        e.questions.forEach((o: any, index: any) => {
+          if (index === questionIndex && o.options.length !== 1) {
+            o.options.splice(optionIndex, 1);
+          }
+        });
+        this.formService.setItem(this.questionFields);
+        this.ngOnInit();
+      }
+    });
+  }
+
+  saveSurvey() {
+    console.log(this.questionFields);
   }
 }

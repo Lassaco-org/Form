@@ -55,125 +55,105 @@
   }
 
 .sfa {
-    .sfa_container {
+    .sfa_section {
         padding: $s-2;
-        background: $white-color;
+        background: $grey2;
         border: 1px solid $blue;
         border-radius: $border-radius2;
         &:not(:last-child) {
             margin-bottom: $s-2;
         }
-        .sfa_header {
-            padding-bottom: $s-2;
-            gap: $s-2;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            @media only screen and (max-width: 805px) {
-                flex-direction: column-reverse;
-                align-items: flex-start;
-                width: 100%;
-                &_question,
-                &_right {
-                    width: 100%;
-                }
-            }
-            // Question
-            &_question {
-                .input-field {
-                    min-width: 400px;
-                    @include input-field($inp-col: $blue, $plac-col: $blue);
-                }
-            }
-            &_right {
-                gap: $s-3;
-                justify-content: space-between;
-                // Type
-                &_type {
-                    @include input-field($bor-col: $grey2, $bac-col: $grey2, $plac-col: $blue, $inp-col: $blue);
-                    width: fit-content;
-                    .icon {
-                        font-size: 20px;
-                        padding: 0 $s-2;
-                    }
-                    input {
-                        &:checked + .dropdown-area {
-                            display: block;
-                        }
-                    }
-                    // Dropdown 
-                    .dropdown-area {
-                        position: absolute;
-                        width: max-content;
-                        max-height: 236px;
-                        background: $white-color;
-                        border: 1px solid $grey2;
-                        border-radius: $border-radius2;
-                        z-index: 10;
-                        overflow-y: auto;
-                        display: none;
-                        &_list {
-                            &_item {
-                                padding: $s-1 $s-3;
-                                cursor: pointer;
-                                p {
-                                    color: $blue40;
-                                    margin-top: 0.2rem;
-                                }
-                                &:hover {
-                                    background: $grey4;
-                                }
-                            }
-                        }
-                    }
-                }    
-                // Actions
-                &_actions {
-                    gap: $s-2;
-                    .icon {
-                        font-size: 20px;
-                        color: $error100;
-                        padding: $s-1;
-                        transition: all 0.2s ease-in;
-                        display: inline-block;
-                        cursor: pointer;
-                        &:hover {
-                            background-color: $grey2;
-                            border-radius: 50%;
-                        }
-                    }
-                }
+        &_title {
+            .input-field {
+                @include input-field();
+                max-width: 300px;
+                border-radius: $border-radius2 $border-radius2 0 0;
+                border-left: 3px solid $blue;
+                border-right: 3px solid $blue;
             }
         }
-        .sfa_body {
-            // margin-top: $s-2;
-            padding: $s-2 10%;
-            border-top: 1px solid $grey2;
-            .response-field {
-                &_info {
-                    color: $grey1;
-                    margin-bottom: $s-1;
-                    .icon {
-                        margin-right: $s-1;
+        .sfa_container {
+            background: $white-color;
+            padding: $s-2;
+            border-radius: 0 $border-radius2 $border-radius2;
+            &:not(:last-child) {
+                margin-bottom: $s-2;
+            }
+            .sfa_header {
+                padding-bottom: $s-2;
+                gap: $s-2;
+                justify-content: space-between;
+                align-items: flex-end;
+                flex-wrap: wrap;
+                @media only screen and (max-width: 805px) {
+                    flex-direction: column-reverse;
+                    align-items: flex-start;
+                    width: 100%;
+                    &_question,
+                    &_right {
+                        width: 100%;
                     }
                 }
-                // List
-                &_list {
-                    display: grid;
-                    grid-gap: $s-1;
-                    &_item {
-                        gap: $s-2;
-                        .input-field {
-                            @include input-field();
-                            input {
-                                padding: 0.7rem;
+                // Question
+                &_question {
+                    .input-field {
+                        @media only screen and (min-width: 500px) {
+                            min-width: 400px;
+                        }
+                        @include input-field($inp-col: $blue, $plac-col: $blue);
+                    }
+                }
+                &_right {
+                    gap: $s-3;
+                    justify-content: space-between;
+                    // Type
+                    &_type {
+                        @include input-field($bor-col: $grey2, $bac-col: $grey2, $plac-col: $blue, $inp-col: $blue);
+                        width: fit-content;
+                        .icon {
+                            font-size: 20px;
+                            padding: 0 $s-2;
+                        }
+                        input {
+                            &:checked + .dropdown-area {
+                                display: block;
                             }
                         }
+                        // Dropdown 
+                        .dropdown-area {
+                            position: absolute;
+                            width: max-content;
+                            max-height: 236px;
+                            background: $white-color;
+                            border: 1px solid $grey2;
+                            border-radius: $border-radius2;
+                            z-index: 10;
+                            overflow-y: auto;
+                            display: none;
+                            &_list {
+                                &_item {
+                                    padding: $s-1 $s-3;
+                                    cursor: pointer;
+                                    p {
+                                        color: $blue40;
+                                        margin-top: 0.2rem;
+                                    }
+                                    &:hover {
+                                        background: $grey4;
+                                    }
+                                }
+                            }
+                        }
+                    }    
+                    // Actions
+                    &_actions {
+                        gap: $s-2;
                         .icon {
                             font-size: 20px;
                             color: $error100;
                             padding: $s-1;
                             transition: all 0.2s ease-in;
+                            display: inline-block;
                             cursor: pointer;
                             &:hover {
                                 background-color: $grey2;
@@ -182,31 +162,86 @@
                         }
                     }
                 }
-                // Input answer
-                &_input {
-                    @include input-field();
-                }
-                // true or false
-                &_decide {
-                    gap: $s-2;
-                    span {
-                        display: inline-block;
-                        padding: $s-1 $s-2;
-                        border: 1px solid $grey2;
-                        border-radius: $border-radius2;
+            }
+            .sfa_body {
+                // margin-top: $s-2;
+                border-top: 1px solid $grey2;
+                &_container {
+                    padding: $s-2 10%;
+                    @media only screen and (max-width: 805px) {
+                        padding: $s-2;
                     }
-                }
-                &_other {
-                    display: flex;
-                    justify-content: flex-end;
-                    margin-top: $s-2;
-                    .add-new {
-                        @include icon-area($size: 24px, $color: $blue);
-                        .icon {
-                            color: $white-color;
-                            font-size: 18px;
+                    .response-field {
+                        &_info {
+                            color: $grey1;
+                            margin-bottom: $s-1;
+                            .icon {
+                                margin-right: $s-1;
+                            }
+                        }
+                        // List
+                        &_list {
+                            display: grid;
+                            grid-gap: $s-1;
+                            &_item {
+                                gap: $s-2;
+                                .input-field {
+                                    @include input-field();
+                                    input {
+                                        padding: 0.7rem;
+                                    }
+                                }
+                                .icon {
+                                    font-size: 20px;
+                                    color: $error100;
+                                    padding: $s-1;
+                                    transition: all 0.2s ease-in;
+                                    cursor: pointer;
+                                    &:hover {
+                                        background-color: $grey2;
+                                        border-radius: 50%;
+                                    }
+                                }
+                            }
+                        }
+                        // Input answer
+                        &_input {
+                            @include input-field();
+                        }
+                        // true or false
+                        &_decide {
+                            gap: $s-2;
+                            span {
+                                display: inline-block;
+                                padding: $s-1 $s-2;
+                                border: 1px solid $grey2;
+                                border-radius: $border-radius2;
+                            }
+                        }
+                        
+                    }
+                    &_other {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-top: $s-2;
+                        .add-new {
+                            @include icon-area($size: 24px, $color: $blue);
+                            .icon {
+                                color: $white-color;
+                                font-size: 18px;
+                            }
                         }
                     }
+                }
+            }
+        }
+        &_other {
+            justify-content: flex-end;
+            .add-new-question {
+                @include icon-area($size: 25px, $color: $blue);
+                .icon {
+                    color: $white-color;
+                    font-size: 20px;
                 }
             }
         }
@@ -214,28 +249,19 @@
     .sfa_other {
         justify-content: flex-end;
         margin-top: $s-2;
-        gap: $s-1;
         .add-new-sect {
+            padding: $s-1;
+            transition: all 0.2s ease-in;
             .icon {
                 font-size: 22px;
-                padding: $s-1;
-                transition: all 0.2s ease-in;
-                display: inline-block;
-                cursor: pointer;
-                &:hover {
-                    background-color: $grey2;
-                    border-radius: 50%;
-                }
+                margin-right: $s-1;
+            }
+            &:hover {
+                background-color: $grey2;
             }
 
         }
-        .add-new-question {
-            @include icon-area($size: 35px, $color: $blue);
-            .icon {
-                color: $white-color;
-                font-size: 20px;
-            }
-        }
+        
     }
 }
 
