@@ -55,11 +55,9 @@ export class AddSurveyQuestionComponent implements OnInit {
     // Fetch question fields then add new if null
     this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
     if (this.questionFields === null || this.questionFields.length === 0) {
-      this.formService.addSectionToLocalStorage({
-        sectionName: 'Section 1',
-        questions: [
+      let payload = {
+        section: [
           {
-            id: 1,
             name: 'Question 1',
             type: 'radio',
             options: [
@@ -72,7 +70,8 @@ export class AddSurveyQuestionComponent implements OnInit {
             sectionName: '',
           },
         ],
-      });
+      };
+      this.formService.addSectionToLocalStorage(payload);
 
       this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
     }
@@ -84,7 +83,7 @@ export class AddSurveyQuestionComponent implements OnInit {
   selectItem(questionType: any, questionFieldIndex: any, questionIndex: any) {
     this.questionFields.forEach((e: any, index: any) => {
       if (index === questionFieldIndex) {
-        e.questions.forEach((o: any, index: any) => {
+        e.forEach((o: any, index: any) => {
           if (index === questionIndex) {
             o.type = questionType.type;
 
@@ -99,10 +98,8 @@ export class AddSurveyQuestionComponent implements OnInit {
   // Add Section
   addSection() {
     let payload = {
-      sectionName: `Section ${this.questionFields.length + 1}`,
-      questions: [
+      section: [
         {
-          id: 1,
           name: 'Question 1',
           type: 'radio',
           options: [
@@ -116,7 +113,15 @@ export class AddSurveyQuestionComponent implements OnInit {
         },
       ],
     };
-    this.formService.addSectionToLocalStorage(payload);
+
+    this.formService.addSectionToLocalStorage(payload.section);
+    this.ngOnInit();
+  }
+
+  // Remove section
+  removeSection(questionFieldIndex: any) {
+    this.questionFields.splice(questionFieldIndex, 1);
+    this.formService.setItem(this.questionFields);
     this.ngOnInit();
   }
 
@@ -124,16 +129,15 @@ export class AddSurveyQuestionComponent implements OnInit {
   addQuestion(questionFieldIndex: any) {
     this.questionFields.forEach((e: any, index: any) => {
       if (index === questionFieldIndex) {
-        e.questions.push({
-          id: e.questions.length + 1,
-          name: `Question ${e.questions.length + 1}`,
+        e.push({
+          name: `Question ${e.length + 1}`,
           type: 'radio',
           options: [
             {
               name: 'Option 1',
             },
           ],
-          number: `${e.questions.length + 1}`,
+          number: `${e.length + 1}`,
           required: false,
           sectionName: '',
         });
@@ -148,8 +152,11 @@ export class AddSurveyQuestionComponent implements OnInit {
   removeQuestionField(questionFieldIndex: any, questionIndex: any) {
     this.questionFields.forEach((e: any, index: any) => {
       if (index === questionFieldIndex) {
-        e.questions.splice(questionIndex, 1);
+        e.splice(questionIndex, 1);
         this.formService.setItem(this.questionFields);
+        if (e.length === 0) {
+          this.removeSection(questionFieldIndex);
+        }
         this.ngOnInit();
       }
     });
@@ -159,7 +166,7 @@ export class AddSurveyQuestionComponent implements OnInit {
   addQuestionOption(questionFieldIndex: any, questionIndex: any) {
     this.questionFields.forEach((e: any, index: any) => {
       if (index === questionFieldIndex) {
-        e.questions.forEach((o: any, index: any) => {
+        e.forEach((o: any, index: any) => {
           if (index === questionIndex) {
             o.options.push({
               name: `Option ${o.options.length + 1}`,
@@ -180,7 +187,7 @@ export class AddSurveyQuestionComponent implements OnInit {
   ) {
     this.questionFields.forEach((e: any, index: any) => {
       if (index === questionFieldIndex) {
-        e.questions.forEach((o: any, index: any) => {
+        e.forEach((o: any, index: any) => {
           if (index === questionIndex && o.options.length !== 1) {
             o.options.splice(optionIndex, 1);
           }
@@ -192,6 +199,23 @@ export class AddSurveyQuestionComponent implements OnInit {
   }
 
   saveSurvey() {
-    console.log(this.questionFields);
+    this.questionFields.forEach((e: any, index: any) => {
+      e.map((questionField: any) => ({
+        '1': questionField[index],
+      }));
+      console.log(this.questionFields);
+    });
+
+    // let payload = {
+    //   titlle: 'Lasaco Survey 1',
+    //   questions: this.questionFields.forEach((s: any) => {
+    //     console.log(s);
+    //     s.map((e: any) => ({
+    //       '1': this.questionFields,
+    //     }));
+    //   }),
+    // };
+    // console.log(payload);
+    // console.log(this.questionFields);
   }
 }

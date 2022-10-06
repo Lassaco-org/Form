@@ -1,0 +1,83 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+
+header {
+    padding: $s-1 $s-2;
+    border-bottom: 1px solid $divider-color;
+    .header_container {
+        height: 3rem;
+        gap: $s-2;
+        justify-content: space-between;
+    }
+}
+
+.sp {
+    max-width: 600px;
+    margin: $s-4 auto;
+    &_header {
+        padding: $s-2;
+        border-radius: $border-radius2;
+        border: 1px solid $blue;
+        margin-bottom: $s-2;
+        color: $blue;
+        p {
+            margin-top: $s-1;
+            padding-top: $s-1;
+            border-top: 1px solid $grey2;
+        }
+    }
+    &_body {
+        padding-top: $s-2;
+        border-top: 1px solid $grey2;
+        &_list {
+            display: grid;
+            grid-gap: $s-2;
+            &_item {
+                padding: $s-2;
+                background: $grey2;
+                border-radius: $border-radius2;
+                transition: all 0.2s;
+                border-left: 3px solid transparent;
+                &:hover {
+                    border-left: 3px solid $blue;
+                }
+                &_response {
+                    margin-top: $s-2;
+                    &_info {
+                        margin-bottom: $s-1;
+                        .icon {
+                            margin-right: $s-1;
+                        }
+                    }
+                    &_options {
+                        display: grid;
+                        grid-gap: $s-1;
+                        li {
+                            border-radius: $border-radius2;
+                            background: $white-color;
+                            transition: all 0.2s;
+                            &.active,
+                            &:hover {
+                                background-color: $blue;
+                                color: $white-color;
+                            }
+                            label {
+                                width: 100%;
+                                padding: $s-1;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    .input-field {
+                        @include input-field();
+                    }
+                }
+            }
+        }
+        &_btns {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: $s-2;
+        }
+    }
+}

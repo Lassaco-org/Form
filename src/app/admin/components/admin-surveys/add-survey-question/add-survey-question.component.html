@@ -3,7 +3,9 @@
     <h2>Surveys</h2>
   </div>
   <div class="btns dis-flex">
-    <button class="btn prim_btn">Preview</button>
+    <button class="btn prim_btn" routerLink="/surveys/id/survey-preview">
+      Preview
+    </button>
     <button class="btn prim_btn" (click)="saveSurvey()">Save</button>
   </div>
 </section>
@@ -23,20 +25,15 @@
           <input
             type="text"
             [id]="questionFieldIndex"
-            [placeholder]="questionField.sectionName"
+            placeholder="Section Title"
             name="{{ questionFieldIndex }}"
-            [(ngModel)]="questionField.sectionName"
-            #sectionName="ngModel"
             spellcheck="true"
           />
         </div>
       </div>
       <div
         class="sfa_container"
-        *ngFor="
-          let question of questionField.questions;
-          let questionIndex = index
-        "
+        *ngFor="let question of questionField; let questionIndex = index"
       >
         <div class="sfa_header dis-flex">
           <div class="sfa_header_question">
@@ -91,12 +88,12 @@
                 Required
                 <div class="switch">
                   <input
-                    [id]="'switch-' + questionIndex"
+                    [id]="'switch-' + questionFieldIndex + '-' + questionIndex"
                     type="checkbox"
                     class="switch-input"
                   />
                   <label
-                    [for]="'switch-' + questionIndex"
+                    [for]="'switch-' + questionFieldIndex + '-' + questionIndex"
                     class="switch-label"
                   ></label>
                 </div>
