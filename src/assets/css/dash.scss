@@ -14,5 +14,20 @@
     }
     .btns {
         gap: $s-1;
+        .icon {
+            font-size: 25px;
+            // color: $blue40;
+            padding: $s-1;
+            transition: all 0.2s ease-in;
+            display: inline-block;
+            cursor: pointer;
+            &:hover {
+                background-color: $grey2;
+                border-radius: 50%;
+            }
+        }
+        .btn {
+            margin-left: $s-1;
+        }
     }
 }

@@ -56,20 +56,31 @@ header {
                             border-radius: $border-radius2;
                             background: $white-color;
                             transition: all 0.2s;
-                            &.active,
-                            &:hover {
+                            &.active {
                                 background-color: $blue;
                                 color: $white-color;
+                            }
+                            &:hover {
+                                background-color: $grey4;
                             }
                             label {
                                 width: 100%;
                                 padding: $s-1;
                                 cursor: pointer;
                             }
+                            input {
+                                display: none;
+                                &:checked + label {
+                                    background-color: $blue;
+                                    color: $white-color;
+                                    border-radius: inherit;
+                                }
+                            }
                         }
                     }
                     .input-field {
                         @include input-field();
+                       
                     }
                 }
             }

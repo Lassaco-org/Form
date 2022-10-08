@@ -29,29 +29,19 @@ export class AddSurveyQuestionComponent implements OnInit {
       type: 'text',
     },
   ];
-  allForms: any;
   questionOptionFields: any[] = [
     {
       value: 'Option 1',
     },
   ];
   questionFields: any;
+  alertMessage: string = '';
+  isAlert: boolean = false;
+  alertColor: string = '';
 
   constructor(private formService: FormService) {}
 
   ngOnInit(): void {
-    // Get All Admins
-    this.formService.getForms().subscribe({
-      next: (res: any) => {
-        this.allForms = res.data.docs;
-        console.log(res.data.docs);
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        // this.dataLoading = false;
-      },
-    });
-
     // Fetch question fields then add new if null
     this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
     if (this.questionFields === null || this.questionFields.length === 0) {
@@ -71,7 +61,7 @@ export class AddSurveyQuestionComponent implements OnInit {
           },
         ],
       };
-      this.formService.addSectionToLocalStorage(payload);
+      this.formService.addSectionToLocalStorage(payload.section);
 
       this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
     }
@@ -115,6 +105,8 @@ export class AddSurveyQuestionComponent implements OnInit {
     };
 
     this.formService.addSectionToLocalStorage(payload.section);
+    this.showAlert('Section added', 'success');
+
     this.ngOnInit();
   }
 
@@ -122,6 +114,9 @@ export class AddSurveyQuestionComponent implements OnInit {
   removeSection(questionFieldIndex: any) {
     this.questionFields.splice(questionFieldIndex, 1);
     this.formService.setItem(this.questionFields);
+
+    this.showAlert('Section removed', 'success');
+
     this.ngOnInit();
   }
 
@@ -146,6 +141,8 @@ export class AddSurveyQuestionComponent implements OnInit {
         this.ngOnInit();
       }
     });
+
+    this.showAlert('Question field added', 'success');
   }
 
   // remove Question Field
@@ -157,6 +154,8 @@ export class AddSurveyQuestionComponent implements OnInit {
         if (e.length === 0) {
           this.removeSection(questionFieldIndex);
         }
+        this.showAlert('Question field removed', 'success');
+
         this.ngOnInit();
       }
     });
@@ -174,6 +173,8 @@ export class AddSurveyQuestionComponent implements OnInit {
           }
         });
         this.formService.setItem(this.questionFields);
+        this.showAlert('Option field added', 'success');
+
         this.ngOnInit();
       }
     });
@@ -193,29 +194,85 @@ export class AddSurveyQuestionComponent implements OnInit {
           }
         });
         this.formService.setItem(this.questionFields);
+        this.showAlert('Option removed', 'success');
+
         this.ngOnInit();
       }
     });
   }
 
   saveSurvey() {
-    this.questionFields.forEach((e: any, index: any) => {
-      e.map((questionField: any) => ({
-        '1': questionField[index],
-      }));
-      console.log(this.questionFields);
-    });
-
+    // this.questionFields.forEach((e: any, index: any) => {
+    //   e.map((questionField: any) => ({
+    //     '1': questionField[index],
+    //   }));
+    //   console.log(this.questionFields);
+    // });
     // let payload = {
-    //   titlle: 'Lasaco Survey 1',
-    //   questions: this.questionFields.forEach((s: any) => {
-    //     console.log(s);
-    //     s.map((e: any) => ({
-    //       '1': this.questionFields,
-    //     }));
-    //   }),
+    //   questions: {
+    //     '1': [
+    //       {
+    //         name: 'question 1',
+    //         options: [
+    //           {
+    //             name: 'option 1',
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         name: 'question 2',
+    //         options: [
+    //           {
+    //             name: 'option 1',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //     '2': [
+    //       {
+    //         name: 'question 1',
+    //         options: [
+    //           {
+    //             name: 'option 1 gdhdhd',
+    //           },
+    //           {
+    //             name: 'option 2 dhdhdhd',
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         name: 'question 2',
+    //         options: [
+    //           {
+    //             name: 'option 1',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    //   // titlle: 'Lasaco Survey 1',
+    //   // questions: this.questionFields.forEach((s: any) => {
+    //   //   console.log(s);
+    //   //   s.map((e: any) => ({
+    //   //     '1': this.questionFields,
+    //   //   }));
+    //   // }),
     // };
     // console.log(payload);
     // console.log(this.questionFields);
+  }
+
+  // Show alert
+  showAlert(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }
