@@ -6,6 +6,7 @@ import { DashboardSidenavComponent } from './components/dashboard-sidenav/dashbo
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareSurveyComponent } from './components/share-survey/share-survey.component';
+import { SurveyResponseComponent } from './components/survey-response/survey-response.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ShareSurveyComponent } from './components/share-survey/share-survey.com
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     ShareSurveyComponent,
+    SurveyResponseComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -20,6 +22,7 @@ import { ShareSurveyComponent } from './components/share-survey/share-survey.com
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     ShareSurveyComponent,
+    SurveyResponseComponent,
   ],
 })
 export class SharedModule {}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SurveyPreviewComponent } from './components/survey-preview/survey-preview.component';
+import { UserSurveyComponent } from './components/user-survey/user-survey.component';
 import { DefaultComponent } from './default.component';
 
 const routes: Routes = [
@@ -14,6 +15,14 @@ const routes: Routes = [
         component: HomeComponent,
         data: {
           title: 'Home',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'surveys/:surveyId',
+        component: UserSurveyComponent,
+        data: {
+          title: 'Survey',
           description: 'Description Meta Tag Content',
         },
       },

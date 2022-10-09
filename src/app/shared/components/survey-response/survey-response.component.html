@@ -1,0 +1,78 @@
+<!-- Survey preview -->
+<section class="sp" *ngFor="let survey of surveys">
+  <div class="sp_header">
+    <h3>{{ survey.title }}</h3>
+    <p>Description</p>
+  </div>
+  <div class="sp_body">
+    <form>
+      <div class="sp_body_list">
+        <div
+          class="sp_body_list_item"
+          *ngFor="
+            let question of survey.questions[1];
+            let questionIndex = index
+          "
+        >
+          <h4>{{ question.name }}</h4>
+          <div class="sp_body_list_item_response">
+            <div
+              class="sp_body_list_item_response_info dis-flex"
+              *ngIf="question.type === 'radio' || question.type === 'checkbox'"
+            >
+              <i class="bx bx-info-circle icon"></i>
+              <p *ngIf="question.type === 'radio'">Select a single option</p>
+              <p *ngIf="question.type === 'checkbox'">
+                Select multiple options
+              </p>
+            </div>
+            <ng-container
+              *ngIf="question.type === 'radio' || question.type === 'checkbox'"
+            >
+              <ul class="sp_body_list_item_response_options">
+                <li
+                  class="dis-flex"
+                  *ngFor="
+                    let option of question.options;
+                    let optionIndex = index
+                  "
+                >
+                  <input
+                    [type]="question.type"
+                    [id]="questionIndex + '-' + optionIndex"
+                    [name]="'options-' + questionIndex"
+                  />
+                  <label [for]="questionIndex + '-' + optionIndex">
+                    {{ option.name }}
+                  </label>
+                </li>
+              </ul>
+            </ng-container>
+            <!-- <ng-container>
+                <ul class="sp_body_list_item_response_options">
+                  <li class="dis-flex">
+                    <input type="checkbox" id="3" name="options-2" />
+                    <label for="3"> Option One </label>
+                  </li>
+                  <li class="dis-flex">
+                    <input type="checkbox" id="4" name="options-3" />
+                    <label for="4"> Option Two </label>
+                  </li>
+                </ul>
+              </ng-container> -->
+            <ng-container *ngIf="question.type === 'text'">
+              <div class="sp_body_list_item_response">
+                <div class="input-field">
+                  <input type="text" placeholder="Type your response" />
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="sp_body_btns">
+        <button class="btn prim_btn">Submit</button>
+      </div>
+    </form>
+  </div>
+</section>
