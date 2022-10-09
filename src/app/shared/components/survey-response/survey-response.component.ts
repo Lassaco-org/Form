@@ -8,6 +8,7 @@ import { FormService } from '../../services/form.service';
 })
 export class SurveyResponseComponent implements OnInit {
   surveys: any;
+  sectionNumber: number = 1;
 
   constructor(private formService: FormService) {}
 
@@ -16,12 +17,24 @@ export class SurveyResponseComponent implements OnInit {
     this.formService.getForms().subscribe({
       next: (res: any) => {
         this.surveys = res.data.docs;
-        console.log(res.data.docs);
+        // let hi = this.surveys[0].questions;
+        // console.log(hi[1].length);
+        // this.surveys[0].questions;
       },
       error: (e) => console.error(e),
       complete: () => {
         // this.dataLoading = false;
       },
     });
+  }
+
+  previousSection() {
+    this.sectionNumber--;
+    console.log(this.sectionNumber);
+  }
+
+  nextSection() {
+    this.sectionNumber++;
+    console.log(this.sectionNumber);
   }
 }

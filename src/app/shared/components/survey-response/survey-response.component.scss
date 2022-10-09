@@ -80,6 +80,13 @@
             display: flex;
             justify-content: flex-end;
             margin-top: $s-2;
+            gap: $s-2;
+            .btn {
+                .icon {
+                    font-size: 25px;
+                    vertical-align: middle;
+                }
+            }
         }
     }
 }
