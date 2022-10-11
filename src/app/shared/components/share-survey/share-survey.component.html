@@ -1,3 +1,10 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
 <div class="modal">
   <div class="modal_area">
     <span class="modal_area_close" (click)="closeShareModal()">
@@ -42,7 +49,9 @@
     </form>
     <div class="modal_area_other">
       <div class="share-link dis-flex clickable">
-        <p>forms.lasaco.co/{{ formId }}</p>
+        <p (click)="copyLink('forms.lasaco.com/' + formId)">
+          forms.lasaco.com/{{ formId }}
+        </p>
         <img
           src="../../../../assets/img/svg/fluent_document-copy-16-regular.svg"
           alt=""

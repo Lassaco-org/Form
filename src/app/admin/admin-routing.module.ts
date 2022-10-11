@@ -7,6 +7,7 @@ import { AddSurveyQuestionComponent } from './components/admin-surveys/add-surve
 import { AdminSurveysOverviewComponent } from './components/admin-surveys/admin-surveys-overview/admin-surveys-overview.component';
 import { CreateSurveyComponent } from './components/admin-surveys/create-survey/create-survey.component';
 import { DisplaySurveyResponsesComponent } from './components/admin-surveys/display-survey-responses/display-survey-responses.component';
+import { EditSurveyQuestionComponent } from './components/admin-surveys/edit-survey-question/edit-survey-question.component';
 import { AddSubAdminComponent } from './components/sub-admins/add-sub-admin/add-sub-admin.component';
 import { DisplaySubAdminsComponent } from './components/sub-admins/display-sub-admins/display-sub-admins.component';
 
@@ -50,6 +51,14 @@ const routes: Routes = [
       {
         path: 'survey-response',
         component: DisplaySurveyResponsesComponent,
+        data: {
+          title: 'Surveys',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: ':formId/edit-survey',
+        component: EditSurveyQuestionComponent,
         data: {
           title: 'Surveys',
           description: 'Description Meta Tag Content',

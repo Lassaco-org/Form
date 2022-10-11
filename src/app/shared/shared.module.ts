@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareSurveyComponent } from './components/share-survey/share-survey.component';
 import { SurveyResponseComponent } from './components/survey-response/survey-response.component';
+import { SurveySectionComponent } from './components/survey-section/survey-section.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SurveyResponseComponent } from './components/survey-response/survey-res
     DashboardSidenavComponent,
     ShareSurveyComponent,
     SurveyResponseComponent,
+    SurveySectionComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -23,6 +25,7 @@ import { SurveyResponseComponent } from './components/survey-response/survey-res
     DashboardSidenavComponent,
     ShareSurveyComponent,
     SurveyResponseComponent,
+    SurveySectionComponent,
   ],
 })
 export class SharedModule {}

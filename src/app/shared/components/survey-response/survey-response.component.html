@@ -1,3 +1,8 @@
+<!-- Data Loading -->
+<span class="loading-spinner" *ngIf="dataLoading">
+  <div class="spinner-3"></div>
+</span>
+
 <!-- Survey preview -->
 <section class="sp" *ngFor="let survey of surveys">
   <div class="sp_header">

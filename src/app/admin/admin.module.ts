@@ -14,6 +14,7 @@ import { AddSurveyQuestionComponent } from './components/admin-surveys/add-surve
 import { DisplaySurveyResponsesComponent } from './components/admin-surveys/display-survey-responses/display-survey-responses.component';
 import { AdminSurveysOverviewComponent } from './components/admin-surveys/admin-surveys-overview/admin-surveys-overview.component';
 import { CreateSurveyComponent } from './components/admin-surveys/create-survey/create-survey.component';
+import { EditSurveyQuestionComponent } from './components/admin-surveys/edit-survey-question/edit-survey-question.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CreateSurveyComponent } from './components/admin-surveys/create-survey/
     DisplaySurveyResponsesComponent,
     AdminSurveysOverviewComponent,
     CreateSurveyComponent,
+    EditSurveyQuestionComponent,
   ],
   imports: [
     CommonModule,

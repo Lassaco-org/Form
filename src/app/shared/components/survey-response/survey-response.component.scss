@@ -1,6 +1,9 @@
 @import '../../../../assets/css/variables.scss';
 @import '../../../../assets/css/mixins.scss';
 
+.loading-spinner {
+    margin-top: $s-4;
+}
 
 .sp {
     max-width: 600px;
@@ -82,6 +85,7 @@
             margin-top: $s-2;
             gap: $s-2;
             .btn {
+                padding: $s-1;
                 .icon {
                     font-size: 25px;
                     vertical-align: middle;

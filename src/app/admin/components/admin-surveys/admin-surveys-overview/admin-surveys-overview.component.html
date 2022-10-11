@@ -1,7 +1,7 @@
 <app-share-survey
   *ngIf="isShareModal"
   (isShareModal)="closeShareModal()"
-  formId="9823nubwxsay"
+  [formId]="formId"
 ></app-share-survey>
 
 <section class="main_header dis-flex">
@@ -25,24 +25,30 @@
         <th>Status</th>
         <th>Actions</th>
       </tr>
-      <tr class="table-body" *ngFor="let i of allAdmins">
-        <ng-container *ngIf="i.type === 'admin'">
-          <td [title]="test">
-            {{ test.length > 30 ? test.slice(0, 30) + "..." : test }}
-          </td>
-          <td>09/19/2022</td>
-          <td>0</td>
-          <td>{{ i.status }}</td>
-          <td class="actions dis-flex">
-            <i
-              class="bx bx-share icon share"
-              title="Share"
-              (click)="openShareModal()"
-            ></i>
-            <i class="bx bx-edit-alt icon edit" title="Edit"></i>
-            <i class="bx bx-pause icon suspend" title="Suspend"></i>
-          </td>
-        </ng-container>
+      <tr class="table-body" *ngFor="let survey of surveys">
+        <td [title]="survey.title">
+          {{
+            survey.title.length > 30
+              ? survey.title.slice(0, 30) + "..."
+              : survey.title
+          }}
+        </td>
+        <td>{{ survey.createdAt | date: "mediumDate" }}</td>
+        <td>0</td>
+        <td>active</td>
+        <td class="actions dis-flex">
+          <i
+            class="bx bx-share icon share"
+            title="Share"
+            (click)="openShareModal(survey.shortCode)"
+          ></i>
+          <i
+            class="bx bx-edit-alt icon edit"
+            [routerLink]="'/admin/' + survey.shortCode + '/edit-survey'"
+            title="Edit"
+          ></i>
+          <i class="bx bx-pause icon suspend" title="Suspend"></i>
+        </td>
       </tr>
     </table>
   </div>
@@ -50,28 +56,4 @@
   <span class="loading-spinner" *ngIf="dataLoading">
     <div class="spinner-3"></div>
   </span>
-
-  <!-- <div class="surveys_list">
-    <div class="surveys_list_item">
-      <img
-        src="../../../../assets/img/form-image-1.png"
-        alt="image"
-        class="image"
-      />
-      <div class="details">
-        <div class="details_header dis-flex">
-          <span class="date">09/19/2022</span>
-          <h4>60 Responses</h4>
-        </div>
-        <h3 class="details_title">
-          User Research Survey Questions For An Online Marketplace for Small
-          Business Owners.
-        </h3>
-        <div class="details_action dis-flex">
-          <button class="btn">Edit</button>
-          <button class="btn prim_btn">Share</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </section>

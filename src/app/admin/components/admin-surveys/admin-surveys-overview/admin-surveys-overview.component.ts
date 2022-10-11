@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AdminService } from 'src/app/admin/services/admin.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
   selector: 'app-admin-surveys-overview',
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./admin-surveys-overview.component.scss'],
 })
 export class AdminSurveysOverviewComponent implements OnInit {
-  allAdmins: any;
+  surveys: any;
   dataLoading: boolean = true;
   loading: boolean = false;
   alertMessage: string = '';
@@ -19,18 +19,20 @@ export class AdminSurveysOverviewComponent implements OnInit {
   isShareModal: boolean = false;
   test: string =
     'User Research Survey Questions For An Online Marketplace for Small Business Owners.';
+  formId: string = '';
 
   constructor(
-    private adminService: AdminService,
+    private formService: FormService,
     private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     // Get All Admins
-    this.adminService.getAdmins().subscribe({
+    this.formService.getForms().subscribe({
       next: (res: any) => {
-        this.allAdmins = res.data.docs;
+        this.surveys = res.data.docs;
+        console.log(this.surveys);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -80,7 +82,8 @@ export class AdminSurveysOverviewComponent implements OnInit {
   }
 
   // Open share modal
-  openShareModal() {
+  openShareModal(formId: any) {
+    this.formId = formId;
     this.isShareModal = true;
   }
 

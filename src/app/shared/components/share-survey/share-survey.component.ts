@@ -16,6 +16,8 @@ export class ShareSurveyComponent implements OnInit {
   userForm: any = FormGroup;
   alertColor: string = '';
   isFormSubmitted: boolean = false;
+  copyText: any;
+  tooltip: any;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -28,5 +30,26 @@ export class ShareSurveyComponent implements OnInit {
 
   closeShareModal() {
     this.isShareModal.emit();
+  }
+
+  // Copy text to clipboard
+  copyLink(link: any) {
+    navigator.clipboard.writeText(link);
+
+    this.showAlert('Survey link copied!', 'success');
+  }
+
+  // Show alert
+  showAlert(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
   }
 }

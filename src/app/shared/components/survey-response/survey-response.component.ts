@@ -9,6 +9,7 @@ import { FormService } from '../../services/form.service';
 export class SurveyResponseComponent implements OnInit {
   surveys: any;
   sectionNumber: number = 1;
+  dataLoading: boolean = true;
 
   constructor(private formService: FormService) {}
 
@@ -23,7 +24,7 @@ export class SurveyResponseComponent implements OnInit {
       },
       error: (e) => console.error(e),
       complete: () => {
-        // this.dataLoading = false;
+        this.dataLoading = false;
       },
     });
   }
