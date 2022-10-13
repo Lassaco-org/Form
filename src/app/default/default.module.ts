@@ -8,9 +8,10 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { UserSurveyComponent } from './components/user-survey/user-survey.component';
 import { SurveyPreviewComponent } from './components/survey-preview/survey-preview.component';
+import { DefaultFooterComponent } from './components/default-footer/default-footer.component';
 
 @NgModule({
-  declarations: [DefaultComponent, HomeComponent, UserSurveyComponent, SurveyPreviewComponent],
+  declarations: [DefaultComponent, HomeComponent, UserSurveyComponent, SurveyPreviewComponent, DefaultFooterComponent],
   imports: [CommonModule, DefaultRoutingModule, RouterModule, SharedModule],
 })
 export class DefaultModule {}

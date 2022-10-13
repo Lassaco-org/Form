@@ -90,11 +90,6 @@ textarea {
   background-color: $white-color;
   border: 2px solid $secondary100;
 }
-.load_btn {
-  background-color: $white-color;
-  color: $blue;
-  border: 2px solid $blue;
-}
 
 /* Buttons ends */
 
@@ -126,25 +121,23 @@ textarea {
 .uc {
   text-transform: uppercase;
 }
-.text-secondary-color {
-  color: $secondary100;
-}
-.text-primary-color {
-  color: $blue;
-}
-.hover-1 {
-  transition: all 0.2s ease-in;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
+
+/* Section starts */
+.container {
+  padding: 0 5%;
+  @media screen and (min-width: 1200px) {
+    max-width: 1250px;
+    margin: 0 auto;
   }
 }
-.hover-2 {
-  transition: all 0.2s ease-in;
-  cursor: pointer;
-  &:hover {
+.sect {
+  margin: 5rem 0;
+  padding: 3% 0;
+  @media only screen and (max-width: 870px) {
+    margin: 3rem 0;
   }
 }
+/* Section ends */
 
 /* Headings starts */
 p {
