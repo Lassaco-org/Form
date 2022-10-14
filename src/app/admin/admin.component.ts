@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
   hamClick: any;
+  isMenuOpen: boolean;
 
   navLinks: any;
 
@@ -14,13 +15,9 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Open Menu
-  openMenu() {
+  // Toggle Menu
+  toggleMenu() {
     this.hamClick = !this.hamClick;
-  }
-
-  // Close Menu
-  closeMenu() {
-    this.hamClick = false;
+    this.isMenuOpen = this.hamClick;
   }
 }

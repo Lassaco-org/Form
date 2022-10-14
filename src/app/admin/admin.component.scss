@@ -2,6 +2,8 @@
 @import '../../assets/css/mixins.scss';
 
 .container-dash {
+  position: relative;
+  top: 4rem;
     &_body {
         @media only screen and (min-width: 997px) {
             display: flex;
@@ -14,14 +16,15 @@
             position: relative;
             left: 0;
             border-right: 1px solid $divider-color;
+            position: fixed;
+            background: $white-color;
             .sidenav {
               height: 100%; 
-              background-color: $white-color;
-              position: relative;
+              overflow-y: auto;
             }
             @media only screen and (max-width: 997px) {
-              position: absolute;
-              top: calc(3rem + $s-2 + 1px);
+              position: fixed;
+              // top: calc(3rem + $s-2 + 1px);
               left: -100%;
               width: 200px;
               transition: all 0.5s;
@@ -40,8 +43,10 @@
         main {
             width: 100%;
             padding: $s-4;
+            position: relative;
             @media only screen and (min-width: 997px) {
-                width: 85%;
+              left: 15%;
+              width: 85%;
             }
         }
         //   Main ends //

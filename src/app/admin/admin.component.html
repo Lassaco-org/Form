@@ -1,13 +1,13 @@
 <div class="container-dash">
-  <app-dashboard-header (hamClick)="openMenu()"></app-dashboard-header>
+  <app-dashboard-header
+    (hamClick)="toggleMenu()"
+    [isMenuOpen]="isMenuOpen"
+  ></app-dashboard-header>
   <div class="container-dash_body">
     <!-- Side Nav -->
     <aside class="sidenav-area" [class.show-menu]="hamClick">
-      <div class="sidenav" #sideNav>
-        <app-dashboard-sidenav
-          [navLinks]="navLinks"
-          (hamClick)="closeMenu()"
-        ></app-dashboard-sidenav>
+      <div class="sidenav">
+        <app-dashboard-sidenav [navLinks]="navLinks"></app-dashboard-sidenav>
       </div>
     </aside>
 

@@ -4,12 +4,36 @@
 header {
     padding: $s-1 $s-4;
     border-bottom: 1px solid $divider-color;
+    height: 4rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 150;
+    background-color: $white-color;
     .header_container {
         height: 3rem;
         gap: $s-2;
         justify-content: space-between;
-        .header_logo {
-            img {
+        .header_left {
+            gap: $s-1;
+            &_menu {
+                display: none;
+                @media only screen and (max-width: 997px) {
+                    display: block;
+                }
+                .icon {
+                    font-size: 25px;
+                    padding: $s-1;
+                    transition: all 0.2s ease-in;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: $grey2;
+                        border-radius: 50%;
+                    }   
+                }
+            }
+            .logo {
                 max-width: 140px;
             }
         }
