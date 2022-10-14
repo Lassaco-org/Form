@@ -42,11 +42,12 @@
         //   Main starts //
         main {
             width: 100%;
-            padding: $s-4;
+            padding: $s-2;
             position: relative;
             @media only screen and (min-width: 997px) {
               left: 15%;
               width: 85%;
+              padding: $s-4;
             }
         }
         //   Main ends //

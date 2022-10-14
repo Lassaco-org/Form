@@ -11,6 +11,9 @@ header {
     width: 100%;
     z-index: 150;
     background-color: $white-color;
+    @media only screen and (max-width: 997px) {
+        padding: $s-1 $s-2;
+    }
     .header_container {
         height: 3rem;
         gap: $s-2;

@@ -1,13 +1,13 @@
 <header>
   <div class="header_container dis-flex">
-    <div class="header_left clickable dis-flex">
-      <span class="header_left_menu" (click)="toggleMenu()">
+    <div class="header_left dis-flex">
+      <span class="header_left_menu clickable" (click)="toggleMenu()">
         <i class="icon" [class]="!isMenuOpen ? 'bx bx-menu' : 'bx bx-x'"></i>
       </span>
       <img
         src="../../../../assets/img/lasaco-logo.png"
         alt="image"
-        class="logo"
+        class="logo clickable"
         routerLink="/"
       />
     </div>
