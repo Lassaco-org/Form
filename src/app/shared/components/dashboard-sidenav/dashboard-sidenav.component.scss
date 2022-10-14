@@ -32,4 +32,11 @@
         }
       }  
     }
+    .log-out {
+      color: $error100;
+      margin-top: $s-6;
+      p {
+        font-weight: 500;
+      }
+    }
 }

@@ -99,7 +99,7 @@
                 // Question
                 &_question {
                     .input-field {
-                        @media only screen and (min-width: 500px) {
+                        @media only screen and (min-width: 520px) {
                             min-width: 400px;
                         }
                         @include input-field($inp-col: $blue, $plac-col: $blue);

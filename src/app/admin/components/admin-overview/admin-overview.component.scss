@@ -1,0 +1,21 @@
+@import '../../../../assets/css/variables.scss';
+@import '../../../../assets/css/mixins.scss';
+@import '../../../../assets/css/dash.scss';
+
+.stats {
+    .card {
+        @include card($value: 300px);
+        &_item {
+            padding: $s-3;
+            border-radius: $border-radius2;
+            border: 1px solid $grey2;
+            &:first-child {
+                background: $blue;
+                color: $white-color;
+            }
+            &_title {
+                margin-bottom: $s-1;
+            }
+        }
+    }
+}

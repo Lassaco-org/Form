@@ -20,9 +20,17 @@ header {
         height: 4rem;
         gap: $s-2;
         justify-content: space-between;
+        .header_logo {
+          img {
+            max-width: 140px;
+          }
+        }
         .header_right {
             .btn {
-                padding: $s-1;
+                padding: $s-1 $s-2;
+                &:hover {
+                  border: 1px solid $white-color;
+                }
             }
         }
     }
@@ -35,19 +43,8 @@ header {
   position: relative;
   display: flex;
   padding: 5% 0;
-  .container {
-    margin: 0 auto;
-  }
-  .ls_flex_details {
-    &_title {
-      animation: slideIn 2s cubic-bezier(0.5, 0, 0, 1);
-    }
-  }
-}
-// Hero ends
-
-/* nd flex starts */
-.ls_flex_content {
+  /* nd flex starts */
+  .ls_flex_content {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,6 +61,7 @@ header {
         margin-bottom: $s-2;
         color: $blue;
         font-size: 40px;
+        animation: slideIn 2s cubic-bezier(0.5, 0, 0, 1);
       }
       p {
         color: $text-color2;
@@ -84,3 +82,6 @@ header {
     }
   }
   /* du_flex_ends */
+}
+// Hero ends
+

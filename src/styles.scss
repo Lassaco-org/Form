@@ -75,41 +75,40 @@ textarea {
   color: $white-color;
   background-color: $blue;
   border: 2px solid $blue;
-}
-.prim_btn:hover {
-  background-color: $white-color;
-  color: $blue;
+  &:hover {
+    background-color: $white-color;
+    color: $blue;
+  }
 }
 .sec_btn {
-  background-color: $secondary100;
-  color: $white-color;
-  border: 2px solid $secondary100;
-}
-.sec_btn:hover {
-  color: $secondary100;
+  color: $blue;
   background-color: $white-color;
-  border: 2px solid $secondary100;
+  border: 2px solid $blue;
+  &:hover {
+    background-color: $blue;
+    color: $white-color;
+  }
 }
 
 /* Buttons ends */
 
 .bg-success-color {
-  background: green;
+  background: $success100;
 }
 .bg-danger-color {
-  background: red;
+  background: $error100;
 }
 .bg-warning-color {
-  background: yellow;
+  background: $warning100;
 }
 .text-success {
-  color: green;
+  color: $success100;
 }
 .text-danger {
-  color: red;
+  color: $error100;
 }
 .text-warning {
-  color: yellow;
+  color: $warning100;
 }
 .dis-flex {
   display: flex;
@@ -120,6 +119,12 @@ textarea {
 }
 .uc {
   text-transform: uppercase;
+}
+.hover-1 {
+  transition: all 0.2s;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Section starts */
@@ -150,12 +155,12 @@ p {
 // Error starts //
 .input-field {
   &.is-invalid {
-      border: 1px solid red !important;
+      border: 1px solid $error100 !important;
   }
 }
 .input_error {
   text-align: left;
-  color: red;
+  color: $error100;
 }
 // Error ends //
 

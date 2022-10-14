@@ -29,7 +29,7 @@
       padding: $s-4;
       border-radius: $border-radius1;
       margin: auto;
-      min-width: 400px;
+      max-width: 400px;
       position: relative;
       @media only screen and (max-width: 870px) {
         width: 90%;
