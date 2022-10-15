@@ -171,7 +171,7 @@
                 &_container {
                     padding: $s-2 10%;
                     @media only screen and (max-width: 805px) {
-                        padding: $s-2;
+                        padding: $s-2 0;
                     }
                     .response-field {
                         &_info {
