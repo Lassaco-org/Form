@@ -7,7 +7,9 @@
     <!-- Side Nav -->
     <aside class="sidenav-area" [class.show-menu]="hamClick">
       <div class="sidenav">
-        <app-dashboard-sidenav [navLinks]="navLinks"></app-dashboard-sidenav>
+        <app-dashboard-sidenav
+          (hamClick)="toggleMenu()"
+        ></app-dashboard-sidenav>
       </div>
     </aside>
 

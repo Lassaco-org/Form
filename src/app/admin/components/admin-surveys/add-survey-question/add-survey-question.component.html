@@ -5,6 +5,12 @@
   [color]="alertColor"
 ></app-alert-popup>
 
+<app-share-survey
+  *ngIf="isShareModal"
+  (isShareModal)="closeShareModal()"
+  [formId]="formId"
+></app-share-survey>
+
 <section class="main_header dis-flex">
   <div class="breadcrumb">
     <h2 class="clickable" routerLink="/admin/surveys">Surveys</h2>
@@ -16,7 +22,7 @@
       routerLink="/surveys/id/survey-preview"
     ></i>
     <i class="bx bx-save icon clickable" title="Save"></i>
-    <button class="btn prim_btn">Send</button>
+    <button class="btn sec_btn" (click)="openShareModal('formId')">Send</button>
   </div>
 </section>
 

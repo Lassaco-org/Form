@@ -1,11 +1,15 @@
 <header>
-  <div class="header_container dis-flex">
-    <span class="header_left clickable">Lasaco Assurance</span>
+  <div class="container dis-flex">
+    <span class="header_logo clickable" routerLink="/">
+      <img src="../../../../assets/img/lasaco-logo.png" alt="" />
+    </span>
     <div class="header_right dis-flex">
-      <!-- <button class="btn prim_btn" routerLink="/auth/login">Login</button> -->
+      <button class="btn prim_btn" routerLink="/admin/surveys">Edit</button>
     </div>
   </div>
 </header>
 
+<main class="">
+  <app-survey-response></app-survey-response>
+</main>
 <!-- Survey preview -->
-<app-survey-response></app-survey-response>

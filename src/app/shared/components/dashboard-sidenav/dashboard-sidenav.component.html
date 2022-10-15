@@ -7,6 +7,7 @@
         routerLinkActive="active"
         routerLink="/admin"
         [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
       >
         <span class="icon">
           <img src="../../../../assets/img/svg/home.svg" alt="" />
@@ -17,6 +18,7 @@
         class="dis-flex"
         routerLinkActive="active"
         routerLink="/admin/surveys"
+        (click)="closeMenu()"
       >
         <span class="icon">
           <img src="../../../../assets/img/svg/folder.svg" alt="" />
@@ -28,6 +30,7 @@
         routerLinkActive="active"
         routerLink="/admin/display-admins"
         *ngIf="user?.type === 'super'"
+        (click)="closeMenu()"
       >
         <span class="icon">
           <img src="../../../../assets/img/svg/people.svg" alt="" />
@@ -38,6 +41,7 @@
         class="dis-flex"
         routerLinkActive="active"
         routerLink="/admin/settings"
+        (click)="closeMenu()"
       >
         <span class="icon">
           <img src="../../../../assets/img/svg/settings.svg" alt="" />

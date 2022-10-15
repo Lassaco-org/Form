@@ -10,7 +10,21 @@ export class AddSurveyQuestionComponent implements OnInit {
   isAlert: boolean = false;
   alertMessage: string = '';
   alertColor: string = '';
+  isShareModal: boolean = false;
+  formId: string = '';
+
   constructor(private formService: FormService) {}
 
   ngOnInit(): void {}
+
+  // Open share modal
+  openShareModal(formId: any) {
+    this.formId = formId;
+    this.isShareModal = true;
+  }
+
+  // close share modal
+  closeShareModal() {
+    this.isShareModal = false;
+  }
 }

@@ -81,6 +81,15 @@ textarea {
   }
 }
 .sec_btn {
+  color: $white-color;
+  background-color: $secondary100;
+  border: 2px solid $secondary100;
+  &:hover {
+    background-color: $white-color;
+    color: $secondary100;
+  }
+}
+.tert_btn {
   color: $blue;
   background-color: $white-color;
   border: 2px solid $blue;

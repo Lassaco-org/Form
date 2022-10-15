@@ -2,11 +2,31 @@
 @import '../../../../assets/css/mixins.scss';
 
 header {
-    padding: $s-1 $s-2;
+    background-color: $white-color;
     border-bottom: 1px solid $divider-color;
-    .header_container {
-        height: 3rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    .container {
+        height: 4rem;
         gap: $s-2;
         justify-content: space-between;
+        .header_logo {
+          img {
+            max-width: 140px;
+          }
+        }
+        .header_right {
+            .btn {
+                padding: 0.7rem $s-2;
+            }
+        }
     }
+}
+
+main {
+    position: relative;
+    top: 4rem;
 }

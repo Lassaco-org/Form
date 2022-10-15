@@ -1,1 +1,20 @@
-<p>edit-survey-question works!</p>
+<section class="main_header dis-flex">
+  <div class="breadcrumb">
+    <h2 class="clickable" routerLink="/admin/surveys">Edit Survey</h2>
+  </div>
+  <div class="btns dis-flex">
+    <i
+      class="bx bx-show icon clickable"
+      title="Preview"
+      routerLink="/surveys/id/survey-preview"
+    ></i>
+
+    <i class="bx bx-save icon clickable" title="Save"></i>
+    <button class="btn tert_btn" routerLink="/admin/survey-response">
+      Responses
+    </button>
+    <button class="btn sec_btn" (click)="openShareModal('formId')">Send</button>
+  </div>
+</section>
+
+<app-survey-section></app-survey-section>

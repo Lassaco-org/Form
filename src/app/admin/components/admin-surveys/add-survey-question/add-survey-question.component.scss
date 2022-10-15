@@ -3,6 +3,7 @@
 @import '../../../../../assets/css/dash.scss';
 
 .main_header {
+    flex-wrap: wrap;
     .btns {
         .btn {
             padding: $s-1;
