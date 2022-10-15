@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormService } from '../../services/form.service';
 
 @Component({
@@ -7,17 +8,27 @@ import { FormService } from '../../services/form.service';
   styleUrls: ['./survey-response.component.scss'],
 })
 export class SurveyResponseComponent implements OnInit {
-  surveys: any;
+  survey: any;
   sectionNumber: number = 1;
   dataLoading: boolean = true;
+  currentShortCode: any;
 
-  constructor(private formService: FormService) {}
+  constructor(
+    private formService: FormService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    // Get Current Rating Agency ID
+    this.currentShortCode = this.activatedRoute.snapshot.params;
+    console.log(this.currentShortCode);
+
     // Get All Surveys
-    this.formService.getForms().subscribe({
+    this.formService.getFormByShortCode('ASN105').subscribe({
       next: (res: any) => {
-        this.surveys = res.data.docs;
+        this.survey = res.data;
+        console.log(this.survey);
+
         // let hi = this.surveys[0].questions;
         // console.log(hi[1].length);
         // this.surveys[0].questions;
@@ -31,11 +42,9 @@ export class SurveyResponseComponent implements OnInit {
 
   previousSection() {
     this.sectionNumber--;
-    console.log(this.sectionNumber);
   }
 
   nextSection() {
     this.sectionNumber++;
-    console.log(this.sectionNumber);
   }
 }

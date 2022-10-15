@@ -29,6 +29,21 @@ export class FormService {
       );
   }
 
+  // get forms
+  getFormByShortCode(shortCode: any): Observable<IForm> {
+    return this.http
+      .get<IForm>(`${this.baseUrl}form/${shortCode}`, this.getHttpOptions())
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Form fetched successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
   // Get Question Field to localstorage
   getQuestionFieldFromLocalStorage() {
     this.userData = localStorage.getItem('survey-questions');

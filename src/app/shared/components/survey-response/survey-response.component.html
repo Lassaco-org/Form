@@ -4,7 +4,7 @@
 </span>
 
 <!-- Survey preview -->
-<section class="sp" *ngFor="let survey of surveys">
+<section class="sp" *ngIf="!dataLoading">
   <div class="sp_header">
     <h3>{{ survey.title }}</h3>
     <p>Description</p>
