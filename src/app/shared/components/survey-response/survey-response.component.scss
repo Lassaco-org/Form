@@ -33,7 +33,7 @@
                 transition: all 0.2s;
                 border-left: 3px solid transparent;
                 &:hover {
-                    border-left: 3px solid $blue;
+                    border-left: 3px solid $secondary100;
                 }
                 &_response {
                     margin-top: $s-2;
