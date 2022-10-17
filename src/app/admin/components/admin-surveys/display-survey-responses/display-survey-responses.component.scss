@@ -1,2 +1,45 @@
 @import '../../../../../assets/css/variables.scss';
 @import '../../../../../assets/css/mixins.scss';
+@import '../../../../../assets/css/dash.scss';
+
+.main_header {
+    flex-wrap: wrap;
+    .btns {
+        .btn {
+            padding: $s-1;
+        }
+    }
+}
+
+.response {
+    &_list {
+        display: grid;
+        grid-gap: $s-2;
+        &_item {
+            border: 1px solid $blue;
+            border-radius: $border-radius2;
+            padding: $s-3;
+            &_header {
+                gap: $s-2;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                padding-bottom: $s-2;
+                border-bottom: 1px solid $grey2;
+                .question {
+                    color: $blue;
+                }
+            }
+            .chart-container {
+                padding-top: $s-2;
+                #chart {
+                    width: 600px;
+                    height: auto;
+                    margin: auto;
+                    @media only screen and (max-width: 745px) {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+    }
+}
