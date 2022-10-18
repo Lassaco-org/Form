@@ -11,13 +11,14 @@ import { ResponseService } from '../../services/response.service';
 })
 export class SurveyResponseComponent implements OnInit {
   survey: any;
-  sectionNumber: number = 1;
+  currentSectionNumber: number = 1;
   dataLoading: boolean = true;
   currentShortCode: any;
   responses: any;
   isAlert: boolean = false;
   alertMessage: string = '';
   alertColor: string = '';
+  questionSectionLength: any;
 
   constructor(
     private formService: FormService,
@@ -35,9 +36,9 @@ export class SurveyResponseComponent implements OnInit {
         this.survey = res.data;
         console.log(this.survey);
 
-        // let hi = this.surveys[0].questions;
-        // console.log(hi[1].length);
-        // this.surveys[0].questions;
+        let hi = this.survey.questions;
+        this.questionSectionLength = Object.keys(hi).length;
+        console.log(Object.keys(hi).length);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -47,11 +48,11 @@ export class SurveyResponseComponent implements OnInit {
   }
 
   previousSection() {
-    this.sectionNumber--;
+    this.currentSectionNumber--;
   }
 
   nextSection() {
-    this.sectionNumber++;
+    this.currentSectionNumber++;
   }
 
   // Submit response

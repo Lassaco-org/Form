@@ -22,7 +22,7 @@
         <div
           class="sp_body_list_item"
           *ngFor="
-            let question of survey.questions[sectionNumber];
+            let question of survey.questions[currentSectionNumber];
             let questionIndex = index
           "
         >
@@ -83,13 +83,27 @@
         </div>
       </div>
       <div class="sp_body_btns">
-        <button class="btn prim_btn dis-flex" (click)="previousSection()">
+        <button
+          class="btn prim_btn dis-flex"
+          (click)="previousSection()"
+          *ngIf="currentSectionNumber > 1"
+        >
           <i class="bx bx-skip-previous icon"></i>Previous
         </button>
-        <button class="btn prim_btn dis-flex" (click)="nextSection()">
+        <button
+          class="btn prim_btn dis-flex"
+          (click)="nextSection()"
+          *ngIf="questionSectionLength > currentSectionNumber"
+        >
           Next<i class="bx bx-skip-next icon"></i>
         </button>
-        <button class="btn prim_btn" (click)="submitResponse()">Submit</button>
+        <button
+          class="btn prim_btn"
+          (click)="submitResponse()"
+          *ngIf="questionSectionLength === currentSectionNumber"
+        >
+          Submit
+        </button>
       </div>
     </form>
   </div>
