@@ -19,7 +19,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'surveys/:surveyId',
+        path: 'surveys/:shortCode',
         component: UserSurveyComponent,
         data: {
           title: 'Survey',
@@ -27,7 +27,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'surveys/:surveyId/survey-preview',
+        path: 'surveys/:shortCode/survey-preview',
         component: SurveyPreviewComponent,
         data: {
           title: 'Preview Survey',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponseService } from 'src/app/shared/services/response.service';
 import {
   Chart,
   ArcElement,
@@ -63,10 +64,24 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   alertColor: string = '';
   isShareModal: boolean = false;
   formId: string = '';
-  constructor() {}
+  responses: any;
+  dataLoading: boolean = true;
+  constructor(private responseService: ResponseService) {}
 
   ngOnInit(): void {
     this.createChart();
+
+    // Get All form responses
+    this.responseService.getResponses().subscribe({
+      next: (res: any) => {
+        this.responses = res.data.docs;
+        console.log(this.responses);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
   }
 
   createChart() {

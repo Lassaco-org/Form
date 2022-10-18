@@ -1,3 +1,10 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
 <!-- Data Loading -->
 <span class="loading-spinner" *ngIf="dataLoading">
   <div class="spinner-3"></div>
@@ -82,7 +89,7 @@
         <button class="btn prim_btn dis-flex" (click)="nextSection()">
           Next<i class="bx bx-skip-next icon"></i>
         </button>
-        <button class="btn prim_btn">Submit</button>
+        <button class="btn prim_btn" (click)="submitResponse()">Submit</button>
       </div>
     </form>
   </div>

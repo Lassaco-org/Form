@@ -57,7 +57,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':formId/edit-survey',
+        path: ':shortCode/edit-survey',
         component: EditSurveyQuestionComponent,
         data: {
           title: 'Surveys',
