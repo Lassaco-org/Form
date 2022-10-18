@@ -30,15 +30,12 @@ export class SurveyResponseComponent implements OnInit {
     // Get Current Rating Agency ID
     this.currentShortCode = this.activatedRoute.snapshot.params;
 
-    // Get All Surveys
+    // Get Survey
     this.formService.getFormByShortCode('ASN105').subscribe({
       next: (res: any) => {
         this.survey = res.data;
-        console.log(this.survey);
-
-        let hi = this.survey.questions;
-        this.questionSectionLength = Object.keys(hi).length;
-        console.log(Object.keys(hi).length);
+        let surveyQuestion = this.survey.questions;
+        this.questionSectionLength = Object.keys(surveyQuestion).length;
       },
       error: (e) => console.error(e),
       complete: () => {

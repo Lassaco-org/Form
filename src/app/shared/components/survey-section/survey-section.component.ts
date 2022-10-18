@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormService } from '../../services/form.service';
 
 @Component({
@@ -33,6 +33,7 @@ export class SurveySectionComponent implements OnInit {
   alertMessage: string = '';
   isAlert: boolean = false;
   alertColor: string = '';
+  // @Output() hi: EventEmitter<any> = new EventEmitter();
 
   constructor(private formService: FormService) {}
 
@@ -254,7 +255,7 @@ export class SurveySectionComponent implements OnInit {
     //   // }),
     // };
     // console.log(payload);
-    // console.log(this.questionFields);
+    console.log(this.questionFields);
   }
 
   // Show alert

@@ -25,6 +25,8 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { ActivatedRoute } from '@angular/router';
+import { FormService } from 'src/app/shared/services/form.service';
 
 // Register the Chart Elements
 Chart.register(
@@ -66,12 +68,33 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   formId: string = '';
   responses: any;
   dataLoading: boolean = true;
-  constructor(private responseService: ResponseService) {}
+  currentShortCode: any;
+  survey: any;
+  constructor(
+    private responseService: ResponseService,
+    private formService: FormService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.createChart();
+    // Get Current Rating Agency ID
+    this.currentShortCode = this.activatedRoute.snapshot.params;
+    console.log(this.currentShortCode);
 
-    // Get All form responses
+    // Get Survey
+    this.formService
+      .getFormByShortCode(this.currentShortCode.shortCode)
+      .subscribe({
+        next: (res: any) => {
+          this.survey = res.data;
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
+
+    // Get all form responses
     this.responseService.getResponses().subscribe({
       next: (res: any) => {
         this.responses = res.data.docs;
@@ -82,6 +105,8 @@ export class DisplaySurveyResponsesComponent implements OnInit {
         this.dataLoading = false;
       },
     });
+
+    this.createChart();
   }
 
   createChart() {

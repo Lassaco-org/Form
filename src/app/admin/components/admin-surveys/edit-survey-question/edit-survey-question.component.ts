@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
@@ -12,10 +13,31 @@ export class EditSurveyQuestionComponent implements OnInit {
   alertColor: string = '';
   isShareModal: boolean = false;
   formId: string = '';
+  currentShortCode: any;
+  survey: any;
+  dataLoading: boolean = true;
 
-  constructor(private formService: FormService) {}
+  constructor(
+    private formService: FormService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get Current Rating Agency ID
+    this.currentShortCode = this.activatedRoute.snapshot.params;
+
+    // Get Survey
+    this.formService.getFormByShortCode('ASN105').subscribe({
+      next: (res: any) => {
+        this.survey = res.data;
+        console.log(this.survey);
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        this.dataLoading = false;
+      },
+    });
+  }
 
   // Open share modal
   openShareModal(formId: any) {

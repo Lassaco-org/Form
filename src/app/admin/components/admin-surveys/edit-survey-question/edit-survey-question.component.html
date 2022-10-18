@@ -1,3 +1,16 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
+<app-share-survey
+  *ngIf="isShareModal"
+  (isShareModal)="closeShareModal()"
+  [formId]="formId"
+></app-share-survey>
+
 <section class="main_header dis-flex">
   <div class="breadcrumb">
     <h2 class="clickable" routerLink="/admin/surveys">Edit Survey</h2>
@@ -6,14 +19,19 @@
     <i
       class="bx bx-show icon clickable"
       title="Preview"
-      routerLink="/surveys/id/survey-preview"
+      [routerLink]="'/surveys/' + survey?.shortCode + '/survey-preview'"
     ></i>
 
     <i class="bx bx-save icon clickable" title="Save"></i>
-    <button class="btn tert_btn" routerLink="/admin/survey-response">
+    <button
+      class="btn tert_btn"
+      [routerLink]="'/admin/' + survey?.shortCode + '/response'"
+    >
       Responses
     </button>
-    <button class="btn sec_btn" (click)="openShareModal('formId')">Send</button>
+    <button class="btn sec_btn" (click)="openShareModal(survey?.shortCode)">
+      Send
+    </button>
   </div>
 </section>
 

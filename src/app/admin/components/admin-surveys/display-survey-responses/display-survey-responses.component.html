@@ -23,10 +23,15 @@
       title="Spreadsheet"
       class="spreadsheet clickable"
     />
-    <button class="btn tert_btn" routerLink="/admin/formId/edit-survey">
+    <button
+      class="btn tert_btn"
+      [routerLink]="'/admin/' + survey?.shortCode + '/edit-survey'"
+    >
       Questions
     </button>
-    <button class="btn sec_btn" (click)="openShareModal('formId')">Send</button>
+    <button class="btn sec_btn" (click)="openShareModal(survey?.shortCode)">
+      Send
+    </button>
   </div>
 </section>
 
