@@ -49,7 +49,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':shortCode/response',
+        path: 'survey/:shortCode/response',
         component: DisplaySurveyResponsesComponent,
         data: {
           title: 'Surveys',
@@ -57,7 +57,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':shortCode/edit-survey',
+        path: 'survey/:shortCode/edit-survey',
         component: EditSurveyQuestionComponent,
         data: {
           title: 'Surveys',

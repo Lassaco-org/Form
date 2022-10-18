@@ -28,7 +28,7 @@
       <tr class="table-body" *ngFor="let survey of surveys">
         <td
           [title]="survey?.title"
-          [routerLink]="'/admin/' + survey?.shortCode + '/edit-survey'"
+          [routerLink]="'/admin/survey/' + survey?.shortCode + '/edit-survey'"
         >
           {{
             survey?.title.length > 30
@@ -47,13 +47,13 @@
           ></i>
           <i
             class="bx bx-edit-alt icon edit"
-            [routerLink]="'/admin/' + survey?.shortCode + '/edit-survey'"
+            [routerLink]="'/admin/survey/' + survey?.shortCode + '/edit-survey'"
             title="Edit"
           ></i>
           <i
             class="bx bx-bar-chart-alt icon analyze"
             title="Analyze"
-            [routerLink]="'/admin/' + survey?.shortCode + '/response'"
+            [routerLink]="'/admin/survey/' + survey?.shortCode + '/response'"
           ></i>
           <!-- /admin/survey-response -->
           <i class="bx bx-pause icon suspend" title="Suspend"></i>
