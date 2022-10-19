@@ -11,18 +11,41 @@
       <i class="bx bx-x icon clickable"></i>
     </span>
     <div class="modal_area_header">
-      <h3>Share this survey</h3>
+      <h2>Share this survey</h2>
       <p>You can invite anyone to view this survey</p>
     </div>
-    <form class="auth_form">
-      <div class="auth_form_field">
+    <form class="auth_form" [formGroup]="userForm">
+      <!-- Email list -->
+      <div class="email_list dis-flex">
         <div
-          class="input-field"
-          [ngClass]="{
-            'is-invalid': isFormSubmitted && userForm.controls.username.errors
-          }"
+          class="email_list_item dis-flex"
+          *ngFor="let email of emailList; let emailIndex = index"
         >
-          <input type="email" name="email" placeholder="Email Address" />
+          <small [title]="email">{{
+            email.length > 12 ? email.slice(0, 10) + "..." : email
+          }}</small>
+          <i
+            class="bx bx-x icon clickable"
+            (click)="removeEmail(emailIndex)"
+          ></i>
+        </div>
+      </div>
+      <div class="email_input-field">
+        <div class="auth_form_field dis-flex">
+          <div
+            class="input-field"
+            [ngClass]="{
+              'is-invalid': isFormSubmitted && userForm.controls.email.errors
+            }"
+          >
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email Address"
+              formControlName="email"
+            />
+          </div>
+          <button class="btn sec_btn" (click)="addEmail()">Add</button>
         </div>
         <!-- Error -->
         <div
@@ -38,8 +61,36 @@
         </div>
       </div>
 
+      <!-- Or -->
+      <p class="or">Or</p>
+
+      <!-- Upload sheet -->
+      <div class="upload-sheet">
+        <div
+          class="upload-sheet_btn clickable dis-flex"
+          appDragDrop
+          (click)="fileInput.click()"
+          (fileDropped)="uploadFile($event)"
+        >
+          <img
+            src="../../../../assets/img/svg/icons8-microsoft-excel-2019.svg"
+            alt=""
+          />
+          <p>Upload contacts</p>
+        </div>
+        <input
+          type="file"
+          id="sheet"
+          (change)="uploadFile($any($event).target.files)"
+          hidden
+          #fileInput
+        />
+        <p class="upload-sheet_file-name">{{ selectedFile }}</p>
+      </div>
+
       <div class="auth_form_btns">
         <button class="btn prim_btn" *ngIf="!loading">Share</button>
+        <!-- [disabled]="selectedFile === undefined || emailList.length === 0" -->
         <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
           <span class="loading-spinner">
             <div class="spinner-3"></div>

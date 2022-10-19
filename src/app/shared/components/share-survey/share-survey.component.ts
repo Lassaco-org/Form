@@ -19,12 +19,17 @@ export class ShareSurveyComponent implements OnInit {
   copyText: any;
   tooltip: any;
 
+  selectedFile: File;
+  // previewImage: any;
+  // showPreviewImage: boolean = false;
+  emailList: any[] = [];
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     // User form
     this.userForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -37,6 +42,41 @@ export class ShareSurveyComponent implements OnInit {
     navigator.clipboard.writeText(link);
 
     this.showAlert('Survey link copied!', 'success');
+  }
+
+  // Add email
+  addEmail() {
+    this.emailList.push(this.userForm.value.email);
+
+    this.userForm.get('email').setValue('');
+  }
+
+  // Remove Email
+  removeEmail(index: any) {
+    this.emailList.splice(index, 1);
+  }
+
+  // Upload File
+  uploadFile(event: any) {
+    // Preview File Selected
+    this.selectedFile = event[0].name;
+
+    // if (this.selectedFile) {
+    //   let reader = new FileReader();
+    //   reader.readAsDataURL(this.selectedFile);
+    //   reader.onload = (e: any) => {
+    //     this.previewImage = e.target.result;
+    //     console.log(e);
+
+    //     if (this.previewImage !== '') {
+    //       this.showPreviewImage = true;
+    //     } else {
+    //       this.showPreviewImage = false;
+    //     }
+    //   };
+    // }
+
+    this.showAlert('File uploaded!', 'success');
   }
 
   // Show alert
