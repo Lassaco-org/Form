@@ -10,7 +10,8 @@ header {
     left: 0;
     width: 100%;
     z-index: 150;
-    background-color: $white-color;
+    background: $blue50;
+    color: $white-color;
     @media only screen and (max-width: 997px) {
         padding: $s-1 $s-2;
     }
@@ -31,13 +32,13 @@ header {
                     transition: all 0.2s ease-in;
                     cursor: pointer;
                     &:hover {
-                        background-color: $grey2;
+                        background-color: $blue40;
                         border-radius: 50%;
                     }   
                 }
             }
             .logo {
-                max-width: 140px;
+                max-width: 102px;
             }
         }
         .header_right {
