@@ -12,8 +12,16 @@
 ></app-share-survey>
 
 <section class="main_header dis-flex">
-  <div class="breadcrumb">
-    <h2 class="clickable" routerLink="/admin/surveys">Edit Survey</h2>
+  <div class="breadcrumb dis-flex">
+    <h2 class="clickable" routerLink="/admin/surveys">Survey</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p [title]="survey?.title">
+      {{
+        survey?.title.length > 20
+          ? survey?.title.slice(0, 20) + "..."
+          : survey?.title
+      }}
+    </p>
   </div>
   <div class="btns dis-flex">
     <i
@@ -25,7 +33,7 @@
     <i class="bx bx-save icon clickable" title="Save"></i>
     <button
       class="btn tert_btn"
-      [routerLink]="'/admin/survey/' + survey?.shortCode + '/response'"
+      [routerLink]="'/admin/surveys/' + survey?.shortCode + '/response'"
     >
       Responses
     </button>

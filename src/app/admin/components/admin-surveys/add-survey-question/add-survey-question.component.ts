@@ -12,10 +12,14 @@ export class AddSurveyQuestionComponent implements OnInit {
   alertColor: string = '';
   isShareModal: boolean = false;
   formId: string = '';
+  newSurveyData: any;
 
   constructor(private formService: FormService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Get the title and descrp from localstorage if it exist
+    this.newSurveyData = JSON.parse(localStorage.getItem('new-survey') || '[]');
+  }
 
   // Open share modal
   openShareModal(formId: any) {

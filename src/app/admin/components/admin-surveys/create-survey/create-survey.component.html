@@ -1,10 +1,22 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
 <section class="main_header dis-flex">
   <div class="breadcrumb">
     <h2>Surveys</h2>
   </div>
   <div class="btns dis-flex">
-    <button class="btn prim_btn" routerLink="/admin/add-question">
+    <button class="btn prim_btn" *ngIf="!loading" (click)="createSurvey()">
       Continue
+    </button>
+    <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
+      <span class="loading-spinner">
+        <div class="spinner-3"></div>
+      </span>
     </button>
   </div>
 </section>
@@ -14,24 +26,63 @@
     <h3 class="text-primary-color">Set the Survey Information</h3>
     <p>This information will tell the users what the survey is about</p>
   </div>
-  <form class="auth_form">
+  <form class="auth_form" [formGroup]="userForm">
     <div class="auth_form_field">
       <label for="title">Survey Title</label>
-      <div class="input-field">
-        <input type="text" id="title" placeholder="Type here" />
+      <div
+        class="input-field"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.title.errors
+        }"
+      >
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Type here"
+          formControlName="title"
+        />
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.title.errors"
+      >
+        <small
+          *ngIf="isFormSubmitted && userForm.controls.title.errors.required"
+          >Title is required</small
+        >
       </div>
     </div>
     <div class="auth_form_field">
       <label for="description">Survey Description</label>
-      <div class="input-field">
+      <div
+        class="input-field"
+        [ngClass]="{
+          'is-invalid': isFormSubmitted && userForm.controls.description.errors
+        }"
+      >
         <textarea
-          name=""
+          name="description"
           id="description"
           cols="30"
           rows="5"
           placeholder="Type here"
+          formControlName="description"
           spellcheck="true"
         ></textarea>
+      </div>
+      <!-- Error -->
+      <div
+        class="input_error"
+        *ngIf="isFormSubmitted && userForm.controls.description.errors"
+      >
+        <small
+          *ngIf="
+            isFormSubmitted && userForm.controls.description.errors.required
+          "
+          >Description is required</small
+        >
       </div>
     </div>
   </form>

@@ -10,7 +10,10 @@
     margin-bottom: $s-3;
     .breadcrumb {
         gap: $s-1;
-        align-items: center;
+        .icon {
+            font-size: 18px;
+            vertical-align: middle;
+        }
     }
     .btns {
         gap: $s-1;

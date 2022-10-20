@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { FormService } from '../../services/form.service';
 import { ResponseService } from '../../services/response.service';
@@ -23,6 +23,7 @@ export class SurveyResponseComponent implements OnInit {
   constructor(
     private formService: FormService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private responseService: ResponseService
   ) {}
 
@@ -56,31 +57,34 @@ export class SurveyResponseComponent implements OnInit {
 
   // Submit response
   submitResponse() {
-    this.responseService
-      .addResponse('payload', this.currentShortCode.shortCode)
-      .pipe(first())
-      .subscribe({
-        next: (res: any) => {
-          // If status is true
-          console.log(res);
+    this.router.navigate([
+      `/surveys/${this.currentShortCode.shortCode}/submitted`,
+    ]);
+    // this.responseService
+    //   .addResponse('payload', this.currentShortCode.shortCode)
+    //   .pipe(first())
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       // If status is true
+    //       console.log(res);
 
-          this.showAlert('Done!', 'success');
+    //       this.showAlert('Done!', 'success');
 
-          // Route user
-          // setTimeout(() => {
-          //   // Route user
-          //   this.router.navigate([
-          //     `/auth/verify-email/${this.userForm.value.username}`,
-          //   ]);
-          // }, 3000);
-        },
-        error: (e) => {
-          console.error(e.message);
+    //       // Route user
+    //       setTimeout(() => {
+    //         // Route user
+    //         this.router.navigate([
+    //           `/surveys/${this.currentShortCode.shortCode}/submitted`,
+    //         ]);
+    //       }, 3000);
+    //     },
+    //     error: (e) => {
+    //       console.error(e.message);
 
-          // Show error message
-          this.showAlert(e.message, 'error');
-        },
-      });
+    //       // Show error message
+    //       this.showAlert(e.message, 'error');
+    //     },
+    //   });
   }
 
   // Show alert

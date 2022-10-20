@@ -9,9 +9,10 @@ import { SharedModule } from '../shared/shared.module';
 import { UserSurveyComponent } from './components/user-survey/user-survey.component';
 import { SurveyPreviewComponent } from './components/survey-preview/survey-preview.component';
 import { DefaultFooterComponent } from './components/default-footer/default-footer.component';
+import { SurveySubmitSuccessComponent } from './components/survey-submit-success/survey-submit-success.component';
 
 @NgModule({
-  declarations: [DefaultComponent, HomeComponent, UserSurveyComponent, SurveyPreviewComponent, DefaultFooterComponent],
+  declarations: [DefaultComponent, HomeComponent, UserSurveyComponent, SurveyPreviewComponent, DefaultFooterComponent, SurveySubmitSuccessComponent],
   imports: [CommonModule, DefaultRoutingModule, RouterModule, SharedModule],
 })
 export class DefaultModule {}

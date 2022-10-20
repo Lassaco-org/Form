@@ -30,7 +30,6 @@ export class EditSurveyQuestionComponent implements OnInit {
     this.formService.getFormByShortCode('ASN105').subscribe({
       next: (res: any) => {
         this.survey = res.data;
-        console.log(this.survey);
       },
       error: (e) => console.error(e),
       complete: () => {

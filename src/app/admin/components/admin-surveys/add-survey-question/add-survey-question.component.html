@@ -12,8 +12,16 @@
 ></app-share-survey>
 
 <section class="main_header dis-flex">
-  <div class="breadcrumb">
+  <div class="breadcrumb dis-flex">
     <h2 class="clickable" routerLink="/admin/surveys">Surveys</h2>
+    <i class="bx bx-chevron-right icon"></i>
+    <p [title]="newSurveyData?.title">
+      {{
+        newSurveyData?.title.length > 20
+          ? newSurveyData?.title.slice(0, 20) + "..."
+          : newSurveyData?.title
+      }}
+    </p>
   </div>
   <div class="btns dis-flex">
     <i
