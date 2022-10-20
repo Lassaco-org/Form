@@ -2,23 +2,22 @@
 @import '../../../../assets/css/mixins.scss';
 
 header {
-    padding: $s-1 $s-4;
-    border-bottom: 1px solid $divider-color;
-    height: 4rem;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 150;
-    background: $blue50;
+    background: $white-color;
     color: $white-color;
-    @media only screen and (max-width: 997px) {
-        padding: $s-1 $s-2;
-    }
+    z-index: 150;
     .header_container {
-        height: 3rem;
+        height: 4rem;
         gap: $s-2;
         justify-content: space-between;
+        background: $blue50;
+        padding: $s-1 $s-4;
+        @media only screen and (max-width: 997px) {
+            padding: $s-1 $s-2;
+        }
         .header_left {
             gap: $s-1;
             &_menu {
