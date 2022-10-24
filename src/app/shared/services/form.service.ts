@@ -44,6 +44,21 @@ export class FormService {
       );
   }
 
+  // get forms
+  addForm(data: any): Observable<IForm> {
+    return this.http
+      .post<IForm>(`${this.baseUrl}form/`, data, this.getHttpOptions())
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Form added successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
   // Get Question Field to localstorage
   getQuestionFieldFromLocalStorage() {
     this.userData = localStorage.getItem('survey-questions');
@@ -51,16 +66,16 @@ export class FormService {
     return data;
   }
 
-  setItem(allData: any) {
-    localStorage.setItem('survey-questions', JSON.stringify(allData));
-  }
+  // setItem(allData: any) {
+  //   localStorage.setItem('survey-questions', JSON.stringify(allData));
+  // }
 
   // Add Question Field to localstorage
-  addSectionToLocalStorage(data: any): void {
-    let allData = JSON.parse(localStorage.getItem('survey-questions') || '[]');
-    allData.push(data);
-    return localStorage.setItem('survey-questions', JSON.stringify(allData));
-  }
+  // addSectionToLocalStorage(data: any): void {
+  //   let allData = JSON.parse(localStorage.getItem('survey-questions') || '[]');
+  //   allData.push(data);
+  //   return localStorage.setItem('survey-questions', JSON.stringify(allData));
+  // }
 
   // Get HttpOptions
   getHttpOptions() {

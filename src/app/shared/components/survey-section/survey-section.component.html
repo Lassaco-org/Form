@@ -5,8 +5,7 @@
   [color]="alertColor"
 ></app-alert-popup>
 
-<section>
-  <!-- Surevey frame add (sfa) -->
+<!-- <section>
   <div class="sfa">
     <form
       class="sfa_section"
@@ -127,8 +126,6 @@
                         [placeholder]="'Option ' + (optionIndex + 1)"
                         name="{{ optionIndex }}"
                       />
-                      <!-- [(ngModel)]="option.value"
-                          #questionOption="ngModel" -->
                       <i
                         class="bx bx-x icon close"
                         (click)="
@@ -165,8 +162,6 @@
                         [placeholder]="'Option ' + (optionIndex + 1)"
                         name="{{ optionIndex }}"
                       />
-                      <!-- [(ngModel)]="option.value"
-                          #questionOption="ngModel" -->
                       <i
                         class="bx bx-x icon close"
                         (click)="
@@ -210,40 +205,41 @@
                 <i class="bx bx-plus icon"></i>
               </span>
             </div>
-            <!-- <ng-container *ngIf="selectedDropdownValue === 'boolean'">
-                <div class="response-field">
-                  <div class="response-field_info dis-flex">
-                    <i class="bx bx-info-circle icon"></i>
-                    <p>Users can decide if a statment is true or false</p>
-                  </div>
-                  <div class="response-field_decide dis-flex">
-                    <span>True</span>
-                    <span>False</span>
-                  </div>
-                </div>
-              </ng-container> -->
           </div>
-        </div>
       </div>
-      <div class="sfa_section_other dis-flex">
-        <div
+        </div>
+        <div class="sfa_section_other dis-flex">
+          <div
           class="add-new-question clickable"
           title="Add new question"
           (click)="addQuestion()"
-        >
+          >
           <i class="bx bx-plus icon"></i>
         </div>
       </div>
     </form>
     <div class="sfa_other dis-flex">
       <div
-        class="add-new-sect dis-flex clickable"
-        title="Add new section"
+      class="add-new-sect dis-flex clickable"
+      title="Add new section"
         (click)="addSection()"
       >
-        <i class="bx bx-grid-horizontal icon"></i>
+      <i class="bx bx-grid-horizontal icon"></i>
         <p>New Section</p>
       </div>
     </div>
   </div>
-</section>
+</section> -->
+
+<!-- <ng-container *ngIf="selectedDropdownValue === 'boolean'">
+    <div class="response-field">
+      <div class="response-field_info dis-flex">
+        <i class="bx bx-info-circle icon"></i>
+        <p>Users can decide if a statment is true or false</p>
+      </div>
+      <div class="response-field_decide dis-flex">
+        <span>True</span>
+        <span>False</span>
+      </div>
+    </div>
+  </ng-container> -->

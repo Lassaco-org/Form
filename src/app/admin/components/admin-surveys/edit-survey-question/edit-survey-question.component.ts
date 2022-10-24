@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs';
 import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { FormService } from 'src/app/shared/services/form.service';
   styleUrls: ['./edit-survey-question.component.scss'],
 })
 export class EditSurveyQuestionComponent implements OnInit {
+  loading: boolean = false;
   isAlert: boolean = false;
   alertMessage: string = '';
   alertColor: string = '';
@@ -173,13 +175,35 @@ export class EditSurveyQuestionComponent implements OnInit {
 
   // Save survey
   onSave() {
-    console.log(this.surveyForm.value);
-    this.showAlert('Survey saved', 'success');
-  }
+    this.loading = true;
 
-  // On Select
-  selectItem(questionType: any, questionFieldIndex: any, questionIndex: any) {
-    console.log(questionType);
+    this.formService
+      .addForm(this.surveyForm.value)
+      .pipe(first())
+      .subscribe({
+        next: (res: any) => {
+          // If status is true
+          this.showAlert(res.message, 'success');
+          console.log(res);
+
+          // Stop loading
+          this.loading = false;
+
+          // Reset form
+          this.surveyForm.reset();
+          if (res.message === 'Admin added successfully') {
+          }
+        },
+        error: (e) => {
+          console.error(e.message);
+
+          // Show error message
+          this.showAlert(e.message, 'error');
+
+          // Set loading to false
+          this.loading = false;
+        },
+      });
   }
 
   // Show alert

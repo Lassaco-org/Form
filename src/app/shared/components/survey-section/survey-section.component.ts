@@ -46,27 +46,27 @@ export class SurveySectionComponent implements OnInit {
   ngOnInit(): void {
     // Fetch question fields then add new if null
     this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
-    if (this.questionFields === null || this.questionFields.length === 0) {
-      let payload = {
-        section: [
-          {
-            name: 'Question 1',
-            type: 'radio',
-            options: [
-              {
-                name: 'Option 1',
-              },
-            ],
-            number: '1',
-            required: false,
-            sectionName: '',
-          },
-        ],
-      };
-      this.formService.addSectionToLocalStorage(payload.section);
+    // if (this.questionFields === null || this.questionFields.length === 0) {
+    //   let payload = {
+    //     section: [
+    //       {
+    //         name: 'Question 1',
+    //         type: 'radio',
+    //         options: [
+    //           {
+    //             name: 'Option 1',
+    //           },
+    //         ],
+    //         number: '1',
+    //         required: false,
+    //         sectionName: '',
+    //       },
+    //     ],
+    //   };
+    //   this.formService.addSectionToLocalStorage(payload.section);
 
-      this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
-    }
+    //   this.questionFields = this.formService.getQuestionFieldFromLocalStorage();
+    // }
   }
 
   // String.fromCharCode('a'.charCodeAt(0) + 1)
@@ -118,55 +118,55 @@ export class SurveySectionComponent implements OnInit {
   saveSurvey() {}
 
   // On Select
-  selectItem(questionType: any, questionFieldIndex: any, questionIndex: any) {
-    this.questionFields.forEach((e: any, index: any) => {
-      if (index === questionFieldIndex) {
-        e.forEach((o: any, index: any) => {
-          if (index === questionIndex) {
-            o.type = questionType.type;
+  // selectItem(questionType: any, questionFieldIndex: any, questionIndex: any) {
+  //   this.questionFields.forEach((e: any, index: any) => {
+  //     if (index === questionFieldIndex) {
+  //       e.forEach((o: any, index: any) => {
+  //         if (index === questionIndex) {
+  //           o.type = questionType.type;
 
-            this.formService.setItem(this.questionFields);
-            this.ngOnInit();
-          }
-        });
-      }
-    });
-  }
+  //           this.formService.setItem(this.questionFields);
+  //           this.ngOnInit();
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
   // Add Section
-  addSection() {
-    let payload = {
-      section: [
-        {
-          name: 'Question 1',
-          type: 'radio',
-          options: [
-            {
-              name: 'Option 1',
-            },
-          ],
-          number: '1',
-          required: false,
-          sectionName: '',
-        },
-      ],
-    };
+  // addSection() {
+  //   let payload = {
+  //     section: [
+  //       {
+  //         name: 'Question 1',
+  //         type: 'radio',
+  //         options: [
+  //           {
+  //             name: 'Option 1',
+  //           },
+  //         ],
+  //         number: '1',
+  //         required: false,
+  //         sectionName: '',
+  //       },
+  //     ],
+  //   };
 
-    this.formService.addSectionToLocalStorage(payload.section);
-    this.showAlert('Section added', 'success');
+  //   this.formService.addSectionToLocalStorage(payload.section);
+  //   this.showAlert('Section added', 'success');
 
-    // this.ngOnInit();
-  }
+  //   // this.ngOnInit();
+  // }
 
   // Remove section
-  removeSection(questionFieldIndex: any) {
-    this.questionFields.splice(questionFieldIndex, 1);
-    this.formService.setItem(this.questionFields);
+  // removeSection(questionFieldIndex: any) {
+  //   this.questionFields.splice(questionFieldIndex, 1);
+  //   this.formService.setItem(this.questionFields);
 
-    this.showAlert('Section removed', 'success');
+  //   this.showAlert('Section removed', 'success');
 
-    this.ngOnInit();
-  }
+  //   this.ngOnInit();
+  // }
 
   // Add Question Field
   // addQuestion(questionFieldIndex: any) {
@@ -194,20 +194,20 @@ export class SurveySectionComponent implements OnInit {
   // }
 
   // remove Question Field
-  removeQuestionField(questionFieldIndex: any, questionIndex: any) {
-    this.questionFields.forEach((e: any, index: any) => {
-      if (index === questionFieldIndex) {
-        e.splice(questionIndex, 1);
-        this.formService.setItem(this.questionFields);
-        if (e.length === 0) {
-          this.removeSection(questionFieldIndex);
-        }
-        this.showAlert('Question field removed', 'success');
+  // removeQuestionField(questionFieldIndex: any, questionIndex: any) {
+  //   this.questionFields.forEach((e: any, index: any) => {
+  //     if (index === questionFieldIndex) {
+  //       e.splice(questionIndex, 1);
+  //       this.formService.setItem(this.questionFields);
+  //       if (e.length === 0) {
+  //         this.removeSection(questionFieldIndex);
+  //       }
+  //       this.showAlert('Question field removed', 'success');
 
-        this.ngOnInit();
-      }
-    });
-  }
+  //       this.ngOnInit();
+  //     }
+  //   });
+  // }
 
   // Add Question option
   // addQuestionOption(questionFieldIndex: any, questionIndex: any) {

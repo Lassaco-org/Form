@@ -45,6 +45,7 @@ export class AddSubAdminComponent implements OnInit {
     }
   }
 
+  // Add and Close
   addAndCloseAdmin() {
     this.validateForm();
 
@@ -78,6 +79,7 @@ export class AddSubAdminComponent implements OnInit {
       });
   }
 
+  // Add and New
   addAndNewAdmin() {
     this.validateForm();
 
@@ -124,6 +126,7 @@ export class AddSubAdminComponent implements OnInit {
       return;
     }
   }
+
   // Show alert
   showAlert(message: string, color: string) {
     // Set message

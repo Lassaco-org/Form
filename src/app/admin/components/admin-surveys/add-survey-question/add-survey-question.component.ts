@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs';
 import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { FormService } from 'src/app/shared/services/form.service';
   styleUrls: ['./add-survey-question.component.scss'],
 })
 export class AddSurveyQuestionComponent implements OnInit {
+  loading: boolean;
   isAlert: boolean = false;
   alertMessage: string = '';
   alertColor: string = '';
@@ -158,8 +160,35 @@ export class AddSurveyQuestionComponent implements OnInit {
 
   // Save survey
   onSave() {
-    console.log(this.surveyForm.value);
-    this.showAlert('Survey saved', 'success');
+    this.loading = true;
+
+    this.formService
+      .addForm(this.surveyForm.value)
+      .pipe(first())
+      .subscribe({
+        next: (res: any) => {
+          // If status is true
+          this.showAlert(res.message, 'success');
+          console.log(res);
+
+          // Stop loading
+          this.loading = false;
+
+          // Reset form
+          this.surveyForm.reset();
+          if (res.message === 'Admin added successfully') {
+          }
+        },
+        error: (e) => {
+          console.error(e.message);
+
+          // Show error message
+          this.showAlert(e.message, 'error');
+
+          // Set loading to false
+          this.loading = false;
+        },
+      });
   }
 
   // On Select
