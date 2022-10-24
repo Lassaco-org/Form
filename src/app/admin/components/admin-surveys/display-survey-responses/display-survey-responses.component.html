@@ -15,7 +15,13 @@
   <div class="breadcrumb dis-flex">
     <h3 class="clickable" routerLink="/admin/surveys">Surveys</h3>
     <i class="bx bx-chevron-right icon"></i>
-    <p [title]="newSurveyData">
+    <p
+      [title]="newSurveyData"
+      class="clickable"
+      [routerLink]="
+        '/admin/surveys/' + this.currentShortCode.shortCode + '/edit-survey'
+      "
+    >
       {{
         newSurveyData.length > 20
           ? newSurveyData.slice(0, 20) + "..."
