@@ -1,18 +1,15 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
-  selector: 'app-add-survey-question',
-  templateUrl: './add-survey-question.component.html',
-  styleUrls: ['./add-survey-question.component.scss'],
+  selector: 'app-delete',
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.scss'],
 })
-export class AddSurveyQuestionComponent implements OnInit {
-  isAlert: boolean = false;
-  alertMessage: string = '';
-  alertColor: string = '';
-  isShareModal: boolean = false;
-  formId: string = '';
+export class DeleteComponent implements OnInit {
+  // selectedDropdownValue: string = '';
+  // selectedDropdownType: string = 'radio';
   questionTypes = [
     {
       id: 1,
@@ -33,8 +30,11 @@ export class AddSurveyQuestionComponent implements OnInit {
       type: 'text',
     },
   ];
+  alertMessage: string = '';
+  isAlert: boolean = false;
+  alertColor: string = '';
   surveyForm: FormGroup;
-  newSurveyData: any;
+  // survey: any;
 
   constructor(
     private formService: FormService,
@@ -42,15 +42,13 @@ export class AddSurveyQuestionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get the title and descrp from localstorage if it exist
-    this.newSurveyData = JSON.parse(localStorage.getItem('new-survey') || '[]');
-
-    // Survey form
     this.surveyForm = this.formBuilder.group({
-      title: this.newSurveyData?.title,
-      description: this.newSurveyData?.description,
+      title: 'Survey title',
+      description: 'Survey description',
       sections: this.formBuilder.array([this.newSection()]),
     });
+
+    console.log(this.surveyForm.value);
   }
 
   // Get survey
@@ -159,12 +157,23 @@ export class AddSurveyQuestionComponent implements OnInit {
   // Save survey
   onSave() {
     console.log(this.surveyForm.value);
-    this.showAlert('Survey saved', 'success');
   }
 
   // On Select
   selectItem(questionType: any, questionFieldIndex: any, questionIndex: any) {
     console.log(questionType);
+
+    // this.survequestions.forEach((e: any, index: any) => {
+    //   if (index === questionFieldIndex) {
+    //     e.forEach((o: any, index: any) => {
+    //       if (index === questionIndex) {
+    //         o.type = questionType.type;
+    //         this.formService.setItem(this.survequestions);
+    //         this.ngOnInit();
+    //       }
+    //     });
+    //   }
+    // });
   }
 
   // Show alert
@@ -184,16 +193,5 @@ export class AddSurveyQuestionComponent implements OnInit {
   // Delete warning
   deleteWarning() {
     this.showAlert('You cant delete last field', 'warning');
-  }
-
-  // Open share modal
-  openShareModal(formId: any) {
-    this.formId = formId;
-    this.isShareModal = true;
-  }
-
-  // close share modal
-  closeShareModal() {
-    this.isShareModal = false;
   }
 }

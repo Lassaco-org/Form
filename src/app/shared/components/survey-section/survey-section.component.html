@@ -8,7 +8,7 @@
 <section>
   <!-- Surevey frame add (sfa) -->
   <div class="sfa">
-    <div
+    <form
       class="sfa_section"
       *ngFor="
         let questionField of questionFields;
@@ -21,7 +21,7 @@
             type="text"
             [id]="questionFieldIndex"
             placeholder="Section Title"
-            name="{{ questionFieldIndex }}"
+            name="section-{{ questionFieldIndex }}"
             spellcheck="true"
           />
         </div>
@@ -37,6 +37,7 @@
                 type="text"
                 id="question"
                 placeholder="State your question"
+                name="question-{{ questionIndex }}"
                 spellcheck="true"
               />
             </div>
@@ -48,6 +49,7 @@
                   type="text"
                   placeholder="Select Question Type"
                   class="clickable"
+                  name="question-type"
                   [(ngModel)]="question.type"
                   readonly
                 />
@@ -85,6 +87,7 @@
                   <input
                     [id]="'switch-' + questionFieldIndex + '-' + questionIndex"
                     type="checkbox"
+                    name="required-{{ questionIndex }}"
                     class="switch-input"
                   />
                   <label
@@ -226,12 +229,12 @@
         <div
           class="add-new-question clickable"
           title="Add new question"
-          (click)="addQuestion(questionFieldIndex)"
+          (click)="addQuestion()"
         >
           <i class="bx bx-plus icon"></i>
         </div>
       </div>
-    </div>
+    </form>
     <div class="sfa_other dis-flex">
       <div
         class="add-new-sect dis-flex clickable"

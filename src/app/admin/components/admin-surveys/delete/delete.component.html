@@ -5,37 +5,20 @@
   [color]="alertColor"
 ></app-alert-popup>
 
-<app-share-survey
-  *ngIf="isShareModal"
-  (isShareModal)="closeShareModal()"
-  [formId]="formId"
-></app-share-survey>
+<section style="margin-top: 3rem">
+  <div class="dis-flex" style="gap: 1rem">
+    <button (click)="addSection()">Add Section</button>
+    <button (click)="addQuestion(0)">Add Question</button>
+    <button (click)="addOption(0, 0)">Add Option</button>
+    <button (click)="onSave()">Save survey</button>
+  </div>
 
-<section class="main_header dis-flex">
-  <div class="breadcrumb dis-flex">
-    <h2 class="clickable" routerLink="/admin/surveys">Surveys</h2>
-    <i class="bx bx-chevron-right icon"></i>
-    <p [title]="newSurveyData?.title">
-      {{
-        newSurveyData?.title.length > 20
-          ? newSurveyData?.title.slice(0, 20) + "..."
-          : newSurveyData?.title
-      }}
-    </p>
-  </div>
-  <div class="btns dis-flex">
-    <i
-      class="bx bx-show icon clickable"
-      title="Preview"
-      routerLink="/surveys/id/survey-preview"
-    ></i>
-    <i class="bx bx-save icon clickable" title="Save" (click)="onSave()"></i>
-    <button class="btn sec_btn" (click)="openShareModal('formId')">Send</button>
-  </div>
+  <h5>Field Values</h5>
+  <pre style="font-size: 15px">{{ surveyForm.value | json }}</pre>
 </section>
 
 <section>
-  <form [formGroup]="surveyForm">
+  <form [formGroup]="surveyForm" (ngSubmit)="onSave()">
     <div class="sfa" formArrayName="sections">
       <!-- Sections starts -->
       <div
