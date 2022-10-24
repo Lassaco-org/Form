@@ -111,14 +111,16 @@
                             display: none;
                             &_list {
                                 &_item {
-                                    padding: $s-1 $s-3;
-                                    cursor: pointer;
-                                    p {
-                                        color: $blue40;
-                                        margin-top: 0.2rem;
-                                    }
-                                    &:hover {
-                                        background: $grey4;
+                                    div {
+                                        padding: $s-1 $s-3;
+                                        cursor: pointer;
+                                        p {
+                                            color: $blue40;
+                                            margin-top: 0.2rem;
+                                        }
+                                        &:hover {
+                                            background: $grey4;
+                                        }
                                     }
                                 }
                             }

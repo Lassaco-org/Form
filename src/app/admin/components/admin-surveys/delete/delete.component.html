@@ -67,7 +67,7 @@
                   <div class="sfa_header_right dis-flex">
                     <div
                       class="sfa_header_right_type"
-                      (click)="dropdown.click()"
+                      (click)="dropdownBtn.click()"
                     >
                       <div class="dropdown-value dis-flex clickable">
                         {{ question.value.type | titlecase }}
@@ -78,44 +78,31 @@
                         [id]="'dropdown-' + sectionIndex + questionIndex"
                         class="dropdown-btn"
                         style="display: none"
-                        #dropdown
+                        #dropdownBtn
                       />
 
                       <div class="dropdown-area" style="overflow: auto">
-                        <ul class="dropdown-area_list">
-                          <li
+                        <div class="dropdown-area_list">
+                          <label
                             class="dropdown-area_list_item"
                             *ngFor="let questionType of questionTypes"
+                            (click)="hi.click()"
                           >
-                            <label
-                              [for]="
-                                questionType.type +
-                                '-' +
-                                sectionIndex +
-                                questionIndex +
-                                questionType.id
-                              "
-                            >
+                            <div>
                               <input
                                 type="radio"
                                 name="type"
-                                [id]="
-                                  questionType.type +
-                                  '-' +
-                                  sectionIndex +
-                                  questionIndex +
-                                  questionType.id
-                                "
                                 [value]="questionType.type"
                                 formControlName="type"
                                 style="display: none"
+                                #hi
                               />
 
                               <h5>{{ questionType.title }}</h5>
                               <p>{{ questionType.description }}</p>
-                            </label>
-                          </li>
-                        </ul>
+                            </div>
+                          </label>
+                        </div>
                       </div>
                     </div>
                     <div class="sfa_header_right_actions dis-flex">
