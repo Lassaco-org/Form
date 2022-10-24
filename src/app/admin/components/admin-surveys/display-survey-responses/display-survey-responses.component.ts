@@ -70,6 +70,8 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   dataLoading: boolean = true;
   currentShortCode: any;
   survey: any;
+  newSurveyData: string = 'Survey title';
+
   constructor(
     private responseService: ResponseService,
     private formService: FormService,
@@ -79,7 +81,6 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   ngOnInit(): void {
     // Get Current Rating Agency ID
     this.currentShortCode = this.activatedRoute.snapshot.params;
-    console.log(this.currentShortCode);
 
     // Get Survey
     this.formService
