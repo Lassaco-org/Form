@@ -42,7 +42,7 @@
         </td>
         <td>{{ survey?.createdAt | date: "mediumDate" }}</td>
         <td>0</td>
-        <td>active</td>
+        <td>{{ survey.available ? "Active" : "In-active" }}</td>
         <td class="actions dis-flex">
           <i
             class="bx bx-share icon share"
