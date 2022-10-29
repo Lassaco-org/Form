@@ -19,7 +19,7 @@ export class AdminSurveysOverviewComponent implements OnInit {
   isShareModal: boolean = false;
   test: string =
     'User Research Survey Questions For An Online Marketplace for Small Business Owners.';
-  formId: string = '';
+  surveyShortCode: string = '';
 
   constructor(
     private formService: FormService,
@@ -32,7 +32,6 @@ export class AdminSurveysOverviewComponent implements OnInit {
     this.formService.getForms().subscribe({
       next: (res: any) => {
         this.surveys = res.data.docs;
-        console.log(this.surveys);
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -41,30 +40,51 @@ export class AdminSurveysOverviewComponent implements OnInit {
     });
   }
 
-  // Suspend Account
-  updateAccountStatus(user: any) {
+  // Edit Survey
+  editSurvey(survey: any) {
+    if (survey.available === true) {
+      this.router.navigate([`/admin/surveys/${survey?.shortCode}/edit-survey`]);
+    } else {
+      this.showAlert('Survey suspend!', 'error');
+    }
+  }
+
+  // Response Analyze Survey
+  analyzeSurvey(survey: any) {
+    if (survey.available === true) {
+      this.router.navigate([`/admin/surveys/${survey?.shortCode}/response`]);
+    } else {
+      this.showAlert('Survey suspend!', 'error');
+    }
+  }
+
+  // Suspend Survey
+  updateSurveyStatus(survey: any) {
     let payload = {
-      status: user.status == 'active' ? 'inactive' : 'active',
+      title: survey.title,
+      available: survey.available == true ? false : true,
     };
 
-    // this.adminService
-    //   .updateStatus(user._id, payload)
-    //   .pipe(first())
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       // If status is true
-    //       if (res.message === 'User status updated successfully') {
-    //         this.showAlert(res.message, 'success');
-    //         this.ngOnInit();
-    //       }
-    //     },
-    //     error: (e) => {
-    //       console.error(e.message);
+    console.log(payload);
 
-    //       // Show error message
-    //       this.showAlert(e.message, 'error');
-    //     },
-    //   });
+    this.formService
+      .updateStatus(survey._id, payload)
+      .pipe(first())
+      .subscribe({
+        next: (res: any) => {
+          // If status is true
+          if (res.message === 'Form updated successfully') {
+            this.showAlert(res.message, 'success');
+            this.ngOnInit();
+          }
+        },
+        error: (e) => {
+          console.error(e.message);
+
+          // Show error message
+          this.showAlert(e.message, 'error');
+        },
+      });
   }
 
   // Show alert
@@ -82,9 +102,13 @@ export class AdminSurveysOverviewComponent implements OnInit {
   }
 
   // Open share modal
-  openShareModal(formId: any) {
-    this.formId = formId;
-    this.isShareModal = true;
+  openShareModal(survey: any) {
+    if (survey.available === true) {
+      this.surveyShortCode = survey.shortCode;
+      this.isShareModal = true;
+    } else {
+      this.showAlert('Survey suspend!', 'error');
+    }
   }
 
   // close share modal

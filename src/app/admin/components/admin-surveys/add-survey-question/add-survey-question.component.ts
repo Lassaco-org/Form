@@ -94,7 +94,6 @@ export class AddSurveyQuestionComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', [Validators.required]],
       type: ['radio', [Validators.required]],
-      number: ['1', [Validators.required]],
       required: [false, [Validators.required]],
       options: this.formBuilder.array([this.newOption()]),
     });
@@ -130,7 +129,6 @@ export class AddSurveyQuestionComponent implements OnInit {
   newOption() {
     return this.formBuilder.group({
       name: ['', [Validators.required]],
-      grade: [0, [Validators.required]],
     });
   }
 
@@ -176,8 +174,8 @@ export class AddSurveyQuestionComponent implements OnInit {
 
           // Reset form
           this.surveyForm.reset();
-          if (res.message === 'Admin added successfully') {
-          }
+          // if (res.message === 'Admin added successfully') {
+          // }
         },
         error: (e) => {
           console.error(e.message);

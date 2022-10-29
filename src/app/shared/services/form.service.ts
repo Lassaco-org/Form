@@ -59,6 +59,25 @@ export class FormService {
       );
   }
 
+  // Update status forms
+  updateStatus(surveyId: string, data: any): Observable<IForm> {
+    return this.http
+      .put<IForm>(
+        `${this.baseUrl}form/${surveyId}`,
+        data,
+        this.getHttpOptions()
+      )
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Form updated successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
   // Get Question Field to localstorage
   getQuestionFieldFromLocalStorage() {
     this.userData = localStorage.getItem('survey-questions');

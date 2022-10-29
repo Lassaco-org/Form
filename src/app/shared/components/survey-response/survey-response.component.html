@@ -53,7 +53,7 @@
                   <input
                     [type]="question.type"
                     [id]="questionIndex + '-' + optionIndex"
-                    [name]="'options-' + questionIndex"
+                    [name]="question.questKey"
                   />
                   <label [for]="questionIndex + '-' + optionIndex">
                     {{ option.name }}

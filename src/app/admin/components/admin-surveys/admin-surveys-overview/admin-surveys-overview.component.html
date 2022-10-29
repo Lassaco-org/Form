@@ -1,7 +1,14 @@
+<!-- Alert -->
+<app-alert-popup
+  *ngIf="isAlert"
+  [text]="alertMessage"
+  [color]="alertColor"
+></app-alert-popup>
+
 <app-share-survey
   *ngIf="isShareModal"
   (isShareModal)="closeShareModal()"
-  [formId]="formId"
+  [formId]="surveyShortCode"
 ></app-share-survey>
 
 <section class="main_header dis-flex">
@@ -26,10 +33,7 @@
         <th>Actions</th>
       </tr>
       <tr class="table-body" *ngFor="let survey of surveys">
-        <td
-          [title]="survey?.title"
-          [routerLink]="'/admin/surveys/' + survey?.shortCode + '/edit-survey'"
-        >
+        <td [title]="survey?.title" (click)="editSurvey(survey)">
           {{
             survey?.title.length > 30
               ? survey?.title.slice(0, 30) + "..."
@@ -43,22 +47,24 @@
           <i
             class="bx bx-share icon share"
             title="Share"
-            (click)="openShareModal(survey?.shortCode)"
+            (click)="openShareModal(survey)"
           ></i>
           <i
             class="bx bx-edit-alt icon edit"
-            [routerLink]="
-              '/admin/surveys/' + survey?.shortCode + '/edit-survey'
-            "
+            (click)="editSurvey(survey)"
             title="Edit"
           ></i>
           <i
             class="bx bx-bar-chart-alt icon analyze"
             title="Analyze"
-            [routerLink]="'/admin/surveys/' + survey?.shortCode + '/response'"
+            (click)="analyzeSurvey(survey)"
           ></i>
-          <!-- /admin/survey-response -->
-          <i class="bx bx-pause icon suspend" title="Suspend"></i>
+          <i
+            class="icon suspend"
+            title="Suspend"
+            (click)="updateSurveyStatus(survey)"
+            [class]="survey.available ? 'bx bx-play' : 'bx bx-pause'"
+          ></i>
         </td>
       </tr>
     </table>

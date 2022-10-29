@@ -32,17 +32,19 @@ export class SurveyResponseComponent implements OnInit {
     this.currentShortCode = this.activatedRoute.snapshot.params;
 
     // Get Survey
-    this.formService.getFormByShortCode('ASN105').subscribe({
-      next: (res: any) => {
-        this.survey = res.data;
-        let surveyQuestion = this.survey.questions;
-        this.questionSectionLength = Object.keys(surveyQuestion).length;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
+    this.formService
+      .getFormByShortCode(this.currentShortCode.shortCode)
+      .subscribe({
+        next: (res: any) => {
+          this.survey = res.data;
+          let surveyQuestion = this.survey.questions;
+          this.questionSectionLength = Object.keys(surveyQuestion).length;
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
   }
 
   previousSection() {

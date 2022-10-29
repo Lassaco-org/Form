@@ -51,16 +51,18 @@ export class EditSurveyQuestionComponent implements OnInit {
     // Get Current Rating Agency ID
     this.currentShortCode = this.activatedRoute.snapshot.params;
 
-    // Get Survey
-    this.formService.getFormByShortCode('ASN105').subscribe({
-      next: (res: any) => {
-        this.survey = res.data;
-      },
-      error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
-    });
+    // Get Survey by shortcode
+    this.formService
+      .getFormByShortCode(this.currentShortCode.shortCode)
+      .subscribe({
+        next: (res: any) => {
+          this.survey = res.data;
+        },
+        error: (e) => console.error(e),
+        complete: () => {
+          this.dataLoading = false;
+        },
+      });
 
     // Survey form
     this.surveyForm = this.formBuilder.group({
@@ -191,8 +193,8 @@ export class EditSurveyQuestionComponent implements OnInit {
 
           // Reset form
           this.surveyForm.reset();
-          if (res.message === 'Admin added successfully') {
-          }
+          // if (res.message === 'Admin added successfully') {
+          // }
         },
         error: (e) => {
           console.error(e.message);
