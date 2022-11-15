@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-share-survey',
@@ -18,21 +19,26 @@ export class ShareSurveyComponent implements OnInit {
   isFormSubmitted: boolean = false;
   copyText: any;
   tooltip: any;
-
-  selectedFile: File;
-  // previewImage: any;
-  // showPreviewImage: boolean = false;
+  arrayBuffer: any;
+  file: File;
   emailList: any[] = [];
+  showEmailList: boolean = false;
+  selectedFileName: any;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     // User form
     this.userForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: [''],
+      message: [
+        'Lasaco Assurance Plc shared you this survey link, kindly spare us few minutes of your time to fill the form. Thank you!',
+        [Validators.required],
+      ],
     });
   }
 
+  // Close Share Modal
   closeShareModal() {
     this.isShareModal.emit();
   }
@@ -46,8 +52,10 @@ export class ShareSurveyComponent implements OnInit {
 
   // Add email
   addEmail() {
+    // Show added email(s)
+    this.showEmailList = true;
     this.emailList.push(this.userForm.value.email);
-
+    // Clear input field
     this.userForm.get('email').setValue('');
   }
 
@@ -56,27 +64,66 @@ export class ShareSurveyComponent implements OnInit {
     this.emailList.splice(index, 1);
   }
 
-  // Upload File
   uploadFile(event: any) {
-    // Preview File Selected
-    this.selectedFile = event[0].name;
+    this.file = event.target.files[0];
+    // Set file name
+    this.selectedFileName = this.file.name;
 
-    // if (this.selectedFile) {
-    //   let reader = new FileReader();
-    //   reader.readAsDataURL(this.selectedFile);
-    //   reader.onload = (e: any) => {
-    //     this.previewImage = e.target.result;
-    //     console.log(e);
+    // Extract emails from xlxs sheet
+    let fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      this.arrayBuffer = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i)
+        arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join('');
+      var workbook = XLSX.read(bstr, { type: 'binary' });
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      let emails = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      // Get each email address
+      emails.forEach((email: any) => {
+        if (email.__EMPTY.includes('.com')) {
+          this.emailList.push(email.__EMPTY);
+        } else {
+          // Show alert
+          this.showAlert('No email found!', 'error');
+        }
+      });
+    };
+    fileReader.readAsArrayBuffer(this.file);
 
-    //     if (this.previewImage !== '') {
-    //       this.showPreviewImage = true;
-    //     } else {
-    //       this.showPreviewImage = false;
-    //     }
-    //   };
-    // }
-
+    // Show alert
     this.showAlert('File uploaded!', 'success');
+  }
+
+  // Share
+  shareForm() {
+    this.validateForm();
+    let payload = {
+      email: this.emailList,
+      subject: 'Survey form',
+      message: this.userForm.value.message,
+      link: `https://lasaco-form.netlify.app/#/surveys/${this.formId}`,
+    };
+    console.log(payload);
+  }
+
+  // Validate form
+  validateForm() {
+    // Start loading
+    this.loading = true;
+
+    // Set submitted to true
+    this.isFormSubmitted = true;
+
+    // If Form is invalid
+    if (this.userForm.invalid) {
+      this.loading = false;
+
+      return;
+    }
   }
 
   // Show alert

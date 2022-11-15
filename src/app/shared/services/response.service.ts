@@ -20,6 +20,24 @@ export class ResponseService {
       .get<IResponse>(`${this.baseUrl}response`, this.getHttpOptions())
       .pipe(
         switchMap((res: any) => {
+          console.log(`Responses fetched successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
+  // get response for a form
+  getResponseForForm(surveyId: string): Observable<IResponse> {
+    return this.http
+      .get<IResponse>(
+        `${this.baseUrl}response?form=${surveyId}`,
+        this.getHttpOptions()
+      )
+      .pipe(
+        switchMap((res: any) => {
           console.log(`Response fetched successfully`, res);
           return of(res);
         }),
@@ -46,6 +64,26 @@ export class ResponseService {
           return throwError(() => new Error(err.error.message));
         })
       );
+  }
+
+  async addPage(data: any, shortCode: string) {
+    try {
+      const r = await fetch(`${this.baseUrl}response/public/${shortCode}`, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+        body: data,
+      });
+      const result = await r.json();
+      if (result.message === 'Form submitted successfully') {
+        return result;
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   }
 
   // Get HttpOptions

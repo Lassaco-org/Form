@@ -17,9 +17,8 @@ export class AdminSurveysOverviewComponent implements OnInit {
   isAlert: boolean = false;
   alertColor: string = '';
   isShareModal: boolean = false;
-  test: string =
-    'User Research Survey Questions For An Online Marketplace for Small Business Owners.';
   surveyShortCode: string = '';
+  user: any;
 
   constructor(
     private formService: FormService,
@@ -27,11 +26,27 @@ export class AdminSurveysOverviewComponent implements OnInit {
     private router: Router
   ) {}
 
+  // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMjYwZjYyYmZmNTQxZTA0NTAxMThjMCIsImlhdCI6MTY2ODE3NTE1NiwiZXhwIjozLjYwMDAwMDAwMDAwMDAwMTRlKzI0fQ.R-CsoqR2nz4_PUcghmDtiQhD0JA-RM9Nkw0siLNvjDM
+
   ngOnInit(): void {
+    // Get user details
+    let userData = this.authService.getUserFromLocalStorage();
+    this.user = userData.user;
+
     // Get All Admins
     this.formService.getForms().subscribe({
       next: (res: any) => {
-        this.surveys = res.data.docs;
+        let result = res.data.docs;
+        result.forEach((res: any) => {
+          // fetch surveys for this current user
+          if (res.createdBy === this.user._id) {
+            this.surveys = result;
+            // console.log(res.createdBy);
+            // this.surveys[0]['totalResponses'] = 10;
+
+            console.log(this.surveys);
+          }
+        });
       },
       error: (e) => console.error(e),
       complete: () => {

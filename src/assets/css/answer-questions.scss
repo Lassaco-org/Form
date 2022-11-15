@@ -1,8 +1,10 @@
-@import '../../../../assets/css/variables.scss';
-@import '../../../../assets/css/mixins.scss';
+@import './variables.scss';
+@import './mixins.scss';
 
-.loading-spinner {
-    margin-top: $s-4;
+main {
+    .loading-spinner {
+        margin-top: $s-4;
+    }
 }
 
 .sp {

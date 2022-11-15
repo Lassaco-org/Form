@@ -85,9 +85,9 @@ export class FormService {
     return data;
   }
 
-  // setItem(allData: any) {
-  //   localStorage.setItem('survey-questions', JSON.stringify(allData));
-  // }
+  setItem(allData: any) {
+    localStorage.setItem('survey-questions', JSON.stringify(allData));
+  }
 
   // Add Question Field to localstorage
   // addSectionToLocalStorage(data: any): void {

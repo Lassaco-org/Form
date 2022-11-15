@@ -6,7 +6,6 @@ import { DashboardSidenavComponent } from './components/dashboard-sidenav/dashbo
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareSurveyComponent } from './components/share-survey/share-survey.component';
-import { SurveyResponseComponent } from './components/survey-response/survey-response.component';
 import { SurveySectionComponent } from './components/survey-section/survey-section.component';
 import { DragDropDirective } from './directive/drag-drop.directive';
 
@@ -16,7 +15,6 @@ import { DragDropDirective } from './directive/drag-drop.directive';
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     ShareSurveyComponent,
-    SurveyResponseComponent,
     SurveySectionComponent,
     DragDropDirective,
   ],
@@ -26,7 +24,6 @@ import { DragDropDirective } from './directive/drag-drop.directive';
     DashboardHeaderComponent,
     DashboardSidenavComponent,
     ShareSurveyComponent,
-    SurveyResponseComponent,
     SurveySectionComponent,
   ],
 })

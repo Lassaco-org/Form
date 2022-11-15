@@ -27,6 +27,8 @@ import {
 } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
 import { FormService } from 'src/app/shared/services/form.service';
+import * as XLSX from 'xlsx';
+import { ExcelService } from 'src/app/admin/services/excel.service';
 
 // Register the Chart Elements
 Chart.register(
@@ -70,12 +72,14 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   dataLoading: boolean = true;
   currentShortCode: any;
   survey: any;
-  newSurveyData: string = 'Survey title';
+  totalSurveyResponses: any;
+  resultArray: any;
 
   constructor(
     private responseService: ResponseService,
     private formService: FormService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -88,97 +92,175 @@ export class DisplaySurveyResponsesComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.survey = res.data;
+          // Get form responses
+          this.responseService.getResponseForForm(this.survey._id).subscribe({
+            next: (res: any) => {
+              let result = res.data.docs;
+              this.totalSurveyResponses = result.length;
+              this.resultArray = [];
+              result.forEach((r: any) => {
+                let resSurveyData = Object.values(r.data);
+                resSurveyData.forEach((s: any) => {
+                  s.forEach((q: any) => {
+                    this.resultArray.push(q);
+                  });
+                });
+              });
+
+              this.mergeResponses(this.resultArray);
+            },
+            error: (e) => console.error(e),
+          });
         },
         error: (e) => console.error(e),
         complete: () => {
           this.dataLoading = false;
         },
       });
+  }
 
-    // Get all form responses
-    this.responseService.getResponses().subscribe({
+  // Merge Responses
+  mergeResponses(array: any) {
+    this.responses = [];
+    array.forEach((item: any) => {
+      var existing = this.responses.filter((v: any, i: any) => {
+        return v.name == item.name;
+      });
+
+      if (existing.length) {
+        var existingIndex = this.responses.indexOf(existing[0]);
+        this.responses[existingIndex].value = this.responses[
+          existingIndex
+        ].value.concat(item.value);
+      } else {
+        if (typeof item.value == 'string') {
+          item.value = [item.value];
+          this.responses.push(item);
+        } else {
+          item.value = [''];
+          // this.responses.push(item);
+        }
+      }
+    });
+    console.log(this.responses);
+  }
+
+  // Export as Excel
+  exportexcel() {
+    this.responseService.getResponseForForm(this.survey._id).subscribe({
       next: (res: any) => {
-        this.responses = res.data.docs;
-        console.log(this.responses);
+        let exportResult = res.data.docs;
+        let exportResultArray: any[] = [];
+        exportResult.forEach((r: any) => {
+          let resSurveyData = Object.values(r.data);
+          resSurveyData.forEach((s: any) => {
+            s.forEach((q: any) => {
+              exportResultArray.push(q);
+            });
+          });
+        });
+        let newExportResultArray = exportResultArray.map((r: any) => ({
+          [r.name]: r.value,
+        }));
+
+        console.log(newExportResultArray);
+        this.excelService.exportExcel(newExportResultArray);
       },
       error: (e) => console.error(e),
-      complete: () => {
-        this.dataLoading = false;
-      },
+      complete: () => {},
     });
 
-    this.createChart();
+    const hello = [
+      {
+        'How many states do we have in Nigeria?': '10',
+        'Which of these states have you been to?': null,
+        'What do you think about the new Naira notes designs?':
+          'I dont like it',
+      },
+      {
+        'How many states do we have in Nigeria?': '36',
+        'Which of these states have you been to?': null,
+        'What do you think about the new Naira notes designs?': 'Make sense',
+      },
+      {
+        'How many states do we have in Nigeria?': '"23"',
+        'Which of these states have you been to?': null,
+        'What do you think about the new Naira notes designs?': 'fine',
+      },
+    ];
+
+    // this.excelService.exportExcel(hello);
   }
 
-  createChart() {
-    this.chart = new Chart('chart1', {
-      type: 'bar',
+  // createChart() {
+  //   this.chart = new Chart('chart1', {
+  //     type: 'bar',
 
-      data: {
-        // values on X-Axis
-        labels: [
-          '2022-05-10',
-          '2022-05-11',
-          '2022-05-12',
-          '2022-05-13',
-          '2022-05-14',
-          '2022-05-15',
-          '2022-05-16',
-          '2022-05-17',
-        ],
-        datasets: [
-          {
-            label: 'Sales',
-            data: ['467', '576', '572', '79', '92', '574', '573', '576'],
-            backgroundColor: 'blue',
-          },
-          {
-            label: 'Profit',
-            data: ['542', '542', '536', '327', '17', '0.00', '538', '541'],
-            backgroundColor: 'limegreen',
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 2.5,
-      },
-    });
+  //     data: {
+  //       // values on X-Axis
+  //       labels: [
+  //         '2022-05-10',
+  //         '2022-05-11',
+  //         '2022-05-12',
+  //         '2022-05-13',
+  //         '2022-05-14',
+  //         '2022-05-15',
+  //         '2022-05-16',
+  //         '2022-05-17',
+  //       ],
+  //       datasets: [
+  //         {
+  //           label: 'Sales',
+  //           data: ['467', '576', '572', '79', '92', '574', '573', '576'],
+  //           backgroundColor: 'blue',
+  //         },
+  //         {
+  //           label: 'Profit',
+  //           data: ['542', '542', '536', '327', '17', '0.00', '538', '541'],
+  //           backgroundColor: 'limegreen',
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       aspectRatio: 2.5,
+  //     },
+  //   });
 
-    this.chart = new Chart('chart2', {
-      type: 'doughnut',
+  //   this.chart = new Chart('chart2', {
+  //     type: 'doughnut',
 
-      data: {
-        // values on X-Axis
-        labels: [
-          '2022-05-10',
-          '2022-05-11',
-          '2022-05-12',
-          '2022-05-13',
-          '2022-05-14',
-          '2022-05-15',
-          '2022-05-16',
-          '2022-05-17',
-        ],
-        datasets: [
-          {
-            label: 'Sales',
-            data: ['467', '576', '572', '79', '92', '574', '573', '576'],
-            backgroundColor: 'blue',
-          },
-          {
-            label: 'Profit',
-            data: ['542', '542', '536', '327', '17', '0.00', '538', '541'],
-            backgroundColor: 'limegreen',
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 2.5,
-      },
-    });
-  }
+  //     data: {
+  //       // values on X-Axis
+  //       labels: [
+  //         '2022-05-10',
+  //         '2022-05-11',
+  //         '2022-05-12',
+  //         '2022-05-13',
+  //         '2022-05-14',
+  //         '2022-05-15',
+  //         '2022-05-16',
+  //         '2022-05-17',
+  //       ],
+  //       datasets: [
+  //         {
+  //           label: 'Sales',
+  //           data: ['467', '576', '572', '79', '92', '574', '573', '576'],
+  //           backgroundColor: 'blue',
+  //         },
+  //         {
+  //           label: 'Profit',
+  //           data: ['542', '542', '536', '327', '17', '0.00', '538', '541'],
+  //           backgroundColor: 'limegreen',
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       aspectRatio: 2.5,
+  //     },
+  //   });
+  // }
 
   // Open share modal
   openShareModal(formId: any) {

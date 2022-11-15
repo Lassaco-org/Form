@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { SurveyEditPreviewComponent } from './components/survey-edit-preview/survey-edit-preview.component';
 import { SurveyPreviewComponent } from './components/survey-preview/survey-preview.component';
 import { SurveySubmitSuccessComponent } from './components/survey-submit-success/survey-submit-success.component';
 import { UserSurveyComponent } from './components/user-survey/user-survey.component';
@@ -28,8 +29,16 @@ const routes: Routes = [
         },
       },
       {
-        path: 'surveys/:shortCode/survey-preview',
+        path: 'surveys/:surveyTitle/survey-preview',
         component: SurveyPreviewComponent,
+        data: {
+          title: 'Preview Survey',
+          description: 'Description Meta Tag Content',
+        },
+      },
+      {
+        path: 'surveys/:shortCode/edit-preview',
+        component: SurveyEditPreviewComponent,
         data: {
           title: 'Preview Survey',
           description: 'Description Meta Tag Content',

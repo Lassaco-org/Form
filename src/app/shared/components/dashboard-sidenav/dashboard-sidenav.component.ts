@@ -19,6 +19,7 @@ export class DashboardSidenavComponent implements OnInit {
     this.user = userData.user;
   }
 
+  // Close menu
   closeMenu() {
     this.hamClick.emit();
   }

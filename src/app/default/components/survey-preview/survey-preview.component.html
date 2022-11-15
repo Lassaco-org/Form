@@ -10,6 +10,126 @@
 </header>
 
 <main class="container">
-  <app-survey-response></app-survey-response>
+  <!-- Survey preview -->
+  <section class="sp">
+    <div class="sp_header">
+      <h3>{{ survey.title }}</h3>
+      <p>{{ survey.description }}</p>
+    </div>
+    <div class="sp_body">
+      <h3 class="sp_body_sect-numb">
+        {{ survey.sections[currentSectionNumber].sectionTitle }}
+      </h3>
+      <form>
+        <div class="sp_body_list">
+          <ng-container
+            *ngFor="
+              let question of survey.sections[currentSectionNumber].questions;
+              let questionIndex = index
+            "
+          >
+            <!-- .questions[currentSectionNumber] -->
+            <div class="sp_body_list_item" [ngSwitch]="question.type">
+              <h4>{{ question.name }}</h4>
+              <div class="sp_body_list_item_response">
+                <ng-container *ngSwitchCase="'radio'">
+                  <div class="sp_body_list_item_response_info dis-flex">
+                    <i class="bx bx-info-circle icon"></i>
+                    <p>Select a single option</p>
+                  </div>
+                  <ul class="sp_body_list_item_response_options">
+                    <li
+                      class="dis-flex"
+                      *ngFor="
+                        let option of question.options;
+                        let optionIndex = index
+                      "
+                    >
+                      <input
+                        type="radio"
+                        [id]="questionIndex + '-' + optionIndex"
+                        [name]="question.questKey"
+                        [value]="option.name"
+                        style="display: none"
+                      />
+                      <label [for]="questionIndex + '-' + optionIndex">
+                        {{ option.name }}
+                      </label>
+                    </li>
+                  </ul>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'checkbox'">
+                  <div class="sp_body_list_item_response_info dis-flex">
+                    <i class="bx bx-info-circle icon"></i>
+                    <p>Select multiple options</p>
+                  </div>
+                  <ul class="sp_body_list_item_response_options">
+                    <li
+                      class="dis-flex"
+                      *ngFor="
+                        let option of question.options;
+                        let optionIndex = index
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        [id]="questionIndex + '-' + optionIndex"
+                        [name]="question.questKey"
+                        [value]="option.name"
+                        style="display: none"
+                      />
+                      <label [for]="questionIndex + '-' + optionIndex">
+                        {{ option.name }}
+                      </label>
+                    </li>
+                  </ul>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'text'">
+                  <div class="sp_body_list_item_response">
+                    <div class="input-field">
+                      <input
+                        type="text"
+                        [id]="questionIndex + '-' + question.questNo"
+                        [name]="question.questKey"
+                        placeholder="Type your response"
+                        ngModel
+                      />
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="sp_body_btns">
+          <button
+            type="button"
+            class="btn prim_btn dis-flex"
+            (click)="previousSection()"
+            *ngIf="currentSectionNumber + 1 > 1"
+          >
+            <i class="bx bx-skip-previous icon"></i>Previous
+          </button>
+          <button
+            type="button"
+            class="btn prim_btn dis-flex"
+            (click)="nextSection()"
+            *ngIf="survey.sections.length > currentSectionNumber + 1"
+          >
+            Next<i class="bx bx-skip-next icon"></i>
+          </button>
+          <button
+            type="submit"
+            class="btn prim_btn"
+            *ngIf="survey.sections.length === currentSectionNumber + 1"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
 </main>
 <!-- Survey preview -->

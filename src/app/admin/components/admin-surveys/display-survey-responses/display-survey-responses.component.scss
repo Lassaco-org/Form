@@ -29,6 +29,18 @@
                     color: $blue;
                 }
             }
+            &_body {
+                margin-top: $s-2;
+                &_value {
+                    li {
+                        gap: $s-1;
+                        .icon {
+                            font-size: 12px;
+                            color: $secondary100;
+                        }
+                    }
+                }
+            }
             .chart-container {
                 padding-top: $s-2;
                 .chart {

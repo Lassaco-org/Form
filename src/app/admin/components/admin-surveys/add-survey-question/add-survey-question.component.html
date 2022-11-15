@@ -27,10 +27,12 @@
     <i
       class="bx bx-show icon clickable"
       title="Preview"
-      routerLink="/surveys/id/survey-preview"
+      (click)="previewSurvey()"
     ></i>
     <i class="bx bx-save icon clickable" title="Save" (click)="onSave()"></i>
-    <button class="btn sec_btn" (click)="openShareModal('formId')">Send</button>
+    <button class="btn sec_btn" routerLink="/admin/create-survey">
+      Change details
+    </button>
   </div>
 </section>
 

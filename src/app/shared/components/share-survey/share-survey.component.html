@@ -16,7 +16,7 @@
     </div>
     <form class="auth_form" [formGroup]="userForm">
       <!-- Email list -->
-      <div class="email_list dis-flex">
+      <div class="email_list dis-flex" *ngIf="showEmailList">
         <div
           class="email_list_item dis-flex"
           *ngFor="let email of emailList; let emailIndex = index"
@@ -32,12 +32,7 @@
       </div>
       <div class="email_input-field">
         <div class="auth_form_field dis-flex">
-          <div
-            class="input-field"
-            [ngClass]="{
-              'is-invalid': isFormSubmitted && userForm.controls.email.errors
-            }"
-          >
+          <div class="input-field">
             <input
               type="email"
               name="email"
@@ -48,17 +43,14 @@
           <button class="btn sec_btn" (click)="addEmail()">Add</button>
         </div>
         <!-- Error -->
-        <div
+        <!-- <div
           class="input_error"
-          *ngIf="isFormSubmitted && userForm.controls.username.errors"
+          *ngIf="isFormSubmitted && userForm.controls.email.errors"
         >
-          <small *ngIf="userForm.controls.username.errors.required"
+          <small *ngIf="userForm.controls.email.errors.required"
             >Email is required</small
           >
-          <!-- <small *ngIf="userForm.controls.email.errors.email"
-                >Email is invalid</small
-              > -->
-        </div>
+        </div> -->
       </div>
 
       <!-- Or -->
@@ -66,6 +58,7 @@
 
       <!-- Upload sheet -->
       <div class="upload-sheet">
+        <label for="">Upload an xlsx file containing only emails</label>
         <div
           class="upload-sheet_btn clickable dis-flex"
           appDragDrop
@@ -81,15 +74,49 @@
         <input
           type="file"
           id="sheet"
-          (change)="uploadFile($any($event).target.files)"
+          (change)="uploadFile($event)"
+          accept=".xlsx"
           hidden
           #fileInput
         />
-        <p class="upload-sheet_file-name">{{ selectedFile }}</p>
+        <p class="upload-sheet_file-name">{{ selectedFileName }}</p>
+      </div>
+
+      <!-- Message -->
+      <div class="message_input-field">
+        <label for="message">Message</label>
+        <div class="auth_form_field dis-flex">
+          <div
+            class="input-field"
+            [ngClass]="{
+              'is-invalid': isFormSubmitted && userForm.controls.message.errors
+            }"
+          >
+            <textarea
+              name="message"
+              id="message"
+              cols="30"
+              rows="3"
+              placeholder="Type your message"
+              formControlName="message"
+            ></textarea>
+          </div>
+        </div>
+        <!-- Error -->
+        <div
+          class="input_error"
+          *ngIf="isFormSubmitted && userForm.controls.message.errors"
+        >
+          <small *ngIf="userForm.controls.message.errors.required"
+            >Message is required</small
+          >
+        </div>
       </div>
 
       <div class="auth_form_btns">
-        <button class="btn prim_btn" *ngIf="!loading">Share</button>
+        <button class="btn prim_btn" *ngIf="!loading" (click)="shareForm()">
+          Share
+        </button>
         <!-- [disabled]="selectedFile === undefined || emailList.length === 0" -->
         <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
           <span class="loading-spinner">

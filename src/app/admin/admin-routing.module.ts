@@ -6,7 +6,6 @@ import { AdminSettingComponent } from './components/admin-setting/admin-setting.
 import { AddSurveyQuestionComponent } from './components/admin-surveys/add-survey-question/add-survey-question.component';
 import { AdminSurveysOverviewComponent } from './components/admin-surveys/admin-surveys-overview/admin-surveys-overview.component';
 import { CreateSurveyComponent } from './components/admin-surveys/create-survey/create-survey.component';
-import { DeleteComponent } from './components/admin-surveys/delete/delete.component';
 import { DisplaySurveyResponsesComponent } from './components/admin-surveys/display-survey-responses/display-survey-responses.component';
 import { EditSurveyQuestionComponent } from './components/admin-surveys/edit-survey-question/edit-survey-question.component';
 import { AddSubAdminComponent } from './components/sub-admins/add-sub-admin/add-sub-admin.component';
@@ -20,14 +19,6 @@ const routes: Routes = [
       {
         path: '',
         component: AdminOverviewComponent,
-        data: {
-          title: 'Overview',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
-        path: 'delete',
-        component: DeleteComponent,
         data: {
           title: 'Overview',
           description: 'Description Meta Tag Content',

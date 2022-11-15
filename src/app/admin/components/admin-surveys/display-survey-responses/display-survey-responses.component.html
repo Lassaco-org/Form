@@ -16,20 +16,20 @@
     <h3 class="clickable" routerLink="/admin/surveys">Surveys</h3>
     <i class="bx bx-chevron-right icon"></i>
     <p
-      [title]="newSurveyData"
+      [title]="survey?.title"
       class="clickable"
       [routerLink]="
         '/admin/surveys/' + this.currentShortCode.shortCode + '/edit-survey'
       "
     >
       {{
-        newSurveyData.length > 20
-          ? newSurveyData.slice(0, 20) + "..."
-          : newSurveyData
+        survey?.title.length > 20
+          ? survey?.title.slice(0, 20) + "..."
+          : survey?.title
       }}
     </p>
     <i class="bx bx-chevron-right icon"></i>
-    <p>Responses(0)</p>
+    <p>Responses({{ totalSurveyResponses }})</p>
   </div>
   <div class="btns dis-flex">
     <!-- <i class="bx bx-spreadsheet spreadsheet icon clickable"></i> -->
@@ -38,6 +38,7 @@
       alt="image"
       title="Spreadsheet"
       class="spreadsheet clickable"
+      (click)="exportexcel()"
     />
     <button
       class="btn tert_btn"
@@ -53,24 +54,29 @@
 
 <section class="response">
   <div class="response_list">
-    <div class="response_list_item">
+    <div
+      class="response_list_item"
+      *ngFor="let response of responses"
+      id="excel-table"
+    >
       <div class="response_list_item_header dis-flex">
-        <h3 class="question">Question 1</h3>
+        <h3 class="question">{{ response.name }}</h3>
 
-        <div class="right">0 responses</div>
+        <div class="right">{{ response.value.length }} responses</div>
       </div>
-      <div class="chart-container">
-        <canvas class="chart" id="chart1">{{ chart }}</canvas>
-      </div>
-    </div>
-    <div class="response_list_item">
-      <div class="response_list_item_header dis-flex">
-        <h3 class="question">Question 2</h3>
-
-        <div class="right">0 responses</div>
-      </div>
-      <div class="chart-container">
-        <canvas class="chart" id="chart2">{{ chart }}</canvas>
+      <div class="response_list_item_body">
+        <ul
+          class="response_list_item_body_value"
+          *ngFor="let value of response.value"
+        >
+          <li class="dis-flex">
+            <i class="bx bxs-disc icon"></i>
+            {{ value }}
+          </li>
+        </ul>
+        <div class="chart-container">
+          <!-- <canvas class="chart" id="chart1">{{ chart }}</canvas> -->
+        </div>
       </div>
     </div>
   </div>

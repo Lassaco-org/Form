@@ -1,0 +1,108 @@
+{
+  "message": "Form responses fetched successfully",
+  "form": "635d2345cd7ca3a6e9105fd7",
+  "data": {
+    "docs": [
+      {
+        "sectionTitle": "Section 1",
+        "questions": [
+          {
+            "name": "How many states do we have in Nigeria?",
+            "type": "radio",
+            "required": true,
+            "options": [
+              {
+                "name": "23"
+              },
+              {
+                "name": "36"
+              },
+              {
+                "name": "10"
+              }
+            ],
+            "number": 1,
+            "questKey": "1I4I4C",
+            "questNo": 1,
+            "responses": [
+              {
+                "_id": "636ffcd1aa2804bd01f2040a",
+                "createdAt": "2022-11-12T20:06:41.275Z",
+                "value": "36"
+              },
+              {
+                "_id": "636ffcd1aa2804bd01f2040a",
+                "createdAt": "2022-11-12T20:06:41.275Z",
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "name": "Which of these states have you been to?",
+            "type": "checkbox",
+            "required": false,
+            "options": [
+              {
+                "name": "Kano"
+              },
+              {
+                "name": "Lagos"
+              },
+              {
+                "name": "Abuja"
+              },
+              {
+                "name": "Kwara"
+              }
+            ],
+            "number": 2,
+            "questKey": "24Ftxi",
+            "questNo": 2,
+            "responses": [
+              {
+                "_id": "636ffcd1aa2804bd01f2040a",
+                "createdAt": "2022-11-12T20:06:41.275Z",
+                "value": ""
+              },
+              {
+                "_id": "636ffcd1aa2804bd01f2040a",
+                "createdAt": "2022-11-12T20:06:41.275Z",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sectionTitle": "Section 2",
+        "questions": [
+          {
+            "name": "What do you think about the new Naira notes designs?",
+            "type": "text",
+            "required": true,
+            "options": [
+              {
+                "name": ""
+              }
+            ],
+            "number": 1,
+            "questKey": "310wKV",
+            "questNo": 3,
+            "responses": [
+              {
+                "_id": "636ffcd1aa2804bd01f2040a",
+                "createdAt": "2022-11-12T20:06:41.275Z",
+                "value": ""
+              },
+              {
+                "_id": "636ffcd1aa2804bd01f2040a",
+                "createdAt": "2022-11-12T20:06:41.275Z",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

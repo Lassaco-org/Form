@@ -1,5 +1,6 @@
 @import '../../../../assets/css/variables.scss';
 @import '../../../../assets/css/mixins.scss';
+@import '../../../../assets/css/answer-questions.scss';
 
 header {
     background-color: $white-color;
@@ -29,4 +30,13 @@ header {
 main {
     position: relative;
     top: 4rem;
+    .sp {
+        &_body {
+            &_btns {
+                .loading-spinner {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
 }

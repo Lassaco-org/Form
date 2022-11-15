@@ -1,17 +1,10 @@
-<!-- Alert -->
-<app-alert-popup
-  *ngIf="isAlert"
-  [text]="alertMessage"
-  [color]="alertColor"
-></app-alert-popup>
-
 <header>
   <div class="container dis-flex">
     <span class="header_logo clickable" routerLink="/">
       <img src="../../../../assets/img/lasaco-logo.png" alt="" />
     </span>
     <div class="header_right dis-flex">
-      <button class="btn prim_btn">Contact</button>
+      <button class="btn prim_btn" (click)="goBack()">Go back</button>
     </div>
   </div>
 </header>
@@ -32,9 +25,7 @@
       <h3 class="sp_body_sect-numb">
         {{ survey.questions[currentSectionNumber][0].sectionTitle }}
       </h3>
-      <!-- (ngSubmit)="submitResponse(userForm.value)" #userForm="ngForm" -->
-
-      <form [formGroup]="responseForm">
+      <form>
         <div class="sp_body_list">
           <ng-container
             *ngFor="
@@ -64,7 +55,6 @@
                         [name]="question.questKey"
                         [value]="option.name"
                         style="display: none"
-                        [formControlName]="question.questKey"
                       />
                       <!-- (click)="method(question.questKey, $event)" -->
                       <label [for]="questionIndex + '-' + optionIndex">
@@ -93,8 +83,6 @@
                         [name]="question.questKey"
                         [value]="option.name"
                         style="display: none"
-                        [formControlName]="question.questKey"
-                        (click)="onCheckChange($event)"
                       />
                       <label [for]="questionIndex + '-' + optionIndex">
                         {{ option.name }}
@@ -111,7 +99,6 @@
                         [id]="questionIndex + '-' + question.questNo"
                         [name]="question.questKey"
                         placeholder="Type your response"
-                        [formControlName]="question.questKey"
                       />
                     </div>
                   </div>
@@ -125,36 +112,26 @@
             type="button"
             class="btn prim_btn dis-flex"
             (click)="previousSection()"
-            *ngIf="currentSectionNumber > 1 && !loading"
+            *ngIf="currentSectionNumber > 1"
           >
             <i class="bx bx-skip-previous icon"></i>Previous
           </button>
           <button
             type="button"
             class="btn prim_btn dis-flex"
-            (click)="nextSection('userForm.value')"
-            *ngIf="questionSectionLength > currentSectionNumber && !loading"
+            (click)="nextSection()"
+            *ngIf="questionSectionLength > currentSectionNumber"
           >
             Next<i class="bx bx-skip-next icon"></i>
           </button>
-          <div
-            class="submit-btn_area"
+          <button
+            type="submit"
+            class="btn prim_btn"
             *ngIf="questionSectionLength === currentSectionNumber"
+            (click)="submitResponse()"
           >
-            <button
-              type="submit"
-              class="btn prim_btn"
-              *ngIf="!loading"
-              (click)="submitResponse()"
-            >
-              Submit
-            </button>
-            <button class="btn load_btn" *ngIf="loading" [disabled]="loading">
-              <span class="loading-spinner">
-                <div class="spinner-3"></div>
-              </span>
-            </button>
-          </div>
+            Submit
+          </button>
         </div>
       </form>
     </div>

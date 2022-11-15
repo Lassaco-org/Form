@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { FormService } from 'src/app/shared/services/form.service';
 
@@ -40,11 +40,13 @@ export class EditSurveyQuestionComponent implements OnInit {
       type: 'text',
     },
   ];
+  surveyTitlePath: string = '';
 
   constructor(
     private formService: FormService,
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +59,19 @@ export class EditSurveyQuestionComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.survey = res.data;
+
+          // Set title path
+          this.surveyTitlePath = this.survey.title
+            .replace(/\s/g, '-')
+            .toLowerCase();
+
+          // this.surveyForm = this.formBuilder.group({
+          //   title: this.survey.title,
+          //   description: this.survey.description,
+          //   sections: this.formBuilder.array([this.newSection()]),
+          // });
+
+          // console.log(this.surveyForm.value);
         },
         error: (e) => console.error(e),
         complete: () => {
@@ -176,36 +191,36 @@ export class EditSurveyQuestionComponent implements OnInit {
   }
 
   // Save survey
-  onSave() {
+  updateSurvey() {
     this.loading = true;
 
-    this.formService
-      .addForm(this.surveyForm.value)
-      .pipe(first())
-      .subscribe({
-        next: (res: any) => {
-          // If status is true
-          this.showAlert(res.message, 'success');
-          console.log(res);
+    // this.formService
+    //   .addForm(this.surveyForm.value)
+    //   .pipe(first())
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       // If status is true
+    //       this.showAlert(res.message, 'success');
+    //       console.log(res);
 
-          // Stop loading
-          this.loading = false;
+    //       // Stop loading
+    //       this.loading = false;
 
-          // Reset form
-          this.surveyForm.reset();
-          // if (res.message === 'Admin added successfully') {
-          // }
-        },
-        error: (e) => {
-          console.error(e.message);
+    //       // Reset form
+    //       this.surveyForm.reset();
+    //       // if (res.message === 'Admin added successfully') {
+    //       // }
+    //     },
+    //     error: (e) => {
+    //       console.error(e.message);
 
-          // Show error message
-          this.showAlert(e.message, 'error');
+    //       // Show error message
+    //       this.showAlert(e.message, 'error');
 
-          // Set loading to false
-          this.loading = false;
-        },
-      });
+    //       // Set loading to false
+    //       this.loading = false;
+    //     },
+    //   });
   }
 
   // Show alert
@@ -236,5 +251,14 @@ export class EditSurveyQuestionComponent implements OnInit {
   // close share modal
   closeShareModal() {
     this.isShareModal = false;
+  }
+
+  // Preview survey
+  previewSurvey() {
+    // Save to localstorage
+    this.formService.setItem(this.survey.questions);
+
+    // Route to preview page
+    this.router.navigate([`/surveys/${this.survey.shortCode}`]);
   }
 }

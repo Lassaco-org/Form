@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { FormService } from 'src/app/shared/services/form.service';
 
@@ -37,15 +38,24 @@ export class AddSurveyQuestionComponent implements OnInit {
   ];
   surveyForm: FormGroup;
   newSurveyData: any;
+  surveyTitlePath: string = '';
+  savedSurvey: any;
+  localStorage_sections: any;
 
   constructor(
     private formService: FormService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     // Get the title and descrp from localstorage if it exist
     this.newSurveyData = JSON.parse(localStorage.getItem('new-survey') || '[]');
+
+    // Set title path
+    this.surveyTitlePath = this.newSurveyData.title
+      .replace(/\s/g, '-')
+      .toLowerCase();
 
     // Survey form
     this.surveyForm = this.formBuilder.group({
@@ -53,6 +63,44 @@ export class AddSurveyQuestionComponent implements OnInit {
       description: this.newSurveyData?.description,
       sections: this.formBuilder.array([this.newSection()]),
     });
+
+    // this.savedSurvey = this.formService.getQuestionFieldFromLocalStorage();
+    // Get Value from LOCAL STORAGE
+    // this.localStorage_sections = JSON.parse(
+    //   localStorage.getItem('survey-questions') || '[]'
+    // );
+    // if (
+    //   this.localStorage_sections == null ||
+    //   this.localStorage_sections.length === 0
+    // ) {
+    // } else {
+    //   this.surveyForm.setControl(
+    //     'sections',
+    //     this.formBuilder.array(this.localStorage_sections.sections)
+    //   );
+    // }
+
+    // if (this.savedSurvey === null || this.savedSurvey.length === 0) {
+    //   // Save to localstorage
+    //   // console.log();
+    // }
+    // this.formService.setItem(this.surveyForm.value);
+    // if (
+    //   localStorage_sections === null ||
+    //   localStorage_sections.length === 0
+    // ) {
+    //   console.log('It empty');
+    // } else {
+    //   this.surveyForm.setControl(
+    //     'sections',
+    //     this.formBuilder.array(localStorage_sections.sections)
+    //   );
+    //   // this.surveyForm.patchValue({
+    //   //   sections: localStorage_sections.sections,
+    //   // });
+
+    //   console.log(this.surveyForm.value);
+    // }
   }
 
   // Get survey
@@ -72,6 +120,9 @@ export class AddSurveyQuestionComponent implements OnInit {
   addSection() {
     this.sections().push(this.newSection());
     this.showAlert('Section added', 'success');
+
+    // Save to localstorage
+    this.formService.setItem(this.surveyForm.value);
   }
 
   // Remove Section
@@ -79,6 +130,9 @@ export class AddSurveyQuestionComponent implements OnInit {
     if (this.sections().length !== 1) {
       this.sections().removeAt(sectionIndex);
       this.showAlert('Section removed', 'success');
+
+      // Save to localstorage
+      this.formService.setItem(this.surveyForm.value);
     } else {
       this.deleteWarning();
     }
@@ -103,6 +157,9 @@ export class AddSurveyQuestionComponent implements OnInit {
   addQuestion(sectionIndex: number) {
     this.sectionQuestions(sectionIndex).push(this.newQuestion());
     this.showAlert('Question added', 'success');
+
+    // Save to localstorage
+    this.formService.setItem(this.surveyForm.value);
   }
 
   // Remove section question
@@ -110,6 +167,9 @@ export class AddSurveyQuestionComponent implements OnInit {
     if (this.sectionQuestions(sectionIndex).length !== 1) {
       this.sectionQuestions(sectionIndex).removeAt(questionIndex);
       this.showAlert('Question removed', 'success');
+
+      // Save to localstorage
+      this.formService.setItem(this.surveyForm.value);
     } else {
       this.deleteWarning();
     }
@@ -138,6 +198,9 @@ export class AddSurveyQuestionComponent implements OnInit {
       this.newOption()
     );
     this.showAlert('Option added', 'success');
+
+    // Save to localstorage
+    this.formService.setItem(this.surveyForm.value);
   }
 
   // Remove section question option
@@ -151,6 +214,9 @@ export class AddSurveyQuestionComponent implements OnInit {
         optionIndex
       );
       this.showAlert('Option removed', 'success');
+
+      // Save to localstorage
+      this.formService.setItem(this.surveyForm.value);
     } else {
       this.deleteWarning();
     }
@@ -172,8 +238,11 @@ export class AddSurveyQuestionComponent implements OnInit {
           // Stop loading
           this.loading = false;
 
+          // Route to admin surveys page
+          this.router.navigate(['/admin/surveys']);
+
           // Reset form
-          this.surveyForm.reset();
+          // this.surveyForm.reset();
           // if (res.message === 'Admin added successfully') {
           // }
         },
@@ -222,5 +291,14 @@ export class AddSurveyQuestionComponent implements OnInit {
   // close share modal
   closeShareModal() {
     this.isShareModal = false;
+  }
+
+  // Preview survey
+  previewSurvey() {
+    // Save to localstorage
+    this.formService.setItem(this.surveyForm.value);
+
+    // Route to preview page
+    this.router.navigate([`/surveys/${this.surveyTitlePath}/survey-preview`]);
   }
 }
