@@ -38,10 +38,10 @@ header {
 
 // Hero starts
 .hero {
-  // min-height: 100vh;
   position: relative;
   display: flex;
   padding: 5% 0;
+  min-height: 100vh;
   /* nd flex starts */
   .ls_flex_content {
     display: flex;
@@ -77,6 +77,16 @@ header {
       img {
         max-width: 100%;
         height: auto;
+        border-radius: $s-2;
+        position: relative;
+        // &::after {
+        //   position: absolute;
+        //   content: '';
+        //   right: 0;
+        //   top: 0;
+        //   background: re;
+
+        // }
       }
     }
   }

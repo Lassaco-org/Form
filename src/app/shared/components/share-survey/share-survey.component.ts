@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs';
 import * as XLSX from 'xlsx';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-share-survey',
@@ -25,7 +27,10 @@ export class ShareSurveyComponent implements OnInit {
   showEmailList: boolean = false;
   selectedFileName: any;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private formService: FormService
+  ) {}
 
   ngOnInit(): void {
     // User form
@@ -52,9 +57,11 @@ export class ShareSurveyComponent implements OnInit {
 
   // Add email
   addEmail() {
-    // Show added email(s)
-    this.showEmailList = true;
-    this.emailList.push(this.userForm.value.email);
+    if (this.userForm.value.email !== '') {
+      // Show added email(s)
+      this.showEmailList = true;
+      this.emailList.push(this.userForm.value.email);
+    }
     // Clear input field
     this.userForm.get('email').setValue('');
   }
@@ -65,6 +72,7 @@ export class ShareSurveyComponent implements OnInit {
   }
 
   uploadFile(event: any) {
+    this.showEmailList = false;
     this.file = event.target.files[0];
     // Set file name
     this.selectedFileName = this.file.name;
@@ -86,28 +94,53 @@ export class ShareSurveyComponent implements OnInit {
       emails.forEach((email: any) => {
         if (email.__EMPTY.includes('.com')) {
           this.emailList.push(email.__EMPTY);
+          this.showAlert('File uploaded!', 'success');
         } else {
           // Show alert
-          this.showAlert('No email found!', 'error');
+          // this.showAlert('No email found!', 'error');
         }
       });
     };
     fileReader.readAsArrayBuffer(this.file);
 
     // Show alert
-    this.showAlert('File uploaded!', 'success');
   }
 
   // Share
   shareForm() {
     this.validateForm();
     let payload = {
-      email: this.emailList,
+      emails: this.emailList,
       subject: 'Survey form',
-      message: this.userForm.value.message,
+      message: `${this.userForm.value.message} Click on the link: https://lasaco-form.netlify.app/#/surveys/${this.formId}`,
       link: `https://lasaco-form.netlify.app/#/surveys/${this.formId}`,
     };
-    console.log(payload);
+
+    this.formService
+      .shareForm(payload)
+      .pipe(first())
+      .subscribe({
+        next: (res: any) => {
+          // If status is true
+          if (res.message === 'Email sent successfully') {
+            this.showAlert(res.message, 'success');
+
+            setTimeout(() => {
+              // Close modal
+              this.closeShareModal();
+            }, 3000);
+          }
+        },
+        error: (e) => {
+          console.error(e.message);
+
+          // Show error message
+          this.showAlert(e.message, 'error');
+
+          // Set loading to false
+          this.loading = false;
+        },
+      });
   }
 
   // Validate form

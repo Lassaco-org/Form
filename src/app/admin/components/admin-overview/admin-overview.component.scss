@@ -19,3 +19,15 @@
         }
     }
 }
+
+.chart-container {
+    margin-top: $s-4;
+    .chart {
+        width: 900px;
+        height: auto;
+        margin: auto;
+        @media only screen and (max-width: 745px) {
+            width: 100% !important;
+        }
+    }
+}

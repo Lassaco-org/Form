@@ -126,14 +126,13 @@
       </div>
     </form>
     <div class="modal_area_other">
-      <div class="share-link dis-flex clickable">
-        <p
-          (click)="
-            copyLink('https://lasaco-form.netlify.app/#/surveys/' + formId)
-          "
-        >
-          https://lasaco-form.netlify.app/#/surveys/{{ formId }}
-        </p>
+      <div
+        class="share-link dis-flex clickable"
+        (click)="
+          copyLink('https://lasaco-form.netlify.app/#/surveys/' + formId)
+        "
+      >
+        <p>https://lasaco-form.netlify.app/#/surveys/{{ formId }}</p>
         <img
           src="../../../../assets/img/svg/fluent_document-copy-16-regular.svg"
           alt=""

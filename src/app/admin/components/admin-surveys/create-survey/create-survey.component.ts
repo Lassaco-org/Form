@@ -33,7 +33,7 @@ export class CreateSurveyComponent implements OnInit {
         this.newSurveyData.description !== null
           ? this.newSurveyData.description
           : '',
-        [Validators.required, Validators.minLength(50)],
+        Validators.required,
       ],
     });
   }

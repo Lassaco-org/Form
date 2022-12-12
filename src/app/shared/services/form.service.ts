@@ -59,6 +59,21 @@ export class FormService {
       );
   }
 
+  // Share forms
+  shareForm(data: any): Observable<IForm> {
+    return this.http
+      .post<IForm>(`${this.baseUrl}form/send`, data, this.getHttpOptions())
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Form sent successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
   // Update status forms
   updateStatus(surveyId: string, data: any): Observable<IForm> {
     return this.http

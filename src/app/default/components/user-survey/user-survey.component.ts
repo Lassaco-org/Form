@@ -163,6 +163,8 @@ export class UserSurveyComponent implements OnInit {
     //   `/surveys/${this.currentShortCode.shortCode}/submitted`,
     // ]);
 
+
+    // Append to Form data
     var formData: any = new FormData();
     for (let i in this.responseForm.value) {
       formData.append(i, this.responseForm.value[i]);

@@ -111,7 +111,7 @@ export class AddSurveyQuestionComponent implements OnInit {
   // Set section payload
   newSection() {
     return this.formBuilder.group({
-      sectionTitle: ['', [Validators.required]],
+      sectionTitle: ['Section', [Validators.required]],
       questions: this.formBuilder.array([this.newQuestion()]),
     });
   }
@@ -243,7 +243,7 @@ export class AddSurveyQuestionComponent implements OnInit {
 
           // Reset form
           // this.surveyForm.reset();
-          // if (res.message === 'Admin added successfully') {
+          // if (res.message === 'Form added successfully') {
           // }
         },
         error: (e) => {
