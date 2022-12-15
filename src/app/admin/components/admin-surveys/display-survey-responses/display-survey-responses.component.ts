@@ -1,61 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ResponseService } from 'src/app/shared/services/response.service';
-import {
-  Chart,
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-} from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
 import { FormService } from 'src/app/shared/services/form.service';
 import { ExcelService } from 'src/app/admin/services/excel.service';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
-
-// Register the Chart Elements
-Chart.register(
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip
-);
+declare var google: any
 
 @Component({
   selector: 'app-display-survey-responses',
@@ -63,21 +12,19 @@ Chart.register(
   styleUrls: ['./display-survey-responses.component.scss'],
 })
 export class DisplaySurveyResponsesComponent implements OnInit {
-  public chart: any;
   isAlert: boolean = false;
   alertMessage: string = '';
   alertColor: string = '';
   isShareModal: boolean = false;
   formId: string = '';
-  responses: any;
+  // responses: any;
   dataLoading: boolean = true;
   currentShortCode: any;
   survey: any;
   totalSurveyResponses: any;
-  resultArray: any;
-  aaa: any;
-  anotherResponses: any;
-  newChartArray: any;
+
+  surveyQuestions: any
+  windowScrolled: boolean = false;
 
   constructor(
     private responseService: ResponseService,
@@ -86,6 +33,17 @@ export class DisplaySurveyResponsesComponent implements OnInit {
     private excelService: ExcelService,
     private http: HttpClient
   ) {}
+
+  // When user scroll 300 away from the top of the document
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      this.windowScrolled = true;
+    }
+    else {
+      this.windowScrolled = false;
+    }
+  }
 
   ngOnInit(): void {
     // Get Current Rating Agency ID
@@ -101,18 +59,18 @@ export class DisplaySurveyResponsesComponent implements OnInit {
           this.responseService.getResponseForForm(this.survey._id).subscribe({
             next: (res: any) => {
               let result = res.data.docs;
-              this.totalSurveyResponses = result.length;
-              this.resultArray = [];
-              result.forEach((r: any) => {
-                let resSurveyData = Object.values(r.data);
-                resSurveyData.forEach((s: any) => {
-                  s.forEach((q: any) => {
-                    this.resultArray.push(q);
-                  });
-                });
-              });
+              // this.totalSurveyResponses = result.length;
+              // this.resultArray = [];
+              // result.forEach((r: any) => {
+              //   let resSurveyData = Object.values(r.data);
+              //   resSurveyData.forEach((s: any) => {
+              //     s.forEach((q: any) => {
+              //       this.resultArray.push(q);
+              //     });
+              //   });
+              // });
 
-              this.mergeResponses(this.resultArray);
+              // // this.mergeResponses(this.resultArray);
             },
             error: (e) => console.error(e),
           });
@@ -123,230 +81,83 @@ export class DisplaySurveyResponsesComponent implements OnInit {
         },
       });
 
-      this.exportexcel()
+      // Load Charts and the corechart and barchart packages.
+    google.charts.load('current', { packages: ['corechart'] });
+
+    this.getResponses()
   }
 
-  // Merge Responses
-  mergeResponses(array: any) {
-    this.responses = [];
-    array.forEach((item: any) => {
-      var existing = this.responses.filter((v: any, i: any) => {
-        return v.name == item.name;
-      });
-
-      if (existing.length) {
-        var existingIndex = this.responses.indexOf(existing[0]);
-        this.responses[existingIndex].value = this.responses[
-          existingIndex
-        ].value.concat(item.value);
-      } else {
-        if (typeof item.value == 'string') {
-          item.value = [item.value];
-          this.responses.push(item);
-        } else {
-          item.value = [''];
-          // this.responses.push(item);
+  getResponses() {
+    this.http.get('assets/data/response.json').subscribe((res: any) => {
+      this.surveyQuestions = res.data
+      this.surveyQuestions .forEach((quest: any, index: any) => {
+        if(quest.type === 'radio') {
+          this.buildChart(quest.responses, index, 'radio')
+        } else if (quest.type === 'checkbox') {
+          this.buildChart(quest.responses, index, 'checkbox') 
         }
-      }
-
-      
+      })
     });
-
-
-    let resLabel = this.responses.map((label: any) => {
-      return label.name;
-    });
-
-    let resData = this.responses.map((data: any) => {
-      return data.value;
-    });
-    let resDataType = this.resultArray.map((dataType: any) => {
-      return dataType.type;
-    });
-    let resQuestId = this.resultArray.map((DataQuestKey: any) => {
-      return DataQuestKey.questKey;
-    });
-
-    // console.log(resLabel);
-    // console.log(resData);
-    // console.log(resDataType);
-    // console.log(resQuestId);
-
-    // const lableData = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
-    // const mainData = ['467', '576', '572', '79', '92', '574', '573', '576'];
-
-    // this.createChart(this.responses);
-    // this.renderChart(resLabel, resData, resDataType, resQuestId);
-
-    let first: any[] = [];
-    let getfirst = this.responses[0].options.forEach((lab: any) => {
-      first.push(lab.name);
-    });
-    let second = this.responses[0].value;
-    let third = this.responses[0].type;
-    let fourth = this.responses[0].questKey;
-
-    // console.log(first, second, third, fourth);
-    // this.renderChart(first, second, third, fourth);
   }
 
-  // Export as Excel
-  exportexcel() {
-    // this.responseService.getResponseForForm(this.survey._id).subscribe({
-    //   next: (res: any) => {
-    //     let exportResult = res.data.docs;
-    //     let exportResultArray: any[] = [];
-    //     exportResult.forEach((r: any) => {
-    //       let resSurveyData = Object.values(r.data);
-    //       resSurveyData.forEach((s: any) => {
-    //         s.forEach((q: any) => {
-    //           exportResultArray.push(q);
-    //         });
-    //       });
-    //     });
-    //     let newExportResultArray = exportResultArray.map((r: any) => ({
-    //       [r.name]: r.value,
-    //     }));
-
-    //     console.log(newExportResultArray);
-    //     this.excelService.exportExcel(newExportResultArray);
-    //   },
-    //   error: (e) => console.error(e),
-    //   complete: () => {},
-    // });
-
-    // const hello = [
-    //   {
-    //     'How many states do we have in Nigeria?': '10',
-    //     'Which of these states have you been to?': null,
-    //     'What do you think about the new Naira notes designs?':
-    //       'I dont like it',
-    //   },
-    //   {
-    //     'How many states do we have in Nigeria?': '36',
-    //     'Which of these states have you been to?': null,
-    //     'What do you think about the new Naira notes designs?': 'Make sense',
-    //   },
-    //   {
-    //     'How many states do we have in Nigeria?': '23',
-    //     'Which of these states have you been to?': null,
-    //     'What do you think about the new Naira notes designs?': 'fine',
-    //   },
-    // ];
-
-    // this.excelService.exportExcel(hello);
-
-    this.http.get('assets/data/response-2.json').subscribe((res: any) => {
-
-      this.anotherResponses = res.data.data
-      this.newChartArray = []
-      // console.log(this.anotherResponses);
-
-      this.anotherResponses.forEach((element: any) => {
-        // console.log(element);
-        element.sectionQuestions.forEach((ee: any, index: any) => {
-          console.log(ee);
-          let ctx = 'chart' + index
-          new Chart(ctx, {
-            type: 'pie',
-            data: {
-              labels: [
-                'Red',
-                'Blue',
-                'Yellow'
-              ],
-              datasets: [{
-                data: [300, 50, 100],
-                backgroundColor: [
-                  'rgb(255, 99, 132)',
-                  'rgb(54, 162, 235)',
-                  'rgb(255, 205, 86)'
-                ],
-                hoverOffset: 4
-              }]
-            },
-            options: {
-              responsive: true,
-              aspectRatio: 2.5,
-            },
-          });
-
-          // ee.shift(chart)
-          ee['chart'] = this.chart
-
-          console.log(ee);
-          
-          
-
-          // this.newChartArray.push(chart)
-
-        })
-        
+  buildChart(responses: any, index: any, type: any) {
+    let id = `chart-${index}` 
+    var func = (chart: any) => {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Topping');
+      data.addColumn('number', 'count');
+      responses.forEach((item: any) => {
+        data.addRows([
+          [item.option, item.value]
+        ]);
       });
+      var options = {
+        width: 600,
+        height: 300,
+        tooltip: { textStyle: { fontName: 'DM Sans', fontSize: 17 } }
+        // tooltip: { textStyle: { fontName: 'verdana', fontSize: 17 } }
+      };
+      chart().draw(data, options);
+    }
+    if(type == 'radio') {
+      var chart = () => new google.visualization.PieChart(document.getElementById(id));
+    } else if (type === 'checkbox') {
+      var chart = () => new google.visualization.BarChart(document.getElementById(id));
+    }
+    var callback = () => func(chart);
 
-
-      // Destroys a specific chart instance
-      // this.chart.destroy();
-
-
-
-      // res.data.data.map((sect: any) => {
-      //   // console.log(sect);
-        
-      //   // sect.SectionQuestions.map((quest: any) => {
-      //   //   if(quest.type === 'radio') {
-      //   //     // quest.responses.forEach((h: any) => {
-      //   //     //   console.log(h);
-              
-      //   //     // })
-      //   //     console.log(quest.responses);
-      //   //   }
-
-      //   //   // let resData = quest.responses
-      //   //   // let resLabel = quest.options
-      //   //   // let resType = quest.type
-      //   //   // let resKey = quest.questKey
-      //   //   // // console.log(resData);
-      //   //   // this.renderChart(resLabel, resData, resType, resKey)
-          
-      //   // })
-      // })
-      // res.data.docs.forEach((element: any) => {
-      //   element.questions.forEach((element1: any) => {
-      //     // console.log(element1);
-      //     element1.responses.forEach((element2: any) => {
-      //       // console.log(element2);
-      //     });
-      //   });
-      // });
-    });
+    // Draw the pie chart and bar chart when Charts is loaded
+    google.charts.setOnLoadCallback(callback);
   }
 
-  renderChart(labelData: any, mainData: any, type: any, id: any) {
-    new Chart('first', {
-      type: 'pie',
-      data: {
-        // values on X-Axis
-        labels: labelData,
-        datasets: [
-          {
-            label: 'Sales',
-            data: mainData,
-            backgroundColor: 'blue',
-          },
-          // {
-          //   label: 'Profit',
-          //   data: ['542', '542', '536', '327', '17', '0.00', '538', '541'],
-          //   backgroundColor: 'limegreen',
-          // },
-        ],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 2.5,
-      },
-    });
+  // Download responses 
+  downloadAsExcel() {
+    console.log(this.survey._id);
+    this.responseService
+      .downloadResponses(this.survey._id)
+      
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+        },
+        error: (e) => console.error(e),
+      });
   }
+
+  // Clear responses 
+  clearResponses() {
+    this.responseService
+      .clearResponses(this.survey._id)
+      .subscribe({
+        next: (res: any) => {
+          if(res.message === "Responses cleared successfully") {
+            this.showAlert('Respones cleared', 'success')
+          }
+        },
+        error: (e) => console.error(e),
+      });
+  }
+
 
   // Open share modal
   openShareModal(formId: any) {
@@ -357,5 +168,25 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   // close share modal
   closeShareModal() {
     this.isShareModal = false;
+  }
+
+  // Show alert
+  showAlert(message: string, color: string) {
+    // Set message
+    this.alertMessage = message;
+    // Set color
+    this.alertColor = color;
+    // Show Alert
+    this.isAlert = true;
+    // Hide Alert
+    setTimeout(() => {
+      this.isAlert = false;
+    }, 3000);
+  }
+
+  // Scroll Up
+  scrollToTop() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 }

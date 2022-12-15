@@ -1,56 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import {
-  Chart,
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { FormService } from 'src/app/shared/services/form.service';
+import { AdminService } from '../../services/admin.service';
+declare var google: any
 
-// Register the Chart Elements
-Chart.register(
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip
-);
 
 @Component({
   selector: 'app-admin-overview',
@@ -59,117 +12,131 @@ Chart.register(
 })
 export class AdminOverviewComponent implements OnInit {
   user: any;
-  chart: any;
 
-  constructor(private authService: AuthService) {}
+  responses: any = [
+      {
+      "name": "Does your organisation have board of trustees?",
+      "type": "radio",
+      "orderedNo": 1,
+      "questKey": 1,
+      "numberOfResponses": 2,
+      "responses": [
+              { option: "Yes", value: 5},
+              { option: "No", value: 4},
+      ]
+      
+      },
+      {
+      "name": "Number of partime?",
+      "type": "text",
+      "orderedNo": 2,
+      "questKey": 2,
+      "responses": [
+        {value: "34"},
+        {value: "20"},
+        {value: "10"},
+        {value: "40"},
+      ]
+      },
+      {
+      "name": "Size of organization?",
+      "type": "checkbox",
+      "orderedNo": 3,
+      "questKey": 3,
+      "responses": [
+              { option: "1-5", value: 3},
+              { option: "6-10", value: 6},
+              { option: "11-20", value: 4},
+              { option: "21-50", value: 3},
+              { option: "51-100", value: 2},
+              { option: "100+", value: 1}
+          ]
+      },
+  ]
+  surveys: any;
+  admins: any;
+  constructor(
+    private authService: AuthService, 
+    private formService: FormService, 
+    private adminService: AdminService
+  ) {}
 
   ngOnInit(): void {
     // Get user details
     let userData = this.authService.getUserFromLocalStorage();
     this.user = userData.user;
 
-    this.createChart();
+    // Get Surveys
+    this.getSurveys()
+
+    // Load Charts and the corechart and barchart packages.
+    google.charts.load('current', { packages: ['corechart'] });
+
+    this.getResponses()
+    this.getAdmins()
   }
 
-  createChart() {
-    this.chart = new Chart('chart1', {
-      type: 'bar',
-      data: {
-        // values on X-Axis
-        // labels: [
-        //   '2022-05-10',
-        //   '2022-05-11',
-        //   '2022-05-12',
-        //   '2022-05-13',
-        //   '2022-05-14',
-        //   '2022-05-15',
-        //   '2022-05-16',
-        //   '2022-05-17',
-        // ],
-        // datasets: [
-        //   {
-        //     label: 'Yes',
-        //     data: ['4'],
-        //     backgroundColor: 'blue',
-        //   },
-        //   {
-        //     label: 'No',
-        //     data: ['5'],
-        //     backgroundColor: 'limegreen',
-        //   },
-        // ],
+  getResponses() {
+    this.responses.forEach((resp: any, index: any) => {
+      if(resp.type === 'radio') {
+        this.buildChart(resp.responses, index, 'radio')
+      } else if (resp.type === 'checkbox') {
+        this.buildChart(resp.responses, index, 'checkbox') 
+      }
+    })
+  }
 
-        labels: ["Jan", "Feb", "Mar"],
-        datasets: [{
-          // axis: 'y',
-          label: 'My First Dataset',
-          data: [65, 59, 80],
-          // fill: false,
-          backgroundColor: [
-            'rgba(255, 99, 132)',
-            'rgba(255, 159, 64)',
-            'rgba(255, 205, 86)',
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 2.5,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+  // Get surveys
+  getSurveys() {
+    this.formService
+      .getForms()
+      .subscribe({
+        next: (res: any) => {
+          this.surveys = res.data.docs;
+          
         },
-        plugins: {
-          legend: {
-            display: false
-          }
-        }
-      },
-    });
+        error: (e) => console.error(e),
+      });
+  }
 
+  // Get surveys
+  getAdmins() {
+    this.adminService
+      .getAdmins()
+      .subscribe({
+        next: (res: any) => {
+          this.admins = res.data.docs;
+        },
+        error: (e) => console.error(e),
+      });
+  }
 
-    this.chart = new Chart('chart2', {
-      type: 'pie',
-      data: {
-        // values on X-Axis
-        // labels: [
-        //   'Yes',
-        //   'No',
-        // ],
-        // datasets: [
-        //   {
-        //     label: 'Yes',
-        //     data: ['4'],
-        //     backgroundColor: 'blue',
-        //   },
-        //   {
-        //     label: 'No',
-        //     data: ['5'],
-        //     backgroundColor: 'limegreen',
-        //   },
-        // ],
+  buildChart(activities: any, index: any, type: any) {
+    let id = `chart-${index}` 
+    var func = (chart: any) => {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Topping');
+      data.addColumn('number', 'count');
+      activities.forEach((item: any) => {
+        data.addRows([
+          [item.option, item.value]
+        ]);
+      });
+      var options = {
+        width: 500,
+        height: 400,
+        tooltip: { textStyle: { fontName: 'verdana', fontSize: 17 } }
+      };
+      chart().draw(data, options);
+    }
+    if(type == 'radio') {
+      var chart = () => new google.visualization.PieChart(document.getElementById(id));
+    } else if (type === 'checkbox') {
+      var chart = () => new google.visualization.BarChart(document.getElementById(id));
+    }
+    var callback = () => func(chart);
 
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
-        datasets: [{
-          data: [300, 50, 100],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-          hoverOffset: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 2.5,
-      },
-    });
+    // Draw the pie chart and bar chart when Charts is loaded
+    google.charts.setOnLoadCallback(callback);
   }
 }

@@ -26,8 +26,6 @@ export class AdminSurveysOverviewComponent implements OnInit {
     private router: Router
   ) {}
 
-  // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMjYwZjYyYmZmNTQxZTA0NTAxMThjMCIsImlhdCI6MTY2ODE3NTE1NiwiZXhwIjozLjYwMDAwMDAwMDAwMDAwMTRlKzI0fQ.R-CsoqR2nz4_PUcghmDtiQhD0JA-RM9Nkw0siLNvjDM
-
   ngOnInit(): void {
     // Get user details
     let userData = this.authService.getUserFromLocalStorage();
@@ -37,16 +35,7 @@ export class AdminSurveysOverviewComponent implements OnInit {
     this.formService.getForms().subscribe({
       next: (res: any) => {
         let result = res.data.docs;
-        result.forEach((res: any) => {
-          // fetch surveys for this current user
-          if (res.createdBy === this.user._id) {
-            this.surveys = result;
-            // console.log(res.createdBy);
-            // this.surveys[0]['totalResponses'] = 10;
-
-            console.log(this.surveys);
-          }
-        });
+        this.surveys = result;
       },
       error: (e) => console.error(e),
       complete: () => {

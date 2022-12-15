@@ -180,3 +180,18 @@
     }
 }
 // switch toggle ends 
+
+// Empty list starts 
+.empty-list {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    p {
+        color: $grey1;
+        margin-top: $s-1;
+        .icon {
+            margin-right: $s-1;
+        }
+    }
+}
+// Empty list ends

@@ -23,54 +23,65 @@
 </section>
 
 <section class="surveys">
-  <div class="table-container">
-    <table>
-      <tr class="table-header">
-        <th>Title</th>
-        <th>Date</th>
-        <th>Total Responses</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-      <tr class="table-body" *ngFor="let survey of surveys">
-        <td [title]="survey?.title" (click)="editSurvey(survey)">
-          {{
-            survey?.title.length > 30
-              ? survey?.title.slice(0, 30) + "..."
-              : survey?.title
-          }}
-        </td>
-        <td>{{ survey?.createdAt | date: "mediumDate" }}</td>
-        <td>0</td>
-        <td>{{ survey.available ? "Active" : "In-active" }}</td>
-        <td class="actions dis-flex">
-          <i
-            class="bx bx-share icon share"
-            title="Share"
-            (click)="openShareModal(survey)"
-          ></i>
-          <i
-            class="bx bx-edit-alt icon edit"
-            (click)="editSurvey(survey)"
-            title="Edit"
-          ></i>
-          <i
-            class="bx bx-bar-chart-alt icon analyze"
-            title="Analyze"
-            (click)="analyzeSurvey(survey)"
-          ></i>
-          <i
-            class="icon suspend"
-            title="Suspend"
-            (click)="updateSurveyStatus(survey)"
-            [class]="survey.available ? 'bx bx-play' : 'bx bx-pause'"
-          ></i>
-        </td>
-      </tr>
-    </table>
-  </div>
   <!-- Data Loading -->
   <span class="loading-spinner" *ngIf="dataLoading">
     <div class="spinner-3"></div>
   </span>
+
+  <ng-container *ngIf="surveys?.length > 0">
+    <div class="table-container" >
+      <table>
+        <tr class="table-header">
+          <th>Title</th>
+          <th>Date</th>
+          <th>Total Responses</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        <tr class="table-body" *ngFor="let survey of surveys">
+          <td [title]="survey?.title" (click)="editSurvey(survey)">
+            {{
+              survey?.title.length > 30
+                ? survey?.title.slice(0, 30) + "..."
+                : survey?.title
+            }}
+          </td>
+          <td>{{ survey?.createdAt | date: "mediumDate" }}</td>
+          <td>0</td>
+          <td>{{ survey.available ? "Active" : "In-active" }}</td>
+          <td class="actions dis-flex">
+            <i
+              class="bx bx-share icon share"
+              title="Share"
+              (click)="openShareModal(survey)"
+            ></i>
+            <i
+              class="bx bx-edit-alt icon edit"
+              (click)="editSurvey(survey)"
+              title="Edit"
+            ></i>
+            <i
+              class="bx bx-bar-chart-alt icon analyze"
+              title="Analyze"
+              (click)="analyzeSurvey(survey)"
+            ></i>
+            <i
+              class="icon suspend"
+              title="Suspend"
+              (click)="updateSurveyStatus(survey)"
+              [class]="survey.available ? 'bx bx-play' : 'bx bx-pause'"
+            ></i>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="surveys?.length === 0">
+    <div class="empty-list">
+      <h2>No survey!</h2>
+      <p class="dis-flex"><i class="bx bx-info-circle icon"></i> Click on <strong>create survey</strong> to get started.</p>
+    </div>
+  </ng-container>
+  
 </section>

@@ -33,12 +33,13 @@
   </div>
   <div class="btns dis-flex">
     <!-- <i class="bx bx-spreadsheet spreadsheet icon clickable"></i> -->
+    <i class='bx bx-reset icon reset' title="Clear" (click)="clearResponses()"></i>
     <img
       src="../../../../../assets/img/svg/icons8-microsoft-excel-2019.svg"
       alt="image"
       title="Spreadsheet"
       class="spreadsheet clickable"
-      (click)="exportexcel()"
+      (click)="downloadAsExcel()"
     />
     <button
       class="btn tert_btn"
@@ -56,70 +57,40 @@
   <div class="response_list">
     <div
       class="response_list_item"
-      *ngFor="let response of responses"
-      id="excel-table"
+      *ngFor="let question of surveyQuestions; let i = index"
     >
       <div class="response_list_item_header dis-flex">
-        <h3 class="question">{{ response.name }}</h3>
+        <h3 class="question">{{ question.name }}</h3>
 
-        <div class="right">{{ response.value.length }} responses</div>
+        <!-- <div class="right">{{ response.value.length }} responses</div> -->
       </div>
-      <div class="response_list_item_body" [ngSwitch]="response.type">
-        <ng-container *ngSwitchCase="'radio'">
-          <ul
-            class="response_list_item_body_value"
-            *ngFor="let value of response.value"
-          >
-            <li class="dis-flex">
-              <i class="bx bxs-disc icon"></i>
-              {{ value }}
-            </li>
-          </ul>
-          <div class="chart-container">
-            <canvas class="chart" [id]="response.questKey"></canvas>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'checkbox'">
-          <ul
-            class="response_list_item_body_value"
-            *ngFor="let value of response.value"
-          >
-            <li class="dis-flex">
-              <i class="bx bxs-disc icon"></i>
-              {{ value }}
-            </li>
-          </ul>
-          <div class="chart-container">
-            <!-- <canvas class="chart" id="chart1">{{ chart }}</canvas> -->
-          </div>
-        </ng-container>
+      <div class="response_list_item_body" [ngSwitch]="question.type">
         <ng-container *ngSwitchCase="'text'">
           <ul
             class="response_list_item_body_value"
-            *ngFor="let value of response.value"
+            *ngFor="let response of question.responses"
           >
             <li class="dis-flex">
               <i class="bx bxs-disc icon"></i>
-              {{ value }}
+              {{ response.value }}
             </li>
           </ul>
         </ng-container>
+
+        <div class="chart-container">
+          <div class="chart" [id]="'chart-' + i"></div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="" *ngFor="let response of anotherResponses">
-    <!-- <div>{{response.sectionQuestions}}</div> -->
-    <div *ngFor="let section of response.sectionQuestions; index as i">
-      <div><strong>{{section.name}}</strong></div>
-      <div>{{section.type}}</div>
-      <div>{{section.responses}}</div>
-      <div class="chart-container">
-        <canvas class="chart" [id]="'chart' + i"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- Back to top -->
+<a
+  class="go-top clickable"
+  (click)="scrollToTop()"
+  [ngClass]="{ show: windowScrolled }"
+>
+  <i class="bx bx-chevron-up icon"></i>
+</a>

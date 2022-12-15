@@ -238,8 +238,15 @@ export class AddSurveyQuestionComponent implements OnInit {
           // Stop loading
           this.loading = false;
 
-          // Route to admin surveys page
-          this.router.navigate(['/admin/surveys']);
+          if(res.message === "Form created successfully") {
+
+            setTimeout(() => {
+              // Route to admin surveys page
+              this.router.navigate(['/admin/surveys']);
+            }, 3000);
+
+          }
+
 
           // Reset form
           // this.surveyForm.reset();

@@ -10,11 +10,11 @@
   <div class="card">
     <div class="card_item">
       <p class="card_item_title">Active users</p>
-      <h3>4</h3>
+      <h3>{{admins?.length}}</h3>
     </div>
     <div class="card_item">
       <p class="card_item_title">Total surveys</p>
-      <h3>3</h3>
+      <h3>{{surveys?.length}}</h3>
     </div>
     <div class="card_item">
       <p class="card_item_title">Total responses</p>
@@ -23,9 +23,13 @@
   </div>
 </section>
 
-<div class="chart-container">
-  <canvas class="chart" id="chart1">{{ chart }}</canvas>
-</div>
-<div class="chart-container">
-  <canvas class="chart" id="chart2">{{ chart }}</canvas>
+<div style="padding-bottom: 3rem; margin-bottom: 2rem; border-bottom: 1px solid grey;" *ngFor="let response of responses; let i = index" >
+  <p><strong>{{response.name}}</strong></p>
+  <p><i>{{response.type}}</i></p>
+  <div *ngIf="response.type === 'text'">
+    <div *ngFor="let resValue of response.responses">
+      <p>{{resValue.value}}</p>
+    </div>
+  </div>
+  <div style="width: 100%; margin: auto;" [id]="'chart-' + i"></div>
 </div>

@@ -55,3 +55,28 @@
         }
     }
 }
+
+/* go-top */
+.go-top {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 100;
+    box-shadow: $box-shadow1;
+    @include icon-area(44px, $blue);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    &.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    & .icon {
+      color: $white-color;
+      font-size: 26px;
+      transition: all 0.2s ease;
+    }
+    &:hover .icon {
+      transform: translateY(-10px);
+    }
+  }
