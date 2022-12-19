@@ -28,7 +28,7 @@ export class DisplaySubAdminsComponent implements OnInit {
     // Get All Admins
     this.adminService.getAdmins().subscribe({
       next: (res: any) => {
-        this.allAdmins = res.data.docs;
+        this.allAdmins = res.data;
       },
       error: (e) => console.error(e),
       complete: () => {

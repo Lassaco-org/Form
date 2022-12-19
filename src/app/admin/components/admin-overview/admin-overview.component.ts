@@ -70,21 +70,21 @@ export class AdminOverviewComponent implements OnInit {
     this.getSurveys()
 
     // Load Charts and the corechart and barchart packages.
-    google.charts.load('current', { packages: ['corechart'] });
+    // google.charts.load('current', { packages: ['corechart'] });
 
-    this.getResponses()
+    // this.getResponses()
     this.getAdmins()
   }
 
-  getResponses() {
-    this.responses.forEach((resp: any, index: any) => {
-      if(resp.type === 'radio') {
-        this.buildChart(resp.responses, index, 'radio')
-      } else if (resp.type === 'checkbox') {
-        this.buildChart(resp.responses, index, 'checkbox') 
-      }
-    })
-  }
+  // getResponses() {
+  //   this.responses.forEach((resp: any, index: any) => {
+  //     if(resp.type === 'radio') {
+  //       this.buildChart(resp.responses, index, 'radio')
+  //     } else if (resp.type === 'checkbox') {
+  //       this.buildChart(resp.responses, index, 'checkbox') 
+  //     }
+  //   })
+  // }
 
   // Get surveys
   getSurveys() {
@@ -99,44 +99,47 @@ export class AdminOverviewComponent implements OnInit {
       });
   }
 
-  // Get surveys
+  // Get Admins
   getAdmins() {
-    this.adminService
-      .getAdmins()
-      .subscribe({
-        next: (res: any) => {
-          this.admins = res.data.docs;
-        },
-        error: (e) => console.error(e),
-      });
+    // Visible to only superadmins
+    if(this.user.type === 'super') {
+      this.adminService
+        .getAdmins()
+        .subscribe({
+          next: (res: any) => {
+            this.admins = res.data.docs;
+          },
+          error: (e) => console.error(e),
+        });
+    }
   }
 
-  buildChart(activities: any, index: any, type: any) {
-    let id = `chart-${index}` 
-    var func = (chart: any) => {
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Topping');
-      data.addColumn('number', 'count');
-      activities.forEach((item: any) => {
-        data.addRows([
-          [item.option, item.value]
-        ]);
-      });
-      var options = {
-        width: 500,
-        height: 400,
-        tooltip: { textStyle: { fontName: 'verdana', fontSize: 17 } }
-      };
-      chart().draw(data, options);
-    }
-    if(type == 'radio') {
-      var chart = () => new google.visualization.PieChart(document.getElementById(id));
-    } else if (type === 'checkbox') {
-      var chart = () => new google.visualization.BarChart(document.getElementById(id));
-    }
-    var callback = () => func(chart);
+  // buildChart(activities: any, index: any, type: any) {
+  //   let id = `chart-${index}` 
+  //   var func = (chart: any) => {
+  //     var data = new google.visualization.DataTable();
+  //     data.addColumn('string', 'Topping');
+  //     data.addColumn('number', 'count');
+  //     activities.forEach((item: any) => {
+  //       data.addRows([
+  //         [item.option, item.value]
+  //       ]);
+  //     });
+  //     var options = {
+  //       width: 500,
+  //       height: 400,
+  //       tooltip: { textStyle: { fontName: 'verdana', fontSize: 17 } }
+  //     };
+  //     chart().draw(data, options);
+  //   }
+  //   if(type == 'radio') {
+  //     var chart = () => new google.visualization.PieChart(document.getElementById(id));
+  //   } else if (type === 'checkbox') {
+  //     var chart = () => new google.visualization.BarChart(document.getElementById(id));
+  //   }
+  //   var callback = () => func(chart);
 
-    // Draw the pie chart and bar chart when Charts is loaded
-    google.charts.setOnLoadCallback(callback);
-  }
+  //   // Draw the pie chart and bar chart when Charts is loaded
+  //   google.charts.setOnLoadCallback(callback);
+  // }
 }

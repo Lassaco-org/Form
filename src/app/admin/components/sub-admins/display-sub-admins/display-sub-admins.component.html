@@ -26,25 +26,28 @@
         <th>Status</th>
         <th>Action</th>
       </tr>
-      <tr class="table-body" *ngFor="let i of allAdmins">
-        <ng-container *ngIf="i.type === 'admin'">
-          <td>{{ i.firstName + " " + i.lastName }}</td>
-          <td>{{ i.email }}</td>
-          <td>0</td>
-          <td>{{ i.status }}</td>
+      <tr class="table-body" *ngFor="let admin of allAdmins?.docs">
+        <ng-container *ngIf="admin.type === 'admin'">
+          <td>{{ admin.firstName + " " + admin.lastName }}</td>
+          <td>{{ admin.email }}</td>
+          <td>{{admin.totalSurveyCreated}}</td>
+          <td>{{ admin.status }}</td>
           <td class="actions">
             <button
               type="button"
               class="btn suspend-btn"
-              (click)="updateAccountStatus(i)"
+              (click)="updateAccountStatus(admin)"
             >
-              <span *ngIf="i.status === 'active'">Suspend</span>
-              <span *ngIf="i.status === 'inactive'">Unsuspend</span>
+              <span *ngIf="admin.status === 'active'">Suspend</span>
+              <span *ngIf="admin.status === 'inactive'">Unsuspend</span>
             </button>
           </td>
         </ng-container>
       </tr>
     </table>
+    <p *ngIf="allAdmins?.hasNextPage === true" (click)="allAdmins?.nextPage">Next</p>
+    {{allAdmins?.nextPage}}
+    <p *ngIf="allAdmins?.hasPreviousPage === true">Previous</p>
   </div>
   <!-- Data Loading -->
   <span class="loading-spinner" *ngIf="dataLoading">

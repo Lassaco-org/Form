@@ -78,7 +78,6 @@ export class UserSurveyComponent implements OnInit {
     // Creating form group
     let surveyQuestion = this.survey.questions;
     surveyQuestion[this.currentSectionNumber].forEach((element: any) => {
-      console.log(element.questKey);
       this.addControl(element.questKey, element.type);
     });
   }
@@ -91,7 +90,8 @@ export class UserSurveyComponent implements OnInit {
       this.responseForm.addControl(key, this.formBuilder.control(''));
     }
 
-    console.log(this.responseForm.value);
+    // console.log(this.responseForm.value);
+    
   }
 
   onCheckChange(event: any) {
@@ -117,7 +117,6 @@ export class UserSurveyComponent implements OnInit {
       });
     }
 
-    console.log(this.responseForm.value);
   }
 
   getMultipleValues(event: any) {
@@ -195,6 +194,8 @@ export class UserSurveyComponent implements OnInit {
       // Show error message
       this.showAlert(error.message, 'error');
     }
+
+
 
     // this.responseService
     //   .addResponse(formData, this.currentShortCode.shortCode)

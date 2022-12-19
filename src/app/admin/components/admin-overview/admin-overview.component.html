@@ -10,11 +10,11 @@
   <div class="card">
     <div class="card_item">
       <p class="card_item_title">Active users</p>
-      <h3>{{admins?.length}}</h3>
+      <h3>{{user?.type === 'super' ? admins?.length : "Visible to only super admins" }}</h3>
     </div>
     <div class="card_item">
       <p class="card_item_title">Total surveys</p>
-      <h3>{{surveys?.length}}</h3>
+      <h3>{{user?.type === 'super' ? surveys?.length : user?.totalSurveyCreated }}</h3>
     </div>
     <div class="card_item">
       <p class="card_item_title">Total responses</p>
@@ -23,7 +23,7 @@
   </div>
 </section>
 
-<div style="padding-bottom: 3rem; margin-bottom: 2rem; border-bottom: 1px solid grey;" *ngFor="let response of responses; let i = index" >
+<!-- <div style="padding-bottom: 3rem; margin-bottom: 2rem; border-bottom: 1px solid grey;" *ngFor="let response of responses; let i = index" >
   <p><strong>{{response.name}}</strong></p>
   <p><i>{{response.type}}</i></p>
   <div *ngIf="response.type === 'text'">
@@ -32,4 +32,4 @@
     </div>
   </div>
   <div style="width: 100%; margin: auto;" [id]="'chart-' + i"></div>
-</div>
+</div> -->

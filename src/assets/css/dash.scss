@@ -186,7 +186,8 @@
     display: grid;
     justify-content: center;
     text-align: center;
-    p {
+    margin-top: $s-6;
+    .descp {
         color: $grey1;
         margin-top: $s-1;
         .icon {

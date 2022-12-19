@@ -29,18 +29,20 @@
       }}
     </p>
     <i class="bx bx-chevron-right icon"></i>
-    <p>Responses({{ totalSurveyResponses }})</p>
+    <p>Responses({{ surveyQuestions?.totalResponses }})</p>
   </div>
   <div class="btns dis-flex">
     <!-- <i class="bx bx-spreadsheet spreadsheet icon clickable"></i> -->
-    <i class='bx bx-reset icon reset' title="Clear" (click)="clearResponses()"></i>
-    <img
-      src="../../../../../assets/img/svg/icons8-microsoft-excel-2019.svg"
-      alt="image"
-      title="Spreadsheet"
-      class="spreadsheet clickable"
-      (click)="downloadAsExcel()"
-    />
+    <i class='bx bx-reset icon reset' title="Clear" (click)="openDeleteModal()"></i>
+    <a [href]="'https://formapp-api.herokuapp.com/api/response/download/'+ survey?._id">
+      <img
+        src="../../../../../assets/img/svg/icons8-microsoft-excel-2019.svg"
+        alt="image"
+        title="Spreadsheet"
+        class="spreadsheet clickable"
+        />
+        <!-- (click)="downloadAsExcel()" -->
+    </a>
     <button
       class="btn tert_btn"
       [routerLink]="'/admin/surveys/' + survey?.shortCode + '/edit-survey'"
@@ -53,26 +55,31 @@
   </div>
 </section>
 
+
 <section class="response">
-  <div class="response_list">
+  <!-- Data Loading -->
+  <span class="loading-spinner" *ngIf="dataLoading">
+    <div class="spinner-3"></div>
+  </span>
+
+  <div class="response_list" *ngIf="surveyQuestions?.totalResponses > 0">
     <div
       class="response_list_item"
-      *ngFor="let question of surveyQuestions; let i = index"
+      *ngFor="let question of surveyQuestions?.data; let i = index"
     >
       <div class="response_list_item_header dis-flex">
         <h3 class="question">{{ question.name }}</h3>
 
-        <!-- <div class="right">{{ response.value.length }} responses</div> -->
+        <div class="right">{{ question.totalResponse }} responses</div>
       </div>
-      <div class="response_list_item_body" [ngSwitch]="question.type">
-        <ng-container *ngSwitchCase="'text'">
+      <div class="response_list_item_body">
+        <ng-container *ngIf="question.type === 'text'">
           <ul
             class="response_list_item_body_value"
-            *ngFor="let response of question.responses"
           >
-            <li class="dis-flex">
+            <li class="dis-flex" *ngFor="let item of question.responses | keyvalue">
               <i class="bx bxs-disc icon"></i>
-              {{ response.value }}
+              {{item.key}}
             </li>
           </ul>
         </ng-container>
@@ -84,7 +91,39 @@
       </div>
     </div>
   </div>
+
+  <ng-container *ngIf="surveyQuestions?.totalResponses === 0">
+    <div class="empty-list">
+      <h2>No responses!</h2>
+      <span class="descp dis-flex">
+        <i class="bx bx-info-circle icon"></i>
+        <p>
+           Click on <strong>send</strong> to get people responses.</p>
+      </span>
+    </div>
+  </ng-container>
 </section>
+
+<div class="modal confirm-delete-modal" *ngIf="deleteModal">
+  <div class="modal_area">
+    <h5></h5>
+
+    <div class="modal-details" style="text-align: left">
+      <h2 class="text-primary-color">Confirm delete</h2>
+      <p>
+        Are you sure you want to clear all responses?
+      </p>
+    </div>
+    <!-- Buttons -->
+    <div class="modal-btns dis-flex">
+      <button type="button" class="btn skip_btn" (click)="closeDeleteModal()">
+        Cancel
+      </button>
+      <button class="btn prim_btn" (click)="clearResponses()">Clear</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- Back to top -->
 <a

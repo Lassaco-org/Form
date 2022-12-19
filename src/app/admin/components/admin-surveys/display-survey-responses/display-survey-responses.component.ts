@@ -17,21 +17,17 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   alertColor: string = '';
   isShareModal: boolean = false;
   formId: string = '';
-  // responses: any;
   dataLoading: boolean = true;
   currentShortCode: any;
   survey: any;
-  totalSurveyResponses: any;
-
   surveyQuestions: any
   windowScrolled: boolean = false;
+  deleteModal: boolean = false;
 
   constructor(
     private responseService: ResponseService,
     private formService: FormService,
     private activatedRoute: ActivatedRoute,
-    private excelService: ExcelService,
-    private http: HttpClient
   ) {}
 
   // When user scroll 300 away from the top of the document
@@ -56,21 +52,32 @@ export class DisplaySurveyResponsesComponent implements OnInit {
         next: (res: any) => {
           this.survey = res.data;
           // Get form responses
-          this.responseService.getResponseForForm(this.survey._id).subscribe({
+          this.responseService.getResponseStats(this.survey._id).subscribe({
             next: (res: any) => {
-              let result = res.data.docs;
-              // this.totalSurveyResponses = result.length;
-              // this.resultArray = [];
-              // result.forEach((r: any) => {
-              //   let resSurveyData = Object.values(r.data);
-              //   resSurveyData.forEach((s: any) => {
-              //     s.forEach((q: any) => {
-              //       this.resultArray.push(q);
-              //     });
-              //   });
-              // });
+              this.surveyQuestions = res.data;
+              // Bind question responses
+              if(this.surveyQuestions.totalResponses > 0) {
+                this.surveyQuestions.data.forEach((quest: any, index: any) => {
+                  // create chart row Data
+                  let resKey: any = Object.keys(quest.responses)
+                  let chartData: any = []
+                  Object.keys(resKey).forEach( function(key) {
+                    chartData.push({option: resKey[key], value: quest.responses[resKey[key]]})
+                  })
+  
+                  // Load Charts and the corechart and barchart packages.
+                  google.charts.load('current', { packages: ['corechart'] });
+                  
+                  // Build chart
+                  if(quest.type === 'radio') {
+                    this.buildChart(chartData, index, 'radio')
+                  } else if (quest.type === 'checkbox') {
+                    this.buildChart(chartData, index, 'checkbox') 
+                  }
+                })
+              }
+              
 
-              // // this.mergeResponses(this.resultArray);
             },
             error: (e) => console.error(e),
           });
@@ -80,26 +87,9 @@ export class DisplaySurveyResponsesComponent implements OnInit {
           this.dataLoading = false;
         },
       });
-
-      // Load Charts and the corechart and barchart packages.
-    google.charts.load('current', { packages: ['corechart'] });
-
-    this.getResponses()
   }
 
-  getResponses() {
-    this.http.get('assets/data/response.json').subscribe((res: any) => {
-      this.surveyQuestions = res.data
-      this.surveyQuestions .forEach((quest: any, index: any) => {
-        if(quest.type === 'radio') {
-          this.buildChart(quest.responses, index, 'radio')
-        } else if (quest.type === 'checkbox') {
-          this.buildChart(quest.responses, index, 'checkbox') 
-        }
-      })
-    });
-  }
-
+  // Build chart
   buildChart(responses: any, index: any, type: any) {
     let id = `chart-${index}` 
     var func = (chart: any) => {
@@ -115,7 +105,6 @@ export class DisplaySurveyResponsesComponent implements OnInit {
         width: 600,
         height: 300,
         tooltip: { textStyle: { fontName: 'DM Sans', fontSize: 17 } }
-        // tooltip: { textStyle: { fontName: 'verdana', fontSize: 17 } }
       };
       chart().draw(data, options);
     }
@@ -152,6 +141,8 @@ export class DisplaySurveyResponsesComponent implements OnInit {
         next: (res: any) => {
           if(res.message === "Responses cleared successfully") {
             this.showAlert('Respones cleared', 'success')
+            this.ngOnInit()
+            this.closeDeleteModal()
           }
         },
         error: (e) => console.error(e),
@@ -169,6 +160,16 @@ export class DisplaySurveyResponsesComponent implements OnInit {
   closeShareModal() {
     this.isShareModal = false;
   }
+
+  // Close delete modal
+  openDeleteModal() {
+    this.deleteModal = true
+  }
+
+  // Close delete modal
+  closeDeleteModal() {
+    this.deleteModal = false
+  } 
 
   // Show alert
   showAlert(message: string, color: string) {

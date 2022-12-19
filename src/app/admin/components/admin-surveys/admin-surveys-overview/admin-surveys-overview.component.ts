@@ -69,8 +69,6 @@ export class AdminSurveysOverviewComponent implements OnInit {
       available: survey.available == true ? false : true,
     };
 
-    console.log(payload);
-
     this.formService
       .updateStatus(survey._id, payload)
       .pipe(first())

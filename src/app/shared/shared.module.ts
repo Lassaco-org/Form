@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareSurveyComponent } from './components/share-survey/share-survey.component';
 import { SurveySectionComponent } from './components/survey-section/survey-section.component';
 import { DragDropDirective } from './directive/drag-drop.directive';
+import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { DragDropDirective } from './directive/drag-drop.directive';
     ShareSurveyComponent,
     SurveySectionComponent,
     DragDropDirective,
+    ConfirmDeleteComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [

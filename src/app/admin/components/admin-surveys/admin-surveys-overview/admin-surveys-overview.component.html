@@ -47,7 +47,7 @@
             }}
           </td>
           <td>{{ survey?.createdAt | date: "mediumDate" }}</td>
-          <td>0</td>
+          <td>{{survey?.totalResponses}}</td>
           <td>{{ survey.available ? "Active" : "In-active" }}</td>
           <td class="actions dis-flex">
             <i
@@ -80,7 +80,11 @@
   <ng-container *ngIf="surveys?.length === 0">
     <div class="empty-list">
       <h2>No survey!</h2>
-      <p class="dis-flex"><i class="bx bx-info-circle icon"></i> Click on <strong>create survey</strong> to get started.</p>
+      <span class="descp dis-flex">
+        <i class="bx bx-info-circle icon"></i>
+        <p>
+          Click on <strong>create survey</strong> to get started.</p>
+      </span>
     </div>
   </ng-container>
   

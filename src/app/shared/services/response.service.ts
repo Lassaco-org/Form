@@ -39,7 +39,25 @@ export class ResponseService {
       )
       .pipe(
         switchMap((res: any) => {
-          console.log(`Response fetched successfully`, res);
+          console.log(`Form responses fetched successfully`, res);
+          return of(res);
+        }),
+        catchError((err: any) => {
+          return throwError(() => new Error(err.error.message));
+        })
+      );
+  }
+
+  // get response statistics
+  getResponseStats(surveyId: string): Observable<IResponse> {
+    return this.http
+      .get<IResponse>(
+        `${this.baseUrl}response/stats/${surveyId}`,
+        this.getHttpOptions()
+      )
+      .pipe(
+        switchMap((res: any) => {
+          console.log(`Responses fetched successfully`, res);
           return of(res);
         }),
         catchError((err: any) => {
