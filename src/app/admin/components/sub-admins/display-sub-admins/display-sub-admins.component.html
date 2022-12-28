@@ -17,7 +17,12 @@
 </section>
 
 <section class="all-admins">
-  <div class="table-container">
+  <!-- Data Loading -->
+  <span class="loading-spinner" *ngIf="dataLoading">
+    <div class="spinner-3"></div>
+  </span>
+
+  <div class="table-container" *ngIf="allAdmins?.docs.length > 0">
     <table>
       <tr class="table-header">
         <th>Name</th>
@@ -27,7 +32,7 @@
         <th>Action</th>
       </tr>
       <tr class="table-body" *ngFor="let admin of allAdmins?.docs">
-        <ng-container *ngIf="admin.type === 'admin'">
+        <!-- <ng-container *ngIf="admin.type === 'admin'"> -->
           <td>{{ admin.firstName + " " + admin.lastName }}</td>
           <td>{{ admin.email }}</td>
           <td>{{admin.totalSurveyCreated}}</td>
@@ -42,15 +47,27 @@
               <span *ngIf="admin.status === 'inactive'">Unsuspend</span>
             </button>
           </td>
-        </ng-container>
+        <!-- </ng-container> -->
       </tr>
     </table>
-    <p *ngIf="allAdmins?.hasNextPage === true" (click)="allAdmins?.nextPage">Next</p>
-    {{allAdmins?.nextPage}}
-    <p *ngIf="allAdmins?.hasPreviousPage === true">Previous</p>
+
+    <!-- <div class="pagination dis-flex">
+      <button
+        type="button"
+        class="btn prim_btn dis-flex"
+        [class.hide]="allAdmins?.hasPreviousPage === false"
+        >
+        <i class="bx bx-skip-previous icon"></i>Previous
+      </button>
+      <span>Page {{allAdmins?.page}}/{{allAdmins?.totalPages}}</span>
+      <button
+        type="button"
+        class="btn prim_btn dis-flex"
+        [class.hide]="allAdmins?.hasNextPage === false"
+        >
+        Next<i class="bx bx-skip-next icon"></i>
+      </button>
+    </div> -->
   </div>
-  <!-- Data Loading -->
-  <span class="loading-spinner" *ngIf="dataLoading">
-    <div class="spinner-3"></div>
-  </span>
+  
 </section>

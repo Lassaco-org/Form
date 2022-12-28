@@ -120,15 +120,16 @@ export class UserSurveyComponent implements OnInit {
   }
 
   getMultipleValues(event: any) {
+    
     // console.log(event.target.value);
-    let me = this.responseForm.get('24Ftxi').value;
-    this.responseForm
-      .get('24Ftxi')
-      .setValue([...this.responseForm.get('24Ftxi').value, event.target.value]);
-    // this.toppings.setValue([...this.toppings.value,"Onion"]);
+    // let me = this.responseForm.get('24Ftxi').value;
+    // this.responseForm
+    //   .get('24Ftxi')
+    //   .setValue([...this.responseForm.get('24Ftxi').value, event.target.value]);
+    // // this.toppings.setValue([...this.toppings.value,"Onion"]);
 
-    console.log(this.responseForm.get('24Ftxi').value);
-    console.log(this.responseForm.value);
+    // console.log(this.responseForm.get('24Ftxi').value);
+    // console.log(this.responseForm.value);
   }
 
   // Submit response

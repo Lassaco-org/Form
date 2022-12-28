@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
   hide: boolean = true;
   alertColor: string = '';
   isFormSubmitted: boolean = false;
-  isNotVerified: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -80,7 +79,7 @@ export class LoginComponent implements OnInit {
 
           // If not verified
           if (e.message === 'Email has not been verified') {
-            this.isNotVerified = true;
+            this.sendEmailVerificationCode()
           }
         },
       });

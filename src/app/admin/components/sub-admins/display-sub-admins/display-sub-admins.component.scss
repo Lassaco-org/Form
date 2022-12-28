@@ -1,5 +1,13 @@
 @import '../../../../../assets/css/dash.scss';
 
 
-.all-admins {
+.pagination {
+    justify-content: space-between;
+    gap: $s-2;
+    margin-top: $s-2;
+    .btn {
+        &.hide {
+            visibility: hidden;
+        }
+    }
 }
