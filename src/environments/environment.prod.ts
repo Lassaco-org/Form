@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://formapp-api.herokuapp.com/api/',
+  baseUrl: 'https://survey-api.lasacoassurance.com/api/',
 };

@@ -94,8 +94,8 @@ export class UserSurveyComponent implements OnInit {
     
   }
 
-  onCheckChange(event: any) {
-    const formArray: FormArray = this.responseForm.get('24Ftxi') as FormArray;
+  onCheckChange(event: any, key: any) {
+    const formArray: FormArray = this.responseForm.get(key) as FormArray;
 
     /* Selected */
     if (event.target.checked) {
@@ -116,6 +116,9 @@ export class UserSurveyComponent implements OnInit {
         i++;
       });
     }
+
+    console.log(this.responseForm.value);
+    
 
   }
 
@@ -174,6 +177,8 @@ export class UserSurveyComponent implements OnInit {
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
+
+
 
     try {
       const result = await this.responseService.addPage(

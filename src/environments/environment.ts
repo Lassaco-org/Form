@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://formapp-api.herokuapp.com/api/',
+  baseUrl: 'https://survey-api.lasacoassurance.com/api/',
 };
 
 /*

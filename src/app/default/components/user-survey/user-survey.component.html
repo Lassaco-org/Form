@@ -93,7 +93,7 @@
                         [value]="option.name"
                         style="display: none"
                         [formControlName]="question.questKey"
-                        (click)="onCheckChange($event)"
+                        (click)="onCheckChange($event, question.questKey)"
                       />
                       <label [for]="questionIndex + '-' + optionIndex">
                         {{ option.name }}
