@@ -5,7 +5,7 @@ footer {
     border: 1px solid $grey2;
     .container {
         gap: $s-2;
-        justify-content: space-between;
+        justify-content: center;
         flex-wrap: wrap;
         padding: $s-4;
         @media only screen and (max-width: 670px) {
