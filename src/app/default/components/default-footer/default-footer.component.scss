@@ -6,6 +6,7 @@ footer {
     .container {
         gap: $s-2;
         justify-content: center;
+        flex-direction: column;
         flex-wrap: wrap;
         padding: $s-4;
         @media only screen and (max-width: 670px) {
@@ -38,6 +39,9 @@ footer {
                     }
                 }
             }
+        }
+        .copy-right {
+            margin-top: $s-6;
         }
     }
 }

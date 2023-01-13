@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'https://survey-api.lasacoassurance.com/api/',
+  //  https://documenter.getpostman.com/view/16398377/2s7YmtEkxz#667fd1e9-53eb-446b-8b22-3432d4137d66
 };
 
 /*
